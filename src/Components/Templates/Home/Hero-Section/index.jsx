@@ -16,18 +16,17 @@ const HeroSection = () => {
       >
         <SwiperSlide>
           <div className="h-[400px] w-full">
-            <img src="/assets/static/banner1.png" className="size-full"/>
+            <img src="/assets/static/banner1.png" className="size-full" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="h-[400px] w-full">
-            <img src="/assets/static/banner2.png" className="size-full"/>
+            <img src="/assets/static/banner2.png" className="size-full" />
           </div>
         </SwiperSlide>
 
-        <SliderButtons/>
+        <SliderButtons />
       </Swiper>
-
     </section>
   );
 };
