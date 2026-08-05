@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const FocusOnComments = () => {
   const location = useLocation();
-
+console.log(location)
   useEffect(() => {
     const hash = location.hash;
     if (hash) {

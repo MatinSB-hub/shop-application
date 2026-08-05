@@ -2,6 +2,7 @@ const InputField = ({
   label,
   onChange,
   fullWidth,
+  name,
   placeholder,
   type = "text",
 }) => {
@@ -25,6 +26,7 @@ const InputField = ({
         }
         id={uniqueID}
         onChange={onChange}
+        name={name}
         className="contact-input-field"
       />
     </div>
