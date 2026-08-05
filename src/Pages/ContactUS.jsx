@@ -3,6 +3,7 @@ import SectionTitle from "../Components/Common/SectionTitle";
 import InputField from "../Components/Templates/ContactUS/InputField";
 import { useState } from "react";
 import axios, { Axios } from "axios";
+import { toast } from "sonner";
 
 const ContactUSPage = () => {
   const [form, setForm] = useState({
@@ -11,32 +12,75 @@ const ContactUSPage = () => {
     subject: "",
     content: "",
   });
-  
+
+  const [nameError, setNameError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [contentError, setContentError] = useState(false);
+  const [subjectError, setSubjectError] = useState(false);
+
   const changeHandler = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  
+
+  const FormValidationHandler = () => {
+    let isValid = true;
+
+    if (form.name.length < 2) {
+      setNameError(true);
+      isValid = false;
+    } else {
+      setNameError(false);
+    }
+
+    if (form.phone.length < 11 || form.phone.length > 11) {
+      setPhoneError(true);
+      isValid = false;
+    } else {
+      setPhoneError(false);
+    }
+
+    if (form.content.length < 10) {
+      setContentError(true);
+      isValid = false;
+    } else {
+      setContentError(false);
+    }
+
+    if (form.subject.length < 3) {
+      setSubjectError(true);
+      isValid = false;
+    } else {
+      setSubjectError(false);
+    }
+
+    return isValid;
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    console.log("sending...");
+    if (FormValidationHandler()) {
+      try {
+        const res = await axios.post(
+          "https://shopino.iran.liara.run/v1/contact-us/",
+          form,
+        );
 
-    try {
-      const res = await axios.post(
-        "https://shopino.iran.liara.run/v1/contact-us/",
-        form,
-      );
-
-      if (res.data.status) {
-        console.log(res);
-        console.log("success", form);
+        if (res.data.status) {
+          toast.success("پیام شما با موفقیت ارسال شد");
+          setForm({
+            name: "",
+            phone: "",
+            subject: "",
+            content: "",
+          });
+        }
+      } catch (error) {
+        console.log(error.response);
+        toast.error("مشکلی در ارسال پیش آمده است");
       }
-    } catch (error) {
-      console.log(error.response);
-      console.log("error", form);
     }
   };
-
 
   return (
     <main className="my-20 container" id="contact-us">
@@ -55,29 +99,51 @@ const ContactUSPage = () => {
             کنید.
           </p>
           <div className="grid grid-cols-2 gap-5 **:w-full">
-            <InputField
-              onChange={changeHandler}
-              value={form.name}
-              placeholder="مثال: امین سعیدی"
-              label="نام و نام خانوادگی"
-              name="name"
-            />
-            <InputField
-              value={form.phone}
-              onChange={changeHandler}
-              placeholder="مثال: 09911871596"
-              label="شماره موبایل"
-              name="phone"
-            />
-            <InputField
-              value={form.subject}
-              onChange={changeHandler}
-              type="text"
-              placeholder="مثال: مرجوع کردن محصول"
-              fullWidth
-              label="موضوع شما"
-              name="subject"
-            />
+            <div>
+              <InputField
+                onChange={changeHandler}
+                value={form.name}
+                placeholder="مثال: امین سعیدی"
+                label="نام و نام خانوادگی"
+                name="name"
+              />
+              {nameError ? (
+                <p className="text-red-500 text-sm mt-2">
+                  نام و نام خانوادگی باید حداقل 2 حرف باشد
+                </p>
+              ) : null}
+            </div>
+            <div>
+              <InputField
+                value={form.phone}
+                onChange={changeHandler}
+                placeholder="مثال: 09911871596"
+                label="شماره موبایل"
+                name="phone"
+              />
+              {phoneError ? (
+                <p className="text-red-500 text-sm mt-2">
+                  شماره موبایل باید 11 رقم باشد
+                </p>
+              ) : null}
+            </div>
+
+            <div>
+              <InputField
+                value={form.subject}
+                onChange={changeHandler}
+                type="text"
+                placeholder="مثال: مرجوع کردن محصول"
+                fullWidth
+                label="موضوع شما"
+                name="subject"
+              />
+              {subjectError ? (
+                <p className="text-red-500 text-sm mt-2">
+                  عنوان باید حداقل 3 حرف باشد
+                </p>
+              ) : null}
+            </div>
 
             <div className="col-span-2">
               <label
@@ -90,10 +156,16 @@ const ContactUSPage = () => {
                 id="contact-message"
                 value={form.content}
                 onChange={changeHandler}
-                className="h-10 rounded-md mt-2.5 border text-sm py-4 min-h-[140px] border-neutral-200 ring-offset-2 px-4 duration-150 focus-within:ring-4 ring-sky-400/40 focus-within:outline-none"
+                className={`h-10 rounded-md mt-2.5 border text-sm py-4 min-h-[140px] border-neutral-200 ring-offset-2 px-4 duration-150 focus-within:ring-4 ring-sky-400/40 focus-within:outline-none`}
                 placeholder="مثال: قصد مرجوعی محصول با شناسه #124214 را دارم"
                 name="content"
               ></textarea>
+              {contentError ? (
+                <p className="text-red-500 text-sm">
+                  {" "}
+                  محتوا باید حداقل 10 حرف باشد
+                </p>
+              ) : null}
             </div>
           </div>
 

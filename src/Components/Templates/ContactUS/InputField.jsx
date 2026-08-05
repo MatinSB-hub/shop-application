@@ -2,6 +2,7 @@ const InputField = ({
   label,
   onChange,
   fullWidth,
+  value,
   name,
   placeholder,
   type = "text",
@@ -10,7 +11,6 @@ const InputField = ({
     fullWidth ? "col-span-2" : null,
   );
   const uniqueID = crypto.randomUUID();
-
   return (
     <div className={cardClassName}>
       <label
@@ -20,6 +20,7 @@ const InputField = ({
         {label}:
       </label>
       <input
+      value={value}
         type={type}
         placeholder={
           placeholder ? placeholder : "لطفا این فیلد را تکمیل بفرمایید."
@@ -27,7 +28,7 @@ const InputField = ({
         id={uniqueID}
         onChange={onChange}
         name={name}
-        className="contact-input-field"
+        className={"contact-input-field"}
       />
     </div>
   );
