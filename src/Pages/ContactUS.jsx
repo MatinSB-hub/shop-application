@@ -4,6 +4,8 @@ import InputField from "../Components/Templates/ContactUS/InputField";
 import { useState } from "react";
 import axios, { Axios } from "axios";
 import { toast } from "sonner";
+import { contactUsSchema } from "../validators/cantactUs";
+import validate from "../validators";
 
 const ContactUSPage = () => {
   const [form, setForm] = useState({
@@ -24,44 +26,12 @@ const ContactUSPage = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const FormValidationHandler = () => {
-    let isValid = true;
-
-    if (form.name.length < 2) {
-      setNameError(true);
-      isValid = false;
-    } else {
-      setNameError(false);
-    }
-
-    if (form.phone.length < 11 || form.phone.length > 11) {
-      setPhoneError(true);
-      isValid = false;
-    } else {
-      setPhoneError(false);
-    }
-
-    if (form.content.length < 10) {
-      setContentError(true);
-      isValid = false;
-    } else {
-      setContentError(false);
-    }
-
-    if (form.subject.length < 3) {
-      setSubjectError(true);
-      isValid = false;
-    } else {
-      setSubjectError(false);
-    }
-
-    return isValid;
-  };
-
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (FormValidationHandler()) {
+     const result = validate(contactUsSchema,form)
+
+    if (result) {
       setIsSubmiting(true);
 
       const response = axios.post(
