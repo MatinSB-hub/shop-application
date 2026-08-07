@@ -6,58 +6,15 @@ import axios, { Axios } from "axios";
 import { toast } from "sonner";
 import { contactUsSchema } from "../validators/cantactUs";
 import validate from "../validators";
+import useContactUs from "../hooks/useContactUs";
 
 const ContactUSPage = () => {
-  const [form, setForm] = useState({
+  const { form, isSubmiting, changeHandler, submitHandler } = useContactUs({
     name: "",
     phone: "",
     subject: "",
-    content: "",
+    contact: "",
   });
-
-  const [nameError, setNameError] = useState(false);
-  const [phoneError, setPhoneError] = useState(false);
-  const [contentError, setContentError] = useState(false);
-  const [subjectError, setSubjectError] = useState(false);
-
-  const [isSubmiting, setIsSubmiting] = useState(false);
-
-  const changeHandler = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-     const result = validate(contactUsSchema,form)
-
-    if (result) {
-      setIsSubmiting(true);
-
-      const response = axios.post(
-        "https://shopino.iran.liara.run/v1/contact-us/",
-        form,
-      );
-
-      toast.promise(response, {
-        loading: "در حال ارسال ...",
-        success: () => {
-          setForm({
-            name: "",
-            phone: "",
-            subject: "",
-            content: "",
-          });
-          setIsSubmiting(false);
-          return "با موفقیت ارسال شد";
-        },
-        error: (error) => {
-          return error.response.data.data.message || "ارسال ناموفق";
-          setIsSubmiting(false);
-        },
-      });
-    }
-  };
 
   return (
     <main className="my-20 container" id="contact-us">
@@ -84,11 +41,6 @@ const ContactUSPage = () => {
                 label="نام و نام خانوادگی"
                 name="name"
               />
-              {nameError ? (
-                <p className="text-red-500 text-sm mt-2">
-                  نام و نام خانوادگی باید حداقل 2 حرف باشد
-                </p>
-              ) : null}
             </div>
             <div>
               <InputField
@@ -98,11 +50,6 @@ const ContactUSPage = () => {
                 label="شماره موبایل"
                 name="phone"
               />
-              {phoneError ? (
-                <p className="text-red-500 text-sm mt-2">
-                  شماره موبایل باید 11 رقم باشد
-                </p>
-              ) : null}
             </div>
 
             <div>
@@ -115,11 +62,6 @@ const ContactUSPage = () => {
                 label="موضوع شما"
                 name="subject"
               />
-              {subjectError ? (
-                <p className="text-red-500 text-sm mt-2">
-                  عنوان باید حداقل 3 حرف باشد
-                </p>
-              ) : null}
             </div>
 
             <div className="col-span-2">
@@ -137,12 +79,6 @@ const ContactUSPage = () => {
                 placeholder="مثال: قصد مرجوعی محصول با شناسه #124214 را دارم"
                 name="content"
               ></textarea>
-              {contentError ? (
-                <p className="text-red-500 text-sm">
-                  {" "}
-                  محتوا باید حداقل 10 حرف باشد
-                </p>
-              ) : null}
             </div>
           </div>
 
