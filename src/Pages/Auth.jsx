@@ -58,14 +58,17 @@ const LoginPage = () => {
                   <span>{convertedTimeFormat()}</span>
                 </div>
               ) : (
-                <button onClick={reSendOtp}>ارسال مجدد</button>
+                <button type="button" onClick={reSendOtp}>ارسال مجدد</button>
               )}
             </div>
           </>
         )}
       </main>
       <footer className="space-y-3 flex items-center justify-center flex-col">
-        <button className="h-10 text-sm flex items-center w-full duration-150 hover:bg-blue-600/80 cursor-pointer justify-center bg-blue-600 text-white rounded-lg focus-within:ring-4 ring-blue-500/40 active:scale-100! hover:scale-103 hover:shadow-lg shadow-blue-500/30">
+        <button
+          disabled={isExpired}
+          className={`h-10 text-sm flex items-center w-full duration-150 hover:bg-blue-600/80 cursor-pointer justify-center bg-blue-600 text-white rounded-lg focus-within:ring-4 ring-blue-500/40 active:scale-100! hover:scale-103 hover:shadow-lg shadow-blue-500/30 ${isExpired && "opacity-50"}`}
+        >
           ارسال کد
         </button>
         <div className="space-y-1 text-center mt-4">

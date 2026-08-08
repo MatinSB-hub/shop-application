@@ -7,30 +7,31 @@ function useCountDown(duration) {
   const convertedTimeFormat = () => {
     let minutes = Math.floor(timeLeft / 60);
     let seconds = timeLeft % 60;
-    let time =
-      minutes.toString().padStart(2, "0") + seconds.toString().padStart(2, "0");
-
-    return time;
+    return `${minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0")}`;
   };
 
-  const restart = ()=>{
-    setTimeLeft(duration)
-    setIsRunning(true)
-  }
+  const restart = () => {
+    setTimeLeft(duration);
+    setIsRunning(true);
+  };
 
   useEffect(() => {
-    if (isRunning) return;
+    if (!isRunning || timeLeft <= 0) {
+      if (timeLeft <= 0) {
+        setIsRunning(false);
+        return;
+      }
+    }
 
     if (timeLeft <= 0) {
       setIsRunning(false);
-      return;
     }
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
 
-    return clearInterval(interval);
+    return () => clearInterval(interval);
   }, [timeLeft, isRunning]);
   return {
     timeLeft,

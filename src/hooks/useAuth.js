@@ -11,7 +11,8 @@ function useAuth() {
   const [otp, setotp] = useState("");
   const [isSentOtp, setIsSentOtp] = useState(false);
 
-  const { timeLeft, isRunning,isExpired, convertedTimeFormat, restart } = useCountDown(20);
+  const { isRunning, isExpired, convertedTimeFormat, restart } =
+    useCountDown(120);
 
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ function useAuth() {
   const sendOtp = async () => {
     if (validate(sendOTPSchema, { phone })) {
       const data = await authServices.sendOTP(phone);
-      console.log("sendOtp:", data);
+      toast.info("کد به شماره موبایل وارد شده ارسال شد");
       setIsSentOtp(true);
       restart();
     }
@@ -34,7 +35,7 @@ function useAuth() {
   const reSendOtp = async () => {
     if (validate(sendOTPSchema, { phone })) {
       const data = await authServices.sendOTP(phone);
-      console.log("reSendOtp:", data);
+      toast.info("کد جدید ارسال شد");
       restart();
     }
   };
