@@ -9,7 +9,12 @@ const LoginPage = () => {
     handlePhoneChange,
     handleOtpChange,
     handleSubmit,
+    reSendOtp,
+    isRunning,
+    isExpired,
+    convertedTimeFormat,
   } = useAuth();
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <header className="text-center flex items-center justify-center flex-col gap-2">
@@ -36,15 +41,27 @@ const LoginPage = () => {
           </>
         )}
         {isSentOtp && (
-          <div className="flex items-center justify-center gap-1">
-            <input
-              value={otp}
-              onChange={handleOtpChange}
-              className="auth-input text-center"
-              dir="ltr"
-              placeholder="کد تایید"
-            />
-          </div>
+          <>
+            <div className="flex items-center justify-center gap-1">
+              <input
+                value={otp}
+                onChange={handleOtpChange}
+                className="auth-input text-center"
+                dir="ltr"
+                placeholder="کد تایید"
+              />
+            </div>
+            <div>
+              {!isExpired ? (
+                <div>
+                  <span>اعتبار کد تا:</span>
+                  <span>{convertedTimeFormat()}</span>
+                </div>
+              ) : (
+                <button onClick={reSendOtp}>ارسال مجدد</button>
+              )}
+            </div>
+          </>
         )}
       </main>
       <footer className="space-y-3 flex items-center justify-center flex-col">

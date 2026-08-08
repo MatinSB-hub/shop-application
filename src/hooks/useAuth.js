@@ -4,11 +4,14 @@ import validate from "../validators";
 import * as authServices from "../services/auth.services";
 import { toast } from "sonner";
 import { sendOTPSchema, verifyOTPSchema } from "../validators/auth";
+import useCountDown from "./useCountDown";
 
 function useAuth() {
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");
   const [isSentOtp, setIsSentOtp] = useState(false);
+
+  const { timeLeft, isRunning,isExpired, convertedTimeFormat, restart } = useCountDown(20);
 
   const navigate = useNavigate();
 
@@ -23,8 +26,16 @@ function useAuth() {
     if (validate(sendOTPSchema, { phone })) {
       const data = await authServices.sendOTP(phone);
       console.log("sendOtp:", data);
-
       setIsSentOtp(true);
+      restart();
+    }
+  };
+
+  const reSendOtp = async () => {
+    if (validate(sendOTPSchema, { phone })) {
+      const data = await authServices.sendOTP(phone);
+      console.log("reSendOtp:", data);
+      restart();
     }
   };
 
@@ -62,6 +73,10 @@ function useAuth() {
     handlePhoneChange,
     handleOtpChange,
     handleSubmit,
+    reSendOtp,
+    isRunning,
+    isExpired,
+    convertedTimeFormat,
   };
 }
 
