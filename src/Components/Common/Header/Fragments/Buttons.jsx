@@ -6,7 +6,6 @@ import { authContext } from "../../../../Contexts/authProvider";
 
 const Buttons = () => {
   const { user, isLoading } = useContext(authContext);
-  console.log("buttons:", { user, isLoading });
 
   return (
     <div className="flex-ic text-white! gap-3! *:rounded-md text-sm *:px-4! *:first:p-0! *:flex-center *:py-2 *:duration-150 *:hover:opacity-90">
@@ -17,7 +16,7 @@ const Buttons = () => {
         <HiShoppingCart className="text-xl text-slate-700!" />
       </Link>
       {isLoading ? (
-        <span>درحال بارگذاری</span>
+        <span className="bg-[#2A2D53]">درحال ّارگذاری ...</span>
       ) : user ? (
         <Link to="/" className="bg-[#2A2D53]">
           پنل کاربری

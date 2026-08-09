@@ -58,7 +58,7 @@ function useAuth() {
     toast.success("ورود موفق");
     
     navigate("/");
-    await refreshUser()
+    refreshUser()
   };
 
   const handleSubmit = (e) => {

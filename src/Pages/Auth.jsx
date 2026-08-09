@@ -53,7 +53,7 @@ const LoginPage = () => {
             </div>
             <div>
               {!isExpired ? (
-                <div>
+                <div className="flex gap-2">
                   <span>اعتبار کد تا:</span>
                   <span>{convertedTimeFormat()}</span>
                 </div>
