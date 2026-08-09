@@ -19,12 +19,8 @@ function useCountDown(duration) {
     if (!isRunning || timeLeft <= 0) {
       if (timeLeft <= 0) {
         setIsRunning(false);
-        return;
       }
-    }
-
-    if (timeLeft <= 0) {
-      setIsRunning(false);
+      return;
     }
 
     const interval = setInterval(() => {

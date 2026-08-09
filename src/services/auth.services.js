@@ -19,7 +19,18 @@ export const verifyOTP = async (phone, otp) => {
       otp: otp,
       isSeller: false,
     },
+    {
+      withCredentials: true,
+    },
   );
 
+  return data;
+};
+
+export const getMe = async () => {
+  const { data } = await axios.get(
+    "https://shopino.iran.liara.run/v1/auth/me",
+    { withCredentials: true },
+  );
   return data;
 };
