@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import validate from "../validators";
 import * as authServices from "../services/auth.services";
 import { toast } from "sonner";
 import { sendOTPSchema, verifyOTPSchema } from "../validators/auth";
 import useCountDown from "./useCountDown";
+import { authContext } from "../Contexts/authProvider";
 
 function useAuth() {
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");
   const [isSentOtp, setIsSentOtp] = useState(false);
+  const {refreshUser} = useContext(authContext)
 
   const { isRunning, isExpired, convertedTimeFormat, restart } =
     useCountDown(120);
@@ -54,8 +56,9 @@ function useAuth() {
     if (!data) return;
 
     toast.success("ورود موفق");
-
+    
     navigate("/");
+    await refreshUser()
   };
 
   const handleSubmit = (e) => {
