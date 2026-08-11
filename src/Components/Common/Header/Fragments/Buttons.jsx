@@ -16,9 +16,9 @@ const Buttons = () => {
         <HiShoppingCart className="text-xl text-slate-700!" />
       </Link>
       {isLoading ? (
-        <span className="bg-[#2A2D53]">درحال ّارگذاری ...</span>
+        <span className="bg-[#2A2D53]">درحال بارگذاری ...</span>
       ) : user ? (
-        <Link to="/" className="bg-[#2A2D53]">
+        <Link to="/dashboard" className="bg-[#2A2D53]">
           پنل کاربری
         </Link>
       ) : (
