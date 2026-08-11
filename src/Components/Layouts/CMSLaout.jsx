@@ -1,6 +1,6 @@
 import React from "react";
-import { Outlet } from "react-router";
-import Sidebar from "../Common/Sidebar/index"
+import { Outlet, useLoaderData } from "react-router";
+import Sidebar from "../Common/Sidebar/index";
 function CMSLaout() {
   return (
     <main id="application" className="flex gap-10 min-h-dvh bg-zinc-50">

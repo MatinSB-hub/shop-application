@@ -58,7 +58,9 @@ const LoginPage = () => {
                   <span>{convertedTimeFormat()}</span>
                 </div>
               ) : (
-                <button type="button" onClick={reSendOtp}>ارسال مجدد</button>
+                <button type="button" onClick={reSendOtp}>
+                  ارسال مجدد
+                </button>
               )}
             </div>
           </>

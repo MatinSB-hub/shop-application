@@ -11,6 +11,9 @@ import AppLayout from "../Components/Layouts/AppLayout.jsx";
 import AuthLayout from "../Components/Layouts/AuthLayout.jsx";
 import AuthPage from "../Pages/Auth.jsx";
 import CMSLaout from "../Components/Layouts/CMSLaout.jsx";
+import { useContext } from "react";
+import { getMe } from "../services/auth.services.js";
+// const test = useContext(authContext)
 
 const router = createBrowserRouter([
   {
@@ -37,8 +40,20 @@ const router = createBrowserRouter([
     children: [
       {
         path: "moderator",
+        loader: async () => {
+          try {
+            const { data } = await getMe();
+            if (!data.user.roles.includes("ADMIN")) {
+              return redirect("/auth");
+            }
+
+            return data.user;
+          } catch (err) {
+            console.log(err);
+          }
+        },
         children: [
-          { index:true , loader: () => redirect("home") },
+          { index: true, loader: () => redirect("home") },
           { path: "home", element: <div>home page</div> },
           { path: "orders", element: <div>orders page</div> },
           { path: "products", element: <div>products page</div> },
