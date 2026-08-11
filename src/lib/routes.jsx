@@ -13,6 +13,7 @@ import AuthPage from "../Pages/Auth.jsx";
 import CMSLaout from "../Components/Layouts/CMSLaout.jsx";
 import { useContext } from "react";
 import { getMe } from "../services/auth.services.js";
+import Forbidden from "../Pages/Forbidden.jsx";
 // const test = useContext(authContext)
 
 const router = createBrowserRouter([
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "cart", element: <CartPage /> },
       { path: "product/:productID", element: <ProductPage /> },
       { path: "blog/:blogID", element: <BlogPage /> },
+      { path: "forbidden", element: <Forbidden /> },
 
       {
         path: "auth",
@@ -44,12 +46,13 @@ const router = createBrowserRouter([
           try {
             const { data } = await getMe();
             if (!data.user.roles.includes("ADMIN")) {
-              return redirect("/auth");
-            }
+              return redirect("/forbidden");
+            } 
 
             return data.user;
-          } catch (err) {
-            console.log(err);
+          } catch(err) {
+            return redirect("/auth");
+            console.log(err)
           }
         },
         children: [
