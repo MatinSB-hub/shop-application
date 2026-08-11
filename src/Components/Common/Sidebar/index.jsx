@@ -1,14 +1,15 @@
+import Logout from "../../Templates/Dashboard/Logout";
 import ModeratorLinks from "../../Templates/Dashboard/ModeratorLinks";
 
 const index = () => {
   return (
-    <aside className="w-70 bg-white shadow-xl flex flex-col justify-between h-dvh! sticky top-0! right-0 border-l border-zinc-200">
+    <aside className="w-70 p-3 bg-white shadow-xl flex flex-col justify-between h-dvh! sticky top-0! right-0 border-l border-zinc-200">
       <div>
-        <main className="p-3 space-y-1.5">
+        <main className="space-y-1.5">
           <ModeratorLinks />
         </main>
       </div>
-      {/* <Logout /> */}
+      <Logout />
     </aside>
   );
 };
