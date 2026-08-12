@@ -14,6 +14,7 @@ import CMSLaout from "../Components/Layouts/CMSLaout.jsx";
 import { useContext } from "react";
 import { getMe } from "../services/auth.services.js";
 import Forbidden from "../Pages/Forbidden.jsx";
+import NotFound from "../Pages/NotFound.jsx";
 // const test = useContext(authContext)
 
 const router = createBrowserRouter([
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [{ index: true, element: <AuthPage /> }],
       },
+      { path: "*", element: <NotFound /> },
     ],
   },
   {
@@ -47,12 +49,12 @@ const router = createBrowserRouter([
             const { data } = await getMe();
             if (!data.user.roles.includes("ADMIN")) {
               return redirect("/forbidden");
-            } 
+            }
 
             return data.user;
-          } catch(err) {
+          } catch (err) {
             return redirect("/auth");
-            console.log(err)
+            console.log(err);
           }
         },
         children: [
