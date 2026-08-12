@@ -11,7 +11,8 @@ function useAuth() {
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");
   const [isSentOtp, setIsSentOtp] = useState(false);
-  const {refreshUser} = useContext(authContext)
+  const [isLoading, setIsLoading] = useState(false);
+  const { refreshUser } = useContext(authContext);
 
   const { isRunning, isExpired, convertedTimeFormat, restart } =
     useCountDown(120);
@@ -27,8 +28,10 @@ function useAuth() {
 
   const sendOtp = async () => {
     if (validate(sendOTPSchema, { phone })) {
+      setIsLoading(true);
       const data = await authServices.sendOTP(phone);
       toast.info("کد به شماره موبایل وارد شده ارسال شد");
+      setIsLoading(false);
       setIsSentOtp(true);
       restart();
     }
@@ -36,17 +39,20 @@ function useAuth() {
 
   const reSendOtp = async () => {
     if (validate(sendOTPSchema, { phone })) {
+      setIsLoading(true);
       const data = await authServices.sendOTP(phone);
       toast.info("کد جدید ارسال شد");
+      setIsLoading(false);
       restart();
     }
   };
 
   const verifyOtp = async () => {
     if (validate(verifyOTPSchema, { phone, otp })) {
+      setIsLoading(true);
       const data = await authServices.verifyOTP(phone, otp);
+      setIsLoading(false);
       setIsSentOtp(false);
-      console.log("verifyOTp:", data);
       return data;
     }
   };
@@ -56,9 +62,9 @@ function useAuth() {
     if (!data) return;
 
     toast.success("ورود موفق");
-    
+
     navigate("/");
-    refreshUser()
+    refreshUser();
   };
 
   const handleSubmit = (e) => {
@@ -81,6 +87,7 @@ function useAuth() {
     isRunning,
     isExpired,
     convertedTimeFormat,
+    isLoading,
   };
 }
 

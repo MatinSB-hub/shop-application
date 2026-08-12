@@ -13,6 +13,7 @@ const LoginPage = () => {
     isRunning,
     isExpired,
     convertedTimeFormat,
+    isLoading,
   } = useAuth();
 
   return (
@@ -59,7 +60,11 @@ const LoginPage = () => {
                 </div>
               ) : (
                 <button type="button" onClick={reSendOtp}>
-                  ارسال مجدد
+                  {isLoading ? (
+                    <div className="w-5 h-5 border-4 border-t-blue-500 border-r-blue-500 border-gray-300 rounded-full animate-spin" />
+                  ) : (
+                    <span>ارسال مجدد</span>
+                  )}
                 </button>
               )}
             </div>
@@ -71,7 +76,11 @@ const LoginPage = () => {
           disabled={isExpired}
           className={`h-10 text-sm flex items-center w-full duration-150 hover:bg-blue-600/80 cursor-pointer justify-center bg-blue-600 text-white rounded-lg focus-within:ring-4 ring-blue-500/40 active:scale-100! hover:scale-103 hover:shadow-lg shadow-blue-500/30 ${isExpired && "opacity-50"}`}
         >
-          ارسال کد
+          {isLoading ? (
+            <div className="w-5 h-5 border-4 border-t-blue-500 border-r-blue-500 border-gray-300 rounded-full animate-spin" />
+          ) : (
+            <span>ارسال کد</span>
+          )}
         </button>
         <div className="space-y-1 text-center mt-4">
           <p className="text-center text-xs text-zinc-500">
