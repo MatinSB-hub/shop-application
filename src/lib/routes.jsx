@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { getMe } from "../services/auth.services.js";
 import Forbidden from "../Pages/Forbidden.jsx";
 import NotFound from "../Pages/NotFound.jsx";
+import ModeratorsProducts from "../Pages/DashBoard/moderator/products/page.jsx";
 // const test = useContext(authContext)
 
 const router = createBrowserRouter([
@@ -61,7 +62,7 @@ const router = createBrowserRouter([
           { index: true, loader: () => redirect("home") },
           { path: "home", element: <div>home page</div> },
           { path: "orders", element: <div>orders page</div> },
-          { path: "products", element: <div>products page</div> },
+          { path: "products", element: <ModeratorsProducts/> },
         ],
       },
     ],

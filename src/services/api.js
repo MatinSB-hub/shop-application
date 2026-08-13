@@ -7,7 +7,7 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 500,
+  timeout: 5000,
 });
 
 api.interceptors.response.use(
@@ -27,7 +27,7 @@ api.interceptors.response.use(
     switch (error.response.data.status) {
       case 401: {
         toast.info("کاربر لاگ اوت میباشد");
-        break
+        break;
       }
     }
 

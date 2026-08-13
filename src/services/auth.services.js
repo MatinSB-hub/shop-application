@@ -2,11 +2,7 @@ import axios from "axios";
 import api from "./api";
 
 export const sendOTP = async (phone) => {
-  try {
     const { data } = await api.post("/auth/send", { phone });
-  } catch {
-    console.log("hoho its here!!!!");
-  }
 
   return data;
 };

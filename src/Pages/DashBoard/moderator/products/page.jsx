@@ -1,9 +1,12 @@
 import React from 'react'
-
-function Page() {
+import PageLable from "../../ui/PageLable"
+function ModeratorsProducts() {
   return (
-    <div>Page</div>
+    <div className="space-y-10">
+      <PageLable lable="مدیریت محصولات فروشگاه" />
+      <ModeratorProductsTable/>
+    </div>
   )
 }
 
-export default Page
+export default ModeratorsProducts
