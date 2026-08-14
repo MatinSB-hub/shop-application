@@ -47,7 +47,7 @@ function ModeratorProductsTable() {
           </TableRow>
         </TableBody>
       </Table>
-      <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
+        <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
     </>
   );
 }

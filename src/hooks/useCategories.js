@@ -4,23 +4,27 @@ import { getAllCategories } from "../services/category.sevices";
 function useCategories() {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
+    let mounted = true;
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const {data} = await getAllCategories();
-        setCategories(data.categories)
+        const { data } = await getAllCategories();
+        mounted && setCategories(data.categories);
       } catch (error) {
-        console.log("error:", error);
+        mounted && console.log("error:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
+
+    return () => (mounted = false);
   }, []);
 
-  return {isLoading,categories}
+  return { isLoading, categories };
 }
 
 export default useCategories;
