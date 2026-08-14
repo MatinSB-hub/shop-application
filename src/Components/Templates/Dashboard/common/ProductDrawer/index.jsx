@@ -1,9 +1,11 @@
 import React from "react";
 import Drawer from "../Drawer";
 import ProductDrawerInput from "../Drawer/ProductDrawerInput";
+import useCategories from "../../../../../hooks/useCategories";
 
 // mode: CREATE | EDIT
 const ProductDrawer = ({ isOpen, onToggle }) => {
+  const { isLoading: categoriesIsLoading, categories } = useCategories();
   return (
     <Drawer isOpen={isOpen} onClose={onToggle} title="ایجاد محصول">
       <ProductDrawerInput
@@ -16,6 +18,13 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         placeholder="iphone-17-promax"
         type="file"
       />
+
+      <div>
+        <label className="text-sm font-medium text-zinc-700 mb-2 block">
+          دسته بندی
+        </label>
+        {categoriesIsLoading ? <p className="text-sm text-zinc-400">در حال بارگزاری ...</p> : <div>لیست دسته بندی ها</div>}
+      </div>
 
       <div className="space-y-4 mt-5 px-6">
         <div>
