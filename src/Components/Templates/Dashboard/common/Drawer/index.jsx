@@ -7,7 +7,7 @@ const Drawer = ({ children, title, onClose, isOpen }) => {
     <>
       <div
         onClick={onClose}
-        className={`fixed inset-0 z-50 transition-opacity duration-500 bg-black /30 ${isOpen ? "opacity-100" : "opacity-0 invisible"}`}
+        className={`fixed inset-0 z-50 transition-opacity duration-500 bg-black/50 ${isOpen ? "opacity-100" : "opacity-0 invisible"}`}
       >
         <div
           className={`absolute inset-y-0 overflow-auto right-0 w-full max-w-md bg-white transition-transform duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
