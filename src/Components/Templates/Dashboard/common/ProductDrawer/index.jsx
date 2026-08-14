@@ -1,7 +1,8 @@
 import React from "react";
 import Drawer from "../Drawer";
-import ProductDrawerInput from "../Drawer/ProductDrawerInput";
+import ProductDrawerInput from "./ProductDrawerInput";
 import useCategories from "../../../../../hooks/useCategories";
+import CascadeCategories from "./CascadeCategories";
 
 // mode: CREATE | EDIT
 const ProductDrawer = ({ isOpen, onToggle }) => {
@@ -20,10 +21,10 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
       />
 
       <div>
-        <label className="text-sm font-medium text-zinc-700 mb-2 block">
+        <label className="text-sm font-medium text-zinc-700 mb-2 block mt-2">
           دسته بندی
         </label>
-        {categoriesIsLoading ? <p className="text-sm text-zinc-400">در حال بارگزاری ...</p> : <div>لیست دسته بندی ها</div>}
+        {categoriesIsLoading ? <p className="text-sm text-zinc-400">در حال بارگزاری ...</p> : <CascadeCategories categories={categories}/>}
       </div>
 
       <div className="space-y-4 mt-5 px-6">
