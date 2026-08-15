@@ -1,27 +1,46 @@
-import React from "react";
+import { useState } from "react";
 
-function CascadeCategories({ categories }) {
+const CascadeCategories = ({ categories }) => {
+  const [path, setPath] = useState([]);
+
+  const levels = [categories, ...path.map((cat) => cat.subCategories || [])];
+
+  const handleSelect = (levelIndex, id) => {
+    const options = levels[levelIndex];
+    const node = options.find((category) => category._id === id);
+
+    const newPath = [...path.slice(0, levelIndex), node];
+    setPath(newPath);
+  };
 
   return (
-    <div className="w-full h-max flex flex-col justify-center items-center gap-5 text-sm rounded-md outline-none mt-2">
-      {categories.map((option, index) => {
+    <div className="space-y-3">
+      {levels.map((options, index) => {
+        if (!options || options.length === 0) {
+          return null;
+        }
+
         return (
           <select
             key={index}
-            value={"default"}
-            className="w-full h-10  bg-white text-sm rounded-md outline-none primary-border px-3"
+            value={path[index]?._id || ""}
+            onChange={(e) => handleSelect(index, e.target.value)}
+            className="w-full h-10 text-sm rounded-md outline-none primary-border px-3 bg-white"
           >
-            <option value="default" disabled>
-              {option.title}
+            <option value="" disabled>
+              انتخاب دسته‌بندی
             </option>
-            {option.subCategories.map((subCategory, index) => {
-             return <option key={subCategory._id}>{subCategory.title}</option>;
-            })}
+
+            {options?.map((option) => (
+              <option key={option._id} value={option._id}>
+                {option.title}
+              </option>
+            ))}
           </select>
         );
       })}
     </div>
   );
-}
+};
 
 export default CascadeCategories;
