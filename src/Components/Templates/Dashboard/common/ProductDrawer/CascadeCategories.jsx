@@ -6,6 +6,7 @@ const CascadeCategories = ({ categories }) => {
   const levels = [categories, ...path.map((cat) => cat.subCategories || [])];
 
   const handleSelect = (levelIndex, id) => {
+    console.log(path)
     const options = levels[levelIndex];
     const node = options.find((category) => category._id === id);
 
