@@ -134,7 +134,7 @@ function useProductForm() {
     form,
     setField,
     selectedCategory,
-    setSelectedCtegory,
+    handleChangeCategory,
     addSellers,
     removeSeller,
     updateSeller,
