@@ -12,7 +12,7 @@ function ProductDrawerInput({ label, placeholder, type, value, onChange }) {
         placeholder={placeholder}
         type={type}
         value={value}
-        onChange={onchange}
+        onChange={onChange}
       />
     </div>
   );

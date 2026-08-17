@@ -4,7 +4,6 @@ import ProductDrawerInput from "./ProductDrawerInput";
 import useCategories from "../../../../../hooks/useCategories";
 import CascadeCategories from "./CascadeCategories";
 import useProductForm from "../../../../../hooks/useProductForm";
-import { useStackId } from "recharts/types/cartesian/BarStack";
 import createProduct from "../../../../../services/product.services";
 import { toast } from "sonner";
 

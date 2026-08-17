@@ -26,15 +26,15 @@ function useProductForm() {
   };
 
   const resetForm = () => {
-    setField({
-      name: "",
-      slug: "",
-      description: "",
-      image: [],
-      sellers: [{ ...emptySeller }],
-      filteredValues: [{ ...emptyPair }],
-      customFields: [{ ...emptyPair }],
-    });
+    setForm({
+    name: "",
+    slug: "",
+    description: "",
+    image: [],
+    sellers: [{ ...emptySeller }],
+    filteredValues: [{ ...emptyPair }],
+    customFields: [{ ...emptyPair }],
+  });
 
     setSelectedCtegory(null);
   };
