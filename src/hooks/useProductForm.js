@@ -4,7 +4,7 @@ function useProductForm() {
   const emptySeller = {
     id: "",
     price: "",
-    stock: "",
+    stock: 0,
   };
   const emptyPair = {
     key: "",
@@ -91,6 +91,45 @@ function useProductForm() {
 
   const setImage = (files) => setField("images", files);
 
+  const buildFormData = () => {
+    const formData = new FormData();
+
+    formData.append("name", form.name);
+    formData.append("slug", form.slug);
+    formData.append("description", form.description);
+
+    const sellersPayload = () => {
+      return form.sellers
+        .filter((seller) => seller.id || seller.price)
+        .map((seller) => ({
+          id: seller.id,
+          price: Number(seller.price),
+          stock: Number(seller.stock),
+        }));
+    };
+
+    formData.append("sellers", JSON.stringify(sellersPayload()));
+
+    ////////this code is different of course//////////////////////////////////
+    const pairsToObject = (obj) => {
+      return obj.map((item) => ({ [item.key]: item.value }));
+    };
+    /////////////////////////////////////////////////////////////////////////
+
+    formData.append(
+      "filteredValues",
+      JSON.stringify(pairsToObject(filteredValues)),
+    );
+    formData.append(
+      "customFields",
+      JSON.stringify(pairsToObject(customFields)),
+    );
+
+    form.image.forEach((image) => formData.append("images", image));
+
+    return formData;
+  };
+
   return {
     form,
     setField,
@@ -104,6 +143,7 @@ function useProductForm() {
     updatePaire,
     setImage,
     resetForm,
+    buildFormData,
   };
 }
 

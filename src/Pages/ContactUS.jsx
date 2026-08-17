@@ -4,7 +4,6 @@ import InputField from "../Components/Templates/contactUs/InputField";
 import { useState } from "react";
 import axios, { Axios } from "axios";
 import { toast } from "sonner";
-import { contactUsSchema } from "../validators/cantactUs";
 import validate from "../validators";
 import useContactUs from "../hooks/useContactUs";
 import ContactUsMap from "../Components/Templates/ContactUS/ContactUsMap";
