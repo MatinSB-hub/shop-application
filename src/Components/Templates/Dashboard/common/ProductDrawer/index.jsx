@@ -7,6 +7,7 @@ import useProductForm from "../../../../../hooks/useProductForm";
 import createProduct from "../../../../../services/product.services";
 import { toast } from "sonner";
 import DynamicKeyValueFields from "./DynamicKeyValueFields";
+import SellerFields from "./SellerFields";
 
 // mode: CREATE | EDIT
 const ProductDrawer = ({ isOpen, onToggle }) => {
@@ -87,6 +88,14 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           />
         )}
       </div>
+
+      <SellerFields  lable={"ویژگی های فیلتری"}
+        sellers={form.sellers}
+        onAdd={() => addSellers()}
+        onRemove={(index) => removeSeller(index)}
+        onChange={(index, key, value) =>
+          updateSeller(index, key, value)
+        }/>
 
       <DynamicKeyValueFields
         lable={"ویژگی های فیلتری"}
