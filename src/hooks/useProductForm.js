@@ -84,7 +84,7 @@ function useProductForm() {
     setForm((prev) => ({
       ...prev,
       [fieldName]: prev[fieldName].map((item, i) =>
-        i === index ? { ...item, [key]: value } : field,
+        i === index ? { ...item, [key]: value } : item,
       ),
     }));
   };

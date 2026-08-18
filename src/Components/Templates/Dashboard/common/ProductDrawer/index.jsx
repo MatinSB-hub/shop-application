@@ -6,6 +6,7 @@ import CascadeCategories from "./CascadeCategories";
 import useProductForm from "../../../../../hooks/useProductForm";
 import createProduct from "../../../../../services/product.services";
 import { toast } from "sonner";
+import DynamicKeyValueFields from "./DynamicKeyValueFields";
 
 // mode: CREATE | EDIT
 const ProductDrawer = ({ isOpen, onToggle }) => {
@@ -86,6 +87,30 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           />
         )}
       </div>
+
+      <DynamicKeyValueFields
+        lable={"ویژگی های فیلتری"}
+        items={form.filteredValues}
+        onAdd={() => addPair("filteredValues")}
+        onRemove={(index) => removePair("filteredValues", index)}
+        onChange={(index, key, value) =>
+          updatePaire("filteredValues", index, key, value)
+        }
+        keyPlaceHolder={"مثلا (حافظه داخلی)"}
+        valuePlaceHolder={"مثلا (16 گیگابایت)"}
+      />
+
+      <DynamicKeyValueFields
+        lable={"ویژگی های سفارشی"}
+        items={form.customFields}
+        onAdd={() => addPair("customFields")}
+        onRemove={(index) => removePair("customFields", index)}
+        onChange={(index, key, value) =>
+          updatePaire("customFields", index, key, value)
+        }
+        keyPlaceHolder={"مثلا (سنسور)"}
+        valuePlaceHolder={"مثلا (مادون قرمز)"}
+      />
 
       <div className="space-y-4 mt-5 px-6">
         <div>
