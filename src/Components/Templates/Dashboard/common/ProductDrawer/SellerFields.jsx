@@ -8,7 +8,6 @@ import { LuOption } from "react-icons/lu";
 function SellerFields({ sellers, onAdd, onRemove, onChange }) {
   const loadSellersOptions = async (inputValue) => {
     const sellers = await searchSellers(inputValue);
-    console.log(inputValue);
     return sellers.map((seller) => ({
       value: seller._id,
       label: seller.name,

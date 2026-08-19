@@ -8,9 +8,16 @@ function ImageUploadField({ files, onChange }) {
 
   const isFull = files.length >= 10;
 
-  const handleFiles = () => {};
+  const handleFiles = (e) => {
+    const selectedImages = Array.from(e.target.files);
+    const remaining = MAX_IMAGE - files.length;
+    const ImageToAdd = selectedImages.slice(0, remaining);
+    onChange([...files, ...ImageToAdd]);
+  };
 
-  const removeFile = (index) => {};
+  const removeFile = (index) => {
+    onChange(files.filter((_, i) => i != index));
+  };
 
   return (
     <div className="w-full flex flex-col gap-5">
@@ -30,12 +37,16 @@ function ImageUploadField({ files, onChange }) {
       />
 
       <div className="grid grid-cols-4 gap-2">
-        {files.map((file, index) => {
+        {files.map((file, index) => (
           <div
             key={index}
             className="relative aspect-square rounded-md overflow-hidden primary-border group"
           >
-            <img src="" className="w-full h-full object-cover" alt="" />
+            <img
+              src={URL.createObjectURL(file)}
+              className="w-full h-full object-cover"
+              alt=""
+            />
 
             <button
               type="button"
@@ -44,10 +55,10 @@ function ImageUploadField({ files, onChange }) {
             >
               <HiX />
             </button>
-          </div>;
-        })}
+          </div>
+        ))}
 
-        {!isFull ? (
+        {!isFull && (
           <button
             onClick={() => inputRef.current?.click()}
             type="button"
@@ -56,12 +67,14 @@ function ImageUploadField({ files, onChange }) {
             <BiImageAdd className="text-xl" />
             <span className="text-[11px]">افزودن تصویر</span>
           </button>
-        ) : (
-          <span className="w-max text-sm text-zinc-500">
-            حداکثر تعداد تصویر انتخاب شده است ({MAX_IMAGE} عدد)
-          </span>
         )}
       </div>
+
+      {isFull && (
+        <span className="w-max text-sm text-zinc-500">
+          حداکثر تعداد تصویر انتخاب شده است ({MAX_IMAGE} عدد)
+        </span>
+      )}
     </div>
   );
 }

@@ -14,7 +14,7 @@ function useProductForm() {
     name: "",
     slug: "",
     description: "",
-    image: [],
+    image: [1,2],
     sellers: [{ ...emptySeller }],
     filteredValues: [{ ...emptyPair }],
     customFields: [{ ...emptyPair }],
@@ -89,7 +89,7 @@ function useProductForm() {
     }));
   };
 
-  const setImage = (files) => setField("images", files);
+  const setImage = (files) => setField("image", files);
 
   const buildFormData = () => {
     const formData = new FormData();

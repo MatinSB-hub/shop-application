@@ -70,11 +70,6 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         value={form.name}
         onChange={(e) => setField("name", e.target.value)}
       />
-      <ProductDrawerInput
-        label="تصویر محصول"
-        placeholder="iphone-17-promax"
-        type="file"
-      />
 
       <div>
         <label className="text-sm font-medium text-zinc-700 mb-2 block mt-2">
