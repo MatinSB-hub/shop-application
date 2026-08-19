@@ -8,6 +8,7 @@ import createProduct from "../../../../../services/product.services";
 import { toast } from "sonner";
 import DynamicKeyValueFields from "./DynamicKeyValueFields";
 import SellerFields from "./SellerFields";
+import ImageUploadField from "./ImageUploadField";
 
 // mode: CREATE | EDIT
 const ProductDrawer = ({ isOpen, onToggle }) => {
@@ -89,13 +90,13 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         )}
       </div>
 
-      <SellerFields  lable={"ویژگی های فیلتری"}
+      <SellerFields
+        lable={"ویژگی های فیلتری"}
         sellers={form.sellers}
         onAdd={() => addSellers()}
         onRemove={(index) => removeSeller(index)}
-        onChange={(index, key, value) =>
-          updateSeller(index, key, value)
-        }/>
+        onChange={(index, key, value) => updateSeller(index, key, value)}
+      />
 
       <DynamicKeyValueFields
         lable={"ویژگی های فیلتری"}
@@ -120,6 +121,8 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         keyPlaceHolder={"مثلا (سنسور)"}
         valuePlaceHolder={"مثلا (مادون قرمز)"}
       />
+
+      <ImageUploadField files={form.image} onChange={setImage} />
 
       <div className="space-y-4 mt-5 px-6">
         <div>
