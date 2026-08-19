@@ -25,7 +25,7 @@ function DynamicKeyValueFields({
       <div className="space-y-3">
         {items.map((item, index) => {
           return (
-            <div className="flex justify-between items-center gap-2    ">
+            <div className="flex justify-between items-center gap-2 " key={index}>
               <input
                 type="text"
                 className="w-full h-10 border-2 primary-border rounded-lg "
