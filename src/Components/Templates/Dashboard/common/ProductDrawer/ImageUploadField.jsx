@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { HiX } from "react-icons/hi";
+import { file } from "zod";
 const MAX_IMAGE = 10;
 
 function ImageUploadField({ files, onChange }) {
@@ -22,9 +23,10 @@ function ImageUploadField({ files, onChange }) {
   };
 
   useEffect(() => {
-    setPreviewUrls((obj) => URL.createObjectURL(obj));
+    const urls = files.map((file) => URL.createObjectURL(file))
+    setPreviewUrls(urls);
 
-    return
+    return ()=> urls.map((url)=>URL.revokeObjectURL(url))
   }, [files]);
 
   return (
