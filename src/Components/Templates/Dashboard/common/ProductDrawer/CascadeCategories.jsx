@@ -1,17 +1,19 @@
 import { useState } from "react";
 
-const CascadeCategories = ({ categories }) => {
+const CascadeCategories = ({ categories, onChange }) => {
   const [path, setPath] = useState([]);
 
   const levels = [categories, ...path.map((cat) => cat.subCategories || [])];
 
   const handleSelect = (levelIndex, id) => {
-    console.log(path)
     const options = levels[levelIndex];
     const node = options.find((category) => category._id === id);
 
     const newPath = [...path.slice(0, levelIndex), node];
     setPath(newPath);
+
+    const isLeaf = !node.subCategories || node.subCategories.length === 0;
+    onChange(isLeaf ? node : null);
   };
 
   return (

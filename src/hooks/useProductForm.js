@@ -14,11 +14,12 @@ function useProductForm() {
     name: "",
     slug: "",
     description: "",
-    image: [1,2],
+    image: [],
     sellers: [{ ...emptySeller }],
     filteredValues: [{ ...emptyPair }],
     customFields: [{ ...emptyPair }],
   });
+
   const [selectedCategory, setSelectedCtegory] = useState(null);
 
   const setField = (name, value) => {
@@ -97,6 +98,7 @@ function useProductForm() {
     formData.append("name", form.name);
     formData.append("slug", form.slug);
     formData.append("description", form.description);
+    formData.append("subCategory", selectedCategory);
 
     const sellersPayload = () => {
       return form.sellers
@@ -118,11 +120,11 @@ function useProductForm() {
 
     formData.append(
       "filteredValues",
-      JSON.stringify(pairsToObject(filteredValues)),
+      JSON.stringify(pairsToObject(form.filteredValues)),
     );
     formData.append(
       "customFields",
-      JSON.stringify(pairsToObject(customFields)),
+      JSON.stringify(pairsToObject(form.customFields)),
     );
 
     form.image.forEach((image) => formData.append("images", image));

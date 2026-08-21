@@ -33,29 +33,42 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
 
   useEffect(() => {
     if (!isOpen) {
-      resetForm();
+      // resetForm();
     }
   }, [isOpen]);
 
   const handleSubmit = async () => {
-    if (!form.name.trim() || !form.slug.trim() || form.description.trim()) {
-      setError("عنوان و لینک محصول الزامی هستند");
-      return;
-    }
+    if (!form.name.trim() || !form.slug.trim() || !form.description.trim()) {
+        // if(!form.name.trim()){
+        //   console.log("name")
+        // }
 
-    if (!selectedCategory) {
-      setError("انتخاب دسته بندی محصول الزامی هست");
-      return;
-    }
+        // if(!form.slug.trim()){
+        //             console.log("name")
 
-    setError(null);
+        // }
 
-    try {
-      setIsSubmiting(true);
-      await createProduct(buildFormData());
-      resetForm();
-      toast.success("محصول با موفقیت ایجاد شد");
-    } catch (err) {
+        // if()
+
+        setError("عنوان و لینک محصول الزامی هستند");
+        return;
+      }
+      
+      if (!selectedCategory) {
+        setError("انتخاب دسته بندی محصول الزامی هست");
+        return;
+      }
+      
+      setError(null);
+      
+      try {
+        setIsSubmiting(true);
+        await createProduct(buildFormData());
+        // resetForm();
+        toast.success("محصول با موفقیت ایجاد شد");
+        // ontoggle()
+      } catch (err) {
+      console.log("here is imageUploadField:")
       setError(err.response?.data?.message || "خطایی رخ داده است");
     } finally {
       setIsSubmiting(false);
@@ -69,6 +82,14 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         type="text"
         value={form.name}
         onChange={(e) => setField("name", e.target.value)}
+      />
+
+      <ProductDrawerInput
+        label="لینک"
+        placeholder="iphone-17-promax"
+        type="text"
+        value={form.slug}
+        onChange={(e) => setField("slug", e.target.value)}
       />
 
       <div>

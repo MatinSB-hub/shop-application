@@ -38,7 +38,7 @@ function SellerFields({ sellers, onAdd, onRemove, onChange }) {
                 value={seller.info}
                 onChange={(option) => {
                   onChange(index, "info", option);
-                  onChange(index, "id", option);
+                  onChange(index, "id", option?.value);
                 }}
                 loadingMessage={() => "درحالی جستوجو..."}
                 noOptionsMessage={() => "فروشنده ای یافت نشد"}
