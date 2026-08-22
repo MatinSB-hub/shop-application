@@ -14,9 +14,9 @@ function useProductForm() {
     name: "",
     slug: "",
     description: "",
-    image: [],
+    images: [],
     sellers: [{ ...emptySeller }],
-    filteredValues: [{ ...emptyPair }],
+    filterValues: [{ ...emptyPair }],
     customFields: [{ ...emptyPair }],
   });
 
@@ -31,9 +31,9 @@ function useProductForm() {
       name: "",
       slug: "",
       description: "",
-      image: [],
+      images: [],
       sellers: [{ ...emptySeller }],
-      filteredValues: [{ ...emptyPair }],
+      filterValues: [{ ...emptyPair }],
       customFields: [{ ...emptyPair }],
     });
 
@@ -41,7 +41,7 @@ function useProductForm() {
   };
 
   const handleChangeCategory = (category) => {
-    setSelectedCtegory(category);
+    setSelectedCtegory(category._id);
   };
 
   const addSellers = () => {
@@ -81,7 +81,7 @@ function useProductForm() {
     }));
   };
 
-  const updatePaire = (fieldName, index, key, value) => {
+  const updatePair = (fieldName, index, key, value) => {
     setForm((prev) => ({
       ...prev,
       [fieldName]: prev[fieldName].map((item, i) =>
@@ -90,7 +90,7 @@ function useProductForm() {
     }));
   };
 
-  const setImage = (files) => setField("image", files);
+  const setImage = (files) => setField("images", files);
 
   const buildFormData = () => {
     const formData = new FormData();
@@ -113,21 +113,24 @@ function useProductForm() {
     formData.append("sellers", JSON.stringify(sellersPayload()));
 
     ////////this code is different of course//////////////////////////////////
-    const pairsToObject = (obj) => {
-      return obj.map((item) => ({ [item.key]: item.value }));
+    const pairsToObject = (list) => {
+      return list.reduce((obj, { key, value }) => {
+        if (key.trim()) obj[key.trim()] = value;
+        return obj;
+      }, {});
     };
     /////////////////////////////////////////////////////////////////////////
 
     formData.append(
-      "filteredValues",
-      JSON.stringify(pairsToObject(form.filteredValues)),
+      "filterValues",
+      JSON.stringify(pairsToObject(form.filterValues)),
     );
     formData.append(
       "customFields",
       JSON.stringify(pairsToObject(form.customFields)),
     );
 
-    form.image.forEach((image) => formData.append("images", image));
+    form.images.forEach((image) => formData.append("images", image));
 
     return formData;
   };
@@ -142,7 +145,7 @@ function useProductForm() {
     updateSeller,
     addPair,
     removePair,
-    updatePaire,
+    updatePair,
     setImage,
     resetForm,
     buildFormData,

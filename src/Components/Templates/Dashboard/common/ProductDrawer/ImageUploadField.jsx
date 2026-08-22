@@ -23,7 +23,6 @@ function ImageUploadField({ files, onChange }) {
   };
 
   useEffect(() => {
-    console.log(files);
     const urls = files.map((file) => URL.createObjectURL(file));
     setPreviewUrls(urls);
 

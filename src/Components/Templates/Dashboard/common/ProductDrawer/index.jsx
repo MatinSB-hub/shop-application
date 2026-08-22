@@ -25,7 +25,7 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
     updateSeller,
     addPair,
     removePair,
-    updatePaire,
+    updatePair,
     setImage,
     resetForm,
     buildFormData,
@@ -33,42 +33,31 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
 
   useEffect(() => {
     if (!isOpen) {
-      // resetForm();
+      resetForm();
+      setError(null);
     }
   }, [isOpen]);
 
   const handleSubmit = async () => {
     if (!form.name.trim() || !form.slug.trim() || !form.description.trim()) {
-        // if(!form.name.trim()){
-        //   console.log("name")
-        // }
+      setError("عنوان , توضیحات و لینک محصول الزامی هستند");
+      return;
+    }
 
-        // if(!form.slug.trim()){
-        //             console.log("name")
+    if (!selectedCategory) {
+      setError("انتخاب دسته بندی محصول الزامی هست");
+      return;
+    }
 
-        // }
+    setError(null);
 
-        // if()
-
-        setError("عنوان و لینک محصول الزامی هستند");
-        return;
-      }
-      
-      if (!selectedCategory) {
-        setError("انتخاب دسته بندی محصول الزامی هست");
-        return;
-      }
-      
-      setError(null);
-      
-      try {
-        setIsSubmiting(true);
-        await createProduct(buildFormData());
-        // resetForm();
-        toast.success("محصول با موفقیت ایجاد شد");
-        // ontoggle()
-      } catch (err) {
-      console.log("here is imageUploadField:")
+    try {
+      setIsSubmiting(true);
+      await createProduct(buildFormData());
+      toast.success(`محصول ${form.name}  با موفقیت ایجاد شد`);
+      resetForm();
+      ontoggle();
+    } catch (err) {
       setError(err.response?.data?.message || "خطایی رخ داده است");
     } finally {
       setIsSubmiting(false);
@@ -116,11 +105,11 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
 
       <DynamicKeyValueFields
         lable={"ویژگی های فیلتری"}
-        items={form.filteredValues}
-        onAdd={() => addPair("filteredValues")}
-        onRemove={(index) => removePair("filteredValues", index)}
+        items={form.filterValues}
+        onAdd={() => addPair("filterValues")}
+        onRemove={(index) => removePair("filterValues", index)}
         onChange={(index, key, value) =>
-          updatePaire("filteredValues", index, key, value)
+          updatePair("filterValues", index, key, value)
         }
         keyPlaceHolder={"مثلا (حافظه داخلی)"}
         valuePlaceHolder={"مثلا (16 گیگابایت)"}
@@ -132,13 +121,13 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         onAdd={() => addPair("customFields")}
         onRemove={(index) => removePair("customFields", index)}
         onChange={(index, key, value) =>
-          updatePaire("customFields", index, key, value)
+          updatePair("customFields", index, key, value)
         }
         keyPlaceHolder={"مثلا (سنسور)"}
         valuePlaceHolder={"مثلا (مادون قرمز)"}
       />
 
-      <ImageUploadField files={form.image} onChange={setImage} />
+      <ImageUploadField files={form.images} onChange={setImage} />
 
       <div className="space-y-4 mt-5 px-6">
         <div>
@@ -153,8 +142,13 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           ></textarea>
         </div>
 
+        {error && <span className="text-sm text-red-500">{error}</span>}
+
         <div className="mt-5 flex items-center justify-end gap-2">
-          <button className="px-4 py-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/15 ">
+          <button
+            className="px-4 py-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/15 "
+            onClick={onToggle}
+          >
             انصراف
           </button>
           <button
