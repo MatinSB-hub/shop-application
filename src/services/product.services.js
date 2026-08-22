@@ -8,10 +8,15 @@ const createProduct = async (formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    return data
+    return data;
   } catch (err) {
     console.log(err.response);
   }
+};
+
+export const getAllProducts = async (params) => {
+  const { data } = await api.get("/products", { params });
+  return data;
 };
 
 export default createProduct;

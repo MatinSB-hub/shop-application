@@ -7,10 +7,16 @@ import TableHead from "../../../../../Components/Templates/Dashboard/common/Tabl
 import TableCell from "../../../../../Components/Templates/Dashboard/common/Table/TableCell";
 import { BiPlus } from "react-icons/bi";
 import ProductDrawer from "../../../../../Components/Templates/Dashboard/common/ProductDrawer";
+import useProducts from "../../../../../hooks/useProducts";
 
 function ModeratorProductsTable() {
   const [isDrawerShow, setIsDrawerShow] = useState(false);
   const toggleDrawer = () => setIsDrawerShow((prev) => !prev);
+
+  const { products, pagination, page, setPage, isLoading, error } =
+    useProducts();
+
+  console.log(products);
   return (
     <>
       <Table>
@@ -47,7 +53,7 @@ function ModeratorProductsTable() {
           </TableRow>
         </TableBody>
       </Table>
-        <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
+      <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
     </>
   );
 }
