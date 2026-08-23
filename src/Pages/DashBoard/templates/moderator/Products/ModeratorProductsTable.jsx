@@ -69,7 +69,12 @@ function ModeratorProductsTable() {
           {!isLoading &&
             !error &&
             products.map((product) => {
-              const { price, hasMultipleSellers } = getDisplayPrice(product.sellers);
+              const { price, hasMultipleSellers } = getDisplayPrice(
+                product.sellers,
+              );
+              {
+                console.log(product);
+              }
               return (
                 <TableRow>
                   <TableCell>{product.shortIdentifier}</TableCell>
@@ -77,11 +82,32 @@ function ModeratorProductsTable() {
                   <TableCell>
                     {formatPrice(price)} تومان
                     {hasMultipleSellers && " (چند فروشنده دارد)"}
-                    </TableCell>
+                  </TableCell>
                 </TableRow>
               );
             })}
         </TableBody>
+
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <button
+            className="px-3 py-1 rounded-md primary-border text-sm disabled:opacity-40"
+            disabled={page <= 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            قبلی
+          </button>
+            {console.log("pagination:",pagination)}
+          <span>
+            صفحه {pagination.page} از {pagination.tottalPages}
+          </span>
+          <button
+            className="px-3 py-1 rounded-md primary-border text-sm disabled:opacity-40"
+            disabled={page > pagination.totalPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            بعدی
+          </button>
+        </div>
       </Table>
       <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
     </>
