@@ -55,7 +55,6 @@ const router = createBrowserRouter([
             return data.user;
           } catch (err) {
             return redirect("/auth");
-            console.log(err);
           }
         },
         children: [

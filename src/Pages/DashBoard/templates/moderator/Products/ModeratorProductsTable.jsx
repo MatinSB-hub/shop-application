@@ -8,6 +8,7 @@ import TableCell from "../../../../../Components/Templates/Dashboard/common/Tabl
 import { BiPlus } from "react-icons/bi";
 import ProductDrawer from "../../../../../Components/Templates/Dashboard/common/ProductDrawer";
 import useProducts from "../../../../../hooks/useProducts";
+import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
 
 function ModeratorProductsTable() {
   const [isDrawerShow, setIsDrawerShow] = useState(false);
@@ -16,7 +17,6 @@ function ModeratorProductsTable() {
   const { products, pagination, page, setPage, isLoading, error } =
     useProducts();
 
-  console.log(products);
   return (
     <>
       <Table>
@@ -40,17 +40,47 @@ function ModeratorProductsTable() {
             <TableCell>شناسه</TableCell>
             <TableCell>عنوان</TableCell>
             <TableCell>مبلغ</TableCell>
-            <TableCell>وضعیت</TableCell>
           </TableRow>
         </TableHead>
-
-        <TableBody>
+        {isLoading && (
           <TableRow>
-            <TableCell>cd53se</TableCell>
-            <TableCell>laptop asus</TableCell>
-            <TableCell>{150_000_00}</TableCell>
-            <TableCell>public</TableCell>
+            <TableCell colSpan={3} className="text-center text-zinc-400">
+              در حال بارگزاری
+            </TableCell>
           </TableRow>
+        )}
+
+        {!isLoading && error && (
+          <TableRow>
+            <TableCell colSpan={3} className="text-center text-red-400">
+              {error || "خطا در دریافت محصولات"}
+            </TableCell>
+          </TableRow>
+        )}
+
+        {!isLoading && !error && products.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={3} className="text-center text-red-400">
+              هنوز محصولی ثبت نشده
+            </TableCell>
+          </TableRow>
+        )}
+        <TableBody>
+          {!isLoading &&
+            !error &&
+            products.map((product) => {
+              const { price, hasMultipleSellers } = getDisplayPrice(product.sellers);
+              return (
+                <TableRow>
+                  <TableCell>{product.shortIdentifier}</TableCell>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>
+                    {formatPrice(price)} تومان
+                    {hasMultipleSellers && " (چند فروشنده دارد)"}
+                    </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
       <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
