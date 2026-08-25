@@ -24,6 +24,8 @@ function useProducts(limit = 10) {
     }
   };
 
+  const reFetchProducts = () => fetchProducts();
+
   useEffect(() => {
     fetchProducts();
   }, [page, limit]);
@@ -34,7 +36,8 @@ function useProducts(limit = 10) {
     page,
     setPage,
     isLoading,
-    error
+    error,
+    reFetchProducts,
   };
 }
 

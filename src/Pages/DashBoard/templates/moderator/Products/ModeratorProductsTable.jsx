@@ -12,6 +12,8 @@ import ProductDrawer from "../../../../../Components/Templates/Dashboard/common/
 import useProducts from "../../../../../hooks/useProducts";
 import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
 import Confirm from "../../../../../Components/Common/Confirm";
+import { toast } from "sonner";
+import { removeProduct } from "../../../../../services/product.services";
 
 function ModeratorProductsTable() {
   const [DeletingProduct, setDeletingProduct] = useState();
@@ -19,11 +21,24 @@ function ModeratorProductsTable() {
   const [isDrawerShow, setIsDrawerShow] = useState(false);
   const toggleDrawer = () => setIsDrawerShow((prev) => !prev);
 
-  const { products, pagination, page, setPage, isLoading, error } =
+  const { products, pagination, page, setPage, isLoading, error,reFetchProducts } =
     useProducts();
 
-  const handleRemove = () => {
-    setIsDeleting(true)
+  const handleRemove = async () => {
+    setIsDeleting(true);
+
+    try {
+      const data = await removeProduct(DeletingProduct._id);
+      toast.success("حذف محصول با موفقیت انجام شد");
+      reFetchProducts()
+      console.log("data", data);
+    } catch (err) {
+      console.log("err.response", err.response);
+      toast.error(err.response.data.message || "خطا در حذف محصول");
+    } finally {
+      setIsDeleting(false);
+      setDeletingProduct(null)
+    }
   };
 
   return (
@@ -82,9 +97,6 @@ function ModeratorProductsTable() {
               const { price, hasMultipleSellers } = getDisplayPrice(
                 product.sellers,
               );
-              {
-                console.log(product);
-              }
               return (
                 <TableRow>
                   <TableCell>{product.shortIdentifier}</TableCell>
@@ -136,6 +148,10 @@ function ModeratorProductsTable() {
         <Confirm
           isOpen={!!DeletingProduct}
           title="حذف محصول"
+          description={`آیا از حذف محصول ${DeletingProduct?.name} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
+          onConfirm={handleRemove}
+          onCancel={() => setDeletingProduct(null)}
+          isLoading={isDeleting}
         />
       </Table>
       <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />

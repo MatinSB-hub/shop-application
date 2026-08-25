@@ -19,4 +19,9 @@ export const getAllProducts = async (params) => {
   return data;
 };
 
+export const removeProduct = async (productId) => {
+  const res = await api.delete(`/products/${productId}`);
+  return res;
+};
+
 export default createProduct;

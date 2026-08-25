@@ -41,7 +41,7 @@ function useProductForm() {
   };
 
   const handleChangeCategory = (category) => {
-    setSelectedCtegory(category._id);
+    setSelectedCtegory(category?._id);
   };
 
   const addSellers = () => {

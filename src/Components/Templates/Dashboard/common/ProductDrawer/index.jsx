@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import DynamicKeyValueFields from "./DynamicKeyValueFields";
 import SellerFields from "./SellerFields";
 import ImageUploadField from "./ImageUploadField";
+import useProducts from "../../../../../hooks/useProducts";
 
 // mode: CREATE | EDIT
 const ProductDrawer = ({ isOpen, onToggle }) => {
