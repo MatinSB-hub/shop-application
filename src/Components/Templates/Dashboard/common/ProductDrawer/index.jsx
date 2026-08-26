@@ -4,7 +4,9 @@ import ProductDrawerInput from "./ProductDrawerInput";
 import useCategories from "../../../../../hooks/useCategories";
 import CascadeCategories from "./CascadeCategories";
 import useProductForm from "../../../../../hooks/useProductForm";
-import createProduct from "../../../../../services/product.services";
+import createProduct, {
+  updateProducts,
+} from "../../../../../services/product.services";
 import { toast } from "sonner";
 import DynamicKeyValueFields from "./DynamicKeyValueFields";
 import SellerFields from "./SellerFields";
@@ -39,7 +41,6 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
       setError(null);
     } else {
       if (!!editingMode) {
-        console.log("here is index of product drawer");
         setProdcutInfoToForm(editingMode);
       }
     }
@@ -60,10 +61,16 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
 
     try {
       setIsSubmiting(true);
-      await createProduct(buildFormData());
-      toast.success(`محصول ${form.name}  با موفقیت ایجاد شد`);
+      if (!!editingMode) {
+        const data = await updateProducts(editingMode._id, buildFormData());
+        console.log("data edit:",data)
+        toast.success(`محصول ${form.name}  با موفقیت ویرایش شد`);
+      } else {
+        await createProduct(buildFormData());
+        toast.success(`محصول ${form.name}  با موفقیت ایجاد شد`);
+      }
       resetForm();
-      ontoggle();
+      onToggle();
     } catch (err) {
       setError(err.response?.data?.message || "خطایی رخ داده است");
     } finally {
@@ -71,7 +78,11 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
     }
   };
   return (
-    <Drawer isOpen={isOpen} onClose={onToggle} title="ایجاد محصول">
+    <Drawer
+      isOpen={isOpen}
+      onClose={onToggle}
+      title={editingMode ? "ویرایش محصول" : "ایجاد محصول"}
+    >
       <ProductDrawerInput
         label="عنوان محصول"
         placeholder="iphone-17-promax"
@@ -134,7 +145,7 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
         valuePlaceHolder={"مثلا (مادون قرمز)"}
       />
 
-      {/* <ImageUploadField files={form.images} onChange={setImage} /> */}
+      <ImageUploadField files={form.images} onChange={setImage} />
 
       <div className="space-y-4 mt-5 px-6">
         <div>
@@ -163,7 +174,11 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
             onClick={handleSubmit}
             disabled={isSubmiting}
           >
-            {isSubmiting ? "در حال ثبت..." : "ایجاد محصول"}
+            {isSubmiting
+              ? "در حال ثبت..."
+              : !!editingMode
+                ? "ویرایش محصول"
+                : "ایجاد محصول"}
           </button>
         </div>
       </div>

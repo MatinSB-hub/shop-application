@@ -24,9 +24,10 @@ export const removeProduct = async (productId) => {
   return res;
 };
 
-export const updateProducts = async(productId)=>{
-  const res = await api.patch(`/products/${productId}`)
-  return res
+export const updateProducts = async(productId,formData)=>{
+  console.log([...formData.entries()])
+  const res = await api.patch(`/products/${productId}`,[...formData.entries()])
+  return res;
 }
 
 export default createProduct;

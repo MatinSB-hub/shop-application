@@ -22,7 +22,10 @@ function ModeratorProductsTable() {
   const [isEditing, setIsEditing] = useState(null);
 
   const [isDrawerShow, setIsDrawerShow] = useState(false);
-  const toggleDrawer = () => setIsDrawerShow((prev) => !prev);
+  const toggleDrawer = () => {
+    setIsDrawerShow((prev) => !prev);
+    setIsEditing(false)
+  };
 
   const {
     products,
@@ -170,7 +173,11 @@ function ModeratorProductsTable() {
           isLoading={isDeleting}
         />
       </Table>
-      <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} editingMode={isEditing}/>
+      <ProductDrawer
+        isOpen={isDrawerShow}
+        onToggle={toggleDrawer}
+        editingMode={isEditing}
+      />
     </>
   );
 }

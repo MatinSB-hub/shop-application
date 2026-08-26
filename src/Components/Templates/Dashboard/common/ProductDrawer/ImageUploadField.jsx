@@ -23,10 +23,13 @@ function ImageUploadField({ files, onChange }) {
   };
 
   useEffect(() => {
-    const urls = files.map((file) => URL.createObjectURL(file));
+    const urls = files
+      .filter((file) => file instanceof File) // ← فقط فایل‌های معتبر
+      .map((file) => URL.createObjectURL(file));
+
     setPreviewUrls(urls);
 
-    return () => urls.map((url) => URL.revokeObjectURL(url));
+    return () => urls.forEach((url) => URL.revokeObjectURL(url));
   }, [files]);
 
   return (
@@ -52,7 +55,7 @@ function ImageUploadField({ files, onChange }) {
             key={index}
             className="relative aspect-square rounded-md overflow-hidden primary-border group"
           >
-            <img src={url} className="w-full h-full object-cover" alt="" />
+            <img src={`${url}`} className="w-full h-full object-cover" alt="" />
 
             <button
               type="button"
