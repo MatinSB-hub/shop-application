@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Table from "../../../../../Components/Templates/Dashboard/common/Table";
 import TableToolbar from "../../../../../Components/Templates/Dashboard/common/Table/TableToolbar";
 import TableRow from "../../../../../Components/Templates/Dashboard/common/Table/TableRow";
@@ -18,11 +18,21 @@ import { removeProduct } from "../../../../../services/product.services";
 function ModeratorProductsTable() {
   const [DeletingProduct, setDeletingProduct] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
+
+  const [isEditing, setIsEditing] = useState(null);
+
   const [isDrawerShow, setIsDrawerShow] = useState(false);
   const toggleDrawer = () => setIsDrawerShow((prev) => !prev);
 
-  const { products, pagination, page, setPage, isLoading, error,reFetchProducts } =
-    useProducts();
+  const {
+    products,
+    pagination,
+    page,
+    setPage,
+    isLoading,
+    error,
+    reFetchProducts,
+  } = useProducts();
 
   const handleRemove = async () => {
     setIsDeleting(true);
@@ -30,14 +40,14 @@ function ModeratorProductsTable() {
     try {
       const data = await removeProduct(DeletingProduct._id);
       toast.success("حذف محصول با موفقیت انجام شد");
-      reFetchProducts()
+      reFetchProducts();
       console.log("data", data);
     } catch (err) {
       console.log("err.response", err.response);
       toast.error(err.response.data.message || "خطا در حذف محصول");
     } finally {
       setIsDeleting(false);
-      setDeletingProduct(null)
+      setDeletingProduct(null);
     }
   };
 
@@ -106,7 +116,13 @@ function ModeratorProductsTable() {
                     {hasMultipleSellers && " (چند فروشنده دارد)"}
                   </TableCell>
                   <TableCell>
-                    <button className="text-blue-400 hover:bg-blue-100 p-2 rounded-md">
+                    <button
+                      className="text-blue-400 hover:bg-blue-100 p-2 rounded-md"
+                      onClick={() => {
+                        setIsEditing(product);
+                        setIsDrawerShow(true);
+                      }}
+                    >
                       <MdOutlineModeEdit />
                     </button>
                     <button
@@ -154,7 +170,7 @@ function ModeratorProductsTable() {
           isLoading={isDeleting}
         />
       </Table>
-      <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
+      <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} editingMode={isEditing}/>
     </>
   );
 }

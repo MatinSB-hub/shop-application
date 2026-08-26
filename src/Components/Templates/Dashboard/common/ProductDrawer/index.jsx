@@ -12,7 +12,7 @@ import ImageUploadField from "./ImageUploadField";
 import useProducts from "../../../../../hooks/useProducts";
 
 // mode: CREATE | EDIT
-const ProductDrawer = ({ isOpen, onToggle }) => {
+const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
   const { isLoading: categoriesIsLoading, categories } = useCategories();
   const [error, setError] = useState(null);
   const [isSubmiting, setIsSubmiting] = useState(null);
@@ -30,12 +30,18 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
     setImage,
     resetForm,
     buildFormData,
+    setProdcutInfoToForm,
   } = useProductForm();
 
   useEffect(() => {
     if (!isOpen) {
       resetForm();
       setError(null);
+    } else {
+      if (!!editingMode) {
+        console.log("here is index of product drawer");
+        setProdcutInfoToForm(editingMode);
+      }
     }
   }, [isOpen]);
 
@@ -128,7 +134,7 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
         valuePlaceHolder={"مثلا (مادون قرمز)"}
       />
 
-      <ImageUploadField files={form.images} onChange={setImage} />
+      {/* <ImageUploadField files={form.images} onChange={setImage} /> */}
 
       <div className="space-y-4 mt-5 px-6">
         <div>

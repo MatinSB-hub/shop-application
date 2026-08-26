@@ -24,4 +24,9 @@ export const removeProduct = async (productId) => {
   return res;
 };
 
+export const updateProducts = async(productId)=>{
+  const res = await api.patch(`/products/${productId}`)
+  return res
+}
+
 export default createProduct;

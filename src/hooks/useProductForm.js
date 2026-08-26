@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { map } from "zod";
 
 function useProductForm() {
   const emptySeller = {
@@ -112,14 +113,12 @@ function useProductForm() {
 
     formData.append("sellers", JSON.stringify(sellersPayload()));
 
-    ////////this code is different of course//////////////////////////////////
     const pairsToObject = (list) => {
       return list.reduce((obj, { key, value }) => {
         if (key.trim()) obj[key.trim()] = value;
         return obj;
       }, {});
     };
-    /////////////////////////////////////////////////////////////////////////
 
     formData.append(
       "filterValues",
@@ -133,6 +132,51 @@ function useProductForm() {
     form.images.forEach((image) => formData.append("images", image));
 
     return formData;
+  };
+
+  const mapApiProductToForm = (productInfo) => {
+    // تبدیل sellers از آرایه‌ای از آبجکت به فرمت فرم
+    const sellers =
+      productInfo.sellers?.length > 0
+        ? productInfo.sellers.map((seller) => ({
+            id: seller.seller || "",
+            price: seller.price ? String(seller.price / 10) : "", // ریال به تومان
+            stock: seller.stock || 0,
+          }))
+        : [{ id: "", price: "", stock: 0 }];
+
+    // تبدیل customFields از آبجکت به آرایه‌ای از key/value
+    const customFields = productInfo.customFields
+      ? Object.entries(productInfo.customFields).map(([key, value]) => ({
+          key: key,
+          value: value,
+        }))
+      : [{ key: "", value: "" }];
+
+    // تبدیل filterValues از آبجکت به آرایه‌ای از key/value
+    const filterValues = productInfo.filterValues
+      ? Object.entries(productInfo.filterValues).map(([key, value]) => ({
+          key: key,
+          value: value,
+        }))
+      : [{ key: "", value: "" }];
+
+    return {
+      name: productInfo.name || "",
+      slug: productInfo.slug || "",
+      description: productInfo.description || "",
+      subCategory: productInfo.subCategory || "",
+      images: productInfo.images || [],
+      sellers: sellers,
+      filterValues: filterValues,
+      customFields: customFields,
+    };
+  };
+
+  const setProdcutInfoToForm = (productInfo) => {
+    const convertedData = mapApiProductToForm(productInfo);
+    console.log("converted Data:", convertedData);
+    setForm(convertedData);
   };
 
   return {
@@ -149,6 +193,8 @@ function useProductForm() {
     setImage,
     resetForm,
     buildFormData,
+    // برای تبدیل اطلاعات محصول به اطلاعات فرم, در فرم ویرایش محصول
+    setProdcutInfoToForm,
   };
 }
 
