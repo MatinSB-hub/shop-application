@@ -162,8 +162,8 @@ function ModeratorSubCategoriesTable() {
 
         <Confirm
           isOpen={!!deletingSubCategory}
-          title="حذف محصول"
-          description={`آیا از حذف محصول ${deletingSubCategory?.title} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
+          title="حذف زیر دسته بندی"
+          description={`آیا از حذف زیر دسته بندی ${deletingSubCategory?.title} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
           onConfirm={handleRemove}
           onCancel={() => setDeletingSubCategory(null)}
           isLoading={isDeleting}

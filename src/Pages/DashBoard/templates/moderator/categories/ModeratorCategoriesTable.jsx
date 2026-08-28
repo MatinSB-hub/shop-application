@@ -13,9 +13,11 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import TableBody from "../../../../../Components/Templates/Dashboard/common/Table/TableBody";
 import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
 import useCategories from "../../../../../hooks/useCategories";
+import { removeCategory } from "../../../../../services/category.sevices";
+import { toast } from "sonner";
 
 function ModeratorCategoriesTable() {
-  const [DeletingProduct, setDeletingProduct] = useState();
+  const [deletingCategory, setDeletingCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
 
   const [isEditing, setIsEditing] = useState(null);
@@ -28,22 +30,22 @@ function ModeratorCategoriesTable() {
 
   const { isLoading, categories, reFetchCategories, error } = useCategories();
 
-  //   const handleRemove = async () => {
-  //     setIsDeleting(true);
+  const handleRemove = async () => {
+    setIsDeleting(true);
 
-  //     try {
-  //       const data = await removeProduct(DeletingProduct._id);
-  //       toast.success("حذف محصول با موفقیت انجام شد");
-  //       reFetchCategories();
-  //       console.log("data", data);
-  //     } catch (err) {
-  //       console.log("err.response", err.response);
-  //       toast.error(err.response.data.message || "خطا در حذف محصول");
-  //     } finally {
-  //       setIsDeleting(false);
-  //       setDeletingProduct(null);
-  //     }
-  //   };
+    try {
+      const data = await removeCategory(deletingCategory._id);
+      toast.success("حذف محصول با موفقیت انجام شد");
+      reFetchCategories();
+      console.log("data", data);
+    } catch (err) {
+      console.log("err.response", err.response);
+      toast.error(err.response.data.message || "خطا در حذف دسته بندی");
+    } finally {
+      setIsDeleting(false);
+      setDeletingCategory(null);
+    }
+  };
 
   return (
     <>
@@ -116,7 +118,7 @@ function ModeratorCategoriesTable() {
                     <button
                       className="text-red-400 hover:bg-red-100 p-2 rounded-md"
                       title="حذف"
-                      onClick={() => setDeletingProduct(category)}
+                      onClick={() => setDeletingCategory(category)}
                     >
                       <FaRegTrashCan />
                     </button>
@@ -149,14 +151,14 @@ function ModeratorCategoriesTable() {
           </div>
         )} */}
 
-        {/* <Confirm
-          isOpen={!!DeletingProduct}
-          title="حذف محصول"
-          description={`آیا از حذف محصول ${DeletingProduct?.name} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
+        <Confirm
+          isOpen={!!deletingCategory}
+          title="حذف دسته بندی"
+          description={`آیا از حذف دسته بندی ${deletingCategory?.title} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
           onConfirm={handleRemove}
-          onCancel={() => setDeletingProduct(null)}
+          onCancel={() => setDeletingCategory(null)}
           isLoading={isDeleting}
-        /> */}
+        />
       </Table>
       {/* <ProductDrawer
         isOpen={isDrawerShow}

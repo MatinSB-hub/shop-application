@@ -16,7 +16,7 @@ export const updateCategory = async (categoryId, formData) => {
   return data;
 };
 
-export const deleteCategory = async (categoryId) => {
+export const removeCategory = async (categoryId) => {
   const { data } = await api.delete(`/category/${categoryId}`);
   return data;
 };
