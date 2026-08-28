@@ -1,8 +1,9 @@
 import React from "react";
 import NavItme from "../../Common/Sidebar/fragments/NavItem/index.jsx";
-import { BiDollar, BiHome } from "react-icons/bi";
+import { BiDollar, BiHome, BiCategoryAlt } from "react-icons/bi";
 import { BsBox2, BsShop } from "react-icons/bs";
-import { FaShop, FaTruckArrowRight } from "react-icons/fa6";
+import { FaTruckArrowRight } from "react-icons/fa6";
+
 
 function ModeratorLinks() {
   return (
@@ -20,6 +21,13 @@ function ModeratorLinks() {
         icon={<BsBox2 />}
         href="/dashboard/moderator/products"
         lable="محصولات"
+      />
+      <NavItme
+      bgColor="bg-cyan-500"
+      iconColor="text-cyan-500"
+        icon={<BiCategoryAlt />}
+        href="/dashboard/moderator/categories"
+        lable="دسته بندی ها"
       />
       <NavItme
       bgColor="bg-green-500"
