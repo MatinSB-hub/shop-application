@@ -4,27 +4,26 @@ import { getAllCategories } from "../services/category.sevices";
 function useCategories() {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await getAllCategories();
+      setCategories(data?.categories || []);
+    } catch (err) {
+      setError("خطا در ردیافت دسته بندی ها");
+      console.log("error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    let mounted = true;
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await getAllCategories();
-        mounted && setCategories(data.categories);
-      } catch (error) {
-        mounted && console.log("error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
-
-    return () => (mounted = false);
   }, []);
 
-  return { isLoading, categories };
+  return { isLoading, categories, reFetch: fetchData, error };
 }
 
 export default useCategories;
