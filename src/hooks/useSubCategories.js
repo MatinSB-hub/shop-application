@@ -23,7 +23,7 @@ function useSubCategories() {
     fetchData();
   }, []);
 
-  return { isLoading, subCategories, reFetch: fetchData, error };
+  return { isLoading, subCategories, reFetchSubCategories: fetchData, error };
 }
 
 export default useSubCategories;
