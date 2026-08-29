@@ -18,6 +18,7 @@ import NotFound from "../Pages/NotFound.jsx";
 import ModeratorsProducts from "../Pages/DashBoard/moderator/products/page.jsx";
 import ModeratorCategoriesTable from "../Pages/DashBoard/templates/moderator/categories/ModeratorCategoriesTable.jsx";
 import ModeratorCategories from "../Pages/DashBoard/moderator/categories/page.jsx";
+import ModeratorUsers from "../Pages/DashBoard/moderator/users/page.jsx";
 // const test = useContext(authContext)
 
 const router = createBrowserRouter([
