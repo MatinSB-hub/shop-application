@@ -1,11 +1,12 @@
-import { getAllProducts } from "../services/product.services";
+import { useEffect, useState } from "react";
+import { getAllUsers } from "../services/users.services";
 
-export const useUsers = async (limit) => {
+function useUsers(limit) {
   const [users, setUsers] = useState([]);
-  const [pagination, setPagination] = useState([]);
-  const [page, setPage] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
-  const [error, setError] = useState([]);
+  const [pagination, setPagination] = useState(null);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchUsers = async () => {
     setIsLoading(true);
@@ -13,6 +14,7 @@ export const useUsers = async (limit) => {
 
     try {
       const res = await getAllUsers({ page, limit });
+      console.log("res:", res);
       setUsers(res?.data?.users || []);
       setPagination(res?.data?.pagination || null);
     } catch (err) {
@@ -38,4 +40,6 @@ export const useUsers = async (limit) => {
     error,
     reFetchUsers,
   };
-};
+}
+
+export default useUsers;
