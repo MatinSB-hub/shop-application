@@ -1,6 +1,6 @@
 import api from "./api";
 
-export const getAllCategories = async () => {
+export const getAllUsers = async () => {
   const { data } = await api.get("/users");
   return data;
 };
