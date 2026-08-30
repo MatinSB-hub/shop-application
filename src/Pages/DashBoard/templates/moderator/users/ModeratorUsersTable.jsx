@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useUsers from "../../../../../hooks/useUsers";
 import Table from "../../../../../Components/Templates/Dashboard/common/Table";
 import TableToolbar from "../../../../../Components/Templates/Dashboard/common/Table/TableToolbar";
@@ -8,7 +8,15 @@ import TableRow from "../../../../../Components/Templates/Dashboard/common/Table
 import TableCell from "../../../../../Components/Templates/Dashboard/common/Table/TableCell";
 import TableBody from "../../../../../Components/Templates/Dashboard/common/Table/TableBody";
 import { MdOutlineModeEdit } from "react-icons/md";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { IoBan } from "react-icons/io5";
+import { toHijriDate } from "../../../../../lib/helpers/date";
+
+// Mapping
+const rolesLables = {
+  USER: "کاربر",
+  ADMIN: "مدیر",
+  SELLER: "فروشنده",
+};
 
 function ModeratorUsersTable() {
   const [DeletingProduct, setDeletingProduct] = useState();
@@ -68,6 +76,7 @@ function ModeratorUsersTable() {
             <TableCell>شناسه</TableCell>
             <TableCell>اسم</TableCell>
             <TableCell>شماره تماس</TableCell>
+            <TableCell>تاریخ ثبت نام</TableCell>
             <TableCell>نقش</TableCell>
             <TableCell>عملیات</TableCell>
           </TableRow>
@@ -100,27 +109,23 @@ function ModeratorUsersTable() {
             !error &&
             users.map((user) => {
               return (
-                <TableRow>
-                  <TableCell>{user._id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
+                <TableRow key={user._id}>
+                  <TableCell>...{user._id.slice(0, 6)}</TableCell>
+                  <TableCell>{user.name || " فاقد نام "}</TableCell>
                   <TableCell>{user.phone}</TableCell>
-                  <TableCell>{user.roles[0]}</TableCell>
+                  <TableCell>{toHijriDate(user.createdAt)}</TableCell>
+                  <TableCell>
+                    {user.roles.map((role) => rolesLables[role]).join(" - ")}
+                  </TableCell>
                   <TableCell>
                     <button
-                      className="text-blue-400 hover:bg-blue-100 p-2 rounded-md"
+                      className="text-red-400 hover:bg-red-100 p-2 rounded-md"
                       onClick={() => {
                         setIsEditing(user);
                         setIsDrawerShow(true);
                       }}
                     >
-                      <MdOutlineModeEdit />
-                    </button>
-                    <button
-                      className="text-red-400 hover:bg-red-100 p-2 rounded-md"
-                      title="حذف"
-                      onClick={() => setDeletingProduct(user)}
-                    >
-                      <FaRegTrashCan />
+                      <IoBan />
                     </button>
                   </TableCell>
                 </TableRow>
