@@ -7,9 +7,11 @@ import TableHead from "../../../../../Components/Templates/Dashboard/common/Tabl
 import TableRow from "../../../../../Components/Templates/Dashboard/common/Table/TableRow";
 import TableCell from "../../../../../Components/Templates/Dashboard/common/Table/TableCell";
 import TableBody from "../../../../../Components/Templates/Dashboard/common/Table/TableBody";
-import { MdOutlineModeEdit } from "react-icons/md";
+import Confirm from "../../../../../Components/Common/Confirm";
 import { IoBan } from "react-icons/io5";
 import { toHijriDate } from "../../../../../lib/helpers/date";
+import { banUser } from "../../../../../services/users.services";
+import { toast } from "sonner";
 
 // Mapping
 const rolesLables = {
@@ -19,8 +21,8 @@ const rolesLables = {
 };
 
 function ModeratorUsersTable() {
-  const [DeletingProduct, setDeletingProduct] = useState();
-  const [isDeleting, setIsDeleting] = useState(null);
+  const [banningUser, setBanningUser] = useState();
+  const [isBanning, setIsBanning] = useState(null);
 
   const [isEditing, setIsEditing] = useState(null);
 
@@ -34,31 +36,29 @@ function ModeratorUsersTable() {
   const { users, pagination, page, setPage, isLoading, error, reFetchUsers } =
     useUsers();
 
-  //   console.log(users)
+  const handleBan = async () => {
+    setIsBanning(true);
 
-  //   const handleRemove = async () => {
-  //     setIsDeleting(true);
-
-  //     try {
-  //       const data = await removeProduct(DeletingProduct._id);
-  //       toast.success("حذف محصول با موفقیت انجام شد");
-  //       reFetchProducts();
-  //       console.log("data", data);
-  //     } catch (err) {
-  //       console.log("err.response", err.response);
-  //       toast.error(err.response.data.message || "خطا در حذف محصول");
-  //     } finally {
-  //       setIsDeleting(false);
-  //       setDeletingProduct(null);
-  //     }
-  //   };
+    try {
+      const data = await banUser(banningUser._id);
+      toast.success("بن کردن کاربر با موفقیت انجام شد");
+      reFetchUsers();
+      console.log("data", data);
+    } catch (err) {
+      console.log("err.response", err.response);
+      toast.error(err.response.data.message || "خطا در بن کردن کاربر");
+    } finally {
+      setIsBanning(false);
+      setBanningUser(null);
+    }
+  };
 
   return (
     <>
       <Table>
         <TableToolbar useFlexBetween>
           <div>
-            <h2>تمامی محصولات</h2>
+            <h2>تمامی کاربران</h2>
           </div>
 
           <div className="flex items-center gap-3">
@@ -120,10 +120,7 @@ function ModeratorUsersTable() {
                   <TableCell>
                     <button
                       className="text-red-400 hover:bg-red-100 p-2 rounded-md"
-                      onClick={() => {
-                        setIsEditing(user);
-                        setIsDrawerShow(true);
-                      }}
+                      onClick={() => setBanningUser(user)}
                     >
                       <IoBan />
                     </button>
@@ -156,14 +153,14 @@ function ModeratorUsersTable() {
           </div>
         )} */}
 
-        {/* <Confirm
-          isOpen={!!DeletingProduct}
-          title="حذف محصول"
-          description={`آیا از حذف محصول ${DeletingProduct?.name} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
-          onConfirm={handleRemove}
-          onCancel={() => setDeletingProduct(null)}
-          isLoading={isDeleting}
-        /> */}
+        <Confirm
+          isOpen={!!banningUser}
+          title="بن کردن کاربر"
+          description={`آیا از بن کردن کاربر ${banningUser?.name || "فاقد نام"} اطمینان دارید؟ این عملیات غیر قابل بازگشت میباشد`}
+          onConfirm={handleBan}
+          onCancel={() => setBanningUser(null)}
+          isLoading={isBanning}
+        />
       </Table>
       {/* <ProductDrawer
         isOpen={isDrawerShow}

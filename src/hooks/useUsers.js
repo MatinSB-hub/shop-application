@@ -14,7 +14,6 @@ function useUsers(limit) {
 
     try {
       const res = await getAllUsers({ page, limit });
-      console.log("res:", res);
       setUsers(res?.data?.users || []);
       setPagination(res?.data?.pagination || null);
     } catch (err) {
