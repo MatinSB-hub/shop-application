@@ -12,6 +12,7 @@ import { IoBan } from "react-icons/io5";
 import { toHijriDate } from "../../../../../lib/helpers/date";
 import { banUser } from "../../../../../services/users.services";
 import { toast } from "sonner";
+import ModeratorTablesPagination from "../../../../../Components/Common/ModeratorTablesPagination";
 
 // Mapping
 const rolesLables = {
@@ -130,28 +131,11 @@ function ModeratorUsersTable() {
             })}
         </TableBody>
 
-        {/* {pagination && pagination.totalPrice > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <button
-              className="px-3 py-1 rounded-md primary-border text-sm disabled:opacity-40"
-              disabled={page <= 1}
-              onClick={() => setPage((prev) => prev - 1)}
-            >
-              قبلی
-            </button>
-            {console.log("pagination:", pagination)}
-            <span>
-              صفحه {pagination.page} از {pagination.tottalPages}
-            </span>
-            <button
-              className="px-3 py-1 rounded-md primary-border text-sm disabled:opacity-40"
-              disabled={page > pagination.totalPages}
-              onClick={() => setPage((prev) => prev + 1)}
-            >
-              بعدی
-            </button>
-          </div>
-        )} */}
+        <ModeratorTablesPagination
+          pagination={pagination}
+          setPage={setPage}
+          page={page}
+        />
 
         <Confirm
           isOpen={!!banningUser}
