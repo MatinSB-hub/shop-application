@@ -158,8 +158,8 @@ function ModeratorCategoriesTable() {
           onCancel={() => setDeletingCategory(null)}
           isLoading={isDeleting}
         />
+        <CreateCategoryModal isOpen={isOpen} onClose={toggleModal} />
       </Table>
-      <CreateCategoryModal isOpen={isOpen} onClose={toggleModal} />
     </>
   );
 }

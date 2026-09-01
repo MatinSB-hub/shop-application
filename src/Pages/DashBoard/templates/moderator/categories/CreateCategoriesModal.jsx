@@ -1,12 +1,13 @@
 import { useReducer, useState } from "react";
 import Modal from "../../../../../Components/Templates/Dashboard/Modal/index";
+import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer";
 
 const CreateCategoryModal = ({ isOpen,onClose }) => {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [iconFile, setIconFile] = useState(null);
-  const [filters, dispatch] = useReducer();
+  const [filters, dispatch] = useReducer(FilterReducer,[]);
 
   return (
     <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={onClose}>
