@@ -61,7 +61,7 @@ function ModeratorSubCategoriesTable() {
       <Table>
         <TableToolbar useFlexBetween>
           <div>
-            <h2>تمامی دسته بندی ها</h2>
+            <h2>تمامی زیر دسته بندی ها</h2>
           </div>
 
           <div className="flex items-center gap-3">
@@ -110,7 +110,7 @@ function ModeratorSubCategoriesTable() {
             !error &&
             subCategories.map((subCategory) => {
               return (
-                <TableRow>
+                <TableRow key={subCategory._id}>
                   <TableCell>{subCategory.title}</TableCell>
                   <TableCell>{subCategory.filters.length}</TableCell>
                   <TableCell>{getParentTitle(subCategory.parent)}</TableCell>

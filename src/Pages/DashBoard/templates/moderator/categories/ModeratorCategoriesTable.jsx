@@ -15,17 +15,16 @@ import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
 import useCategories from "../../../../../hooks/useCategories";
 import { removeCategory } from "../../../../../services/category.sevices";
 import { toast } from "sonner";
+import CreateCategoryModal from "./CreateCategoriesModal";
 
 function ModeratorCategoriesTable() {
   const [deletingCategory, setDeletingCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
 
-  const [isEditing, setIsEditing] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [isDrawerShow, setIsDrawerShow] = useState(false);
-  const toggleDrawer = () => {
-    setIsDrawerShow((prev) => !prev);
-    setIsEditing(false);
+  const toggleModal = () => {
+    setIsOpen((prev) => !prev);
   };
 
   const { isLoading, categories, reFetchCategories, error } = useCategories();
@@ -57,7 +56,7 @@ function ModeratorCategoriesTable() {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={toggleDrawer}
+              onClick={toggleModal}
               className="px-3 hover:opacity-90 flex items-center h-10 rounded-md bg-blue-500 text-white"
             >
               <BiPlus />
@@ -101,7 +100,7 @@ function ModeratorCategoriesTable() {
             !error &&
             categories.map((category) => {
               return (
-                <TableRow>
+                <TableRow key={category._id}>
                   <TableCell>{category.title}</TableCell>
                   <TableCell>{category.filters.length}</TableCell>
                   <TableCell>{category.subCategories.length}</TableCell>
@@ -160,11 +159,7 @@ function ModeratorCategoriesTable() {
           isLoading={isDeleting}
         />
       </Table>
-      {/* <ProductDrawer
-        isOpen={isDrawerShow}
-        onToggle={toggleDrawer}
-        editingMode={isEditing}
-      /> */}
+      <CreateCategoryModal isOpen={isOpen} onClose={toggleModal} />
     </>
   );
 }
