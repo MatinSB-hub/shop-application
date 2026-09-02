@@ -1,13 +1,28 @@
 import { useReducer, useState } from "react";
 import Modal from "../../../../../Components/Templates/Dashboard/Modal/index";
 import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer";
+import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
+import { toast } from "sonner";
 
-const CreateCategoryModal = ({ isOpen,onClose }) => {
+const CreateCategoryModal = ({ isOpen, onClose }) => {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [iconFile, setIconFile] = useState(null);
-  const [filters, dispatch] = useReducer(FilterReducer,[]);
+  const [filters, dispatchFilters] = useReducer(FilterReducer, []);
+
+  const { error, isSubmiting, submit } = useCategoriesForm(() => {
+    toast.success("ایجاد دسسته بندی با موفقیت انجام شد");
+    resetForm();
+  });
+
+  const resetForm = () => {
+    setTitle("");
+    setSlug("");
+    setDescription("");
+    setIconFile(null);
+    dispatchFilters({ type: "filters/reset" });
+  };
 
   return (
     <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={onClose}>
