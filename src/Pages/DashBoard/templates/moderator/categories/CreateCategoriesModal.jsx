@@ -3,6 +3,7 @@ import Modal from "../../../../../Components/Templates/Dashboard/Modal/index";
 import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer";
 import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
+import { Handler } from "leaflet";
 
 const CreateCategoryModal = ({ isOpen, onClose }) => {
   const [title, setTitle] = useState("");
@@ -11,9 +12,9 @@ const CreateCategoryModal = ({ isOpen, onClose }) => {
   const [iconFile, setIconFile] = useState(null);
   const [filters, dispatchFilters] = useReducer(FilterReducer, []);
 
-  const { error, isSubmiting, submit } = useCategoriesForm(() => {
+  const { error, isSubmitting, submit } = useCategoriesForm(() => {
     toast.success("ایجاد دسسته بندی با موفقیت انجام شد");
-    resetForm();
+    handleClose();
   });
 
   const resetForm = () => {
@@ -24,8 +25,17 @@ const CreateCategoryModal = ({ isOpen, onClose }) => {
     dispatchFilters({ type: "filters/reset" });
   };
 
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  const handleSubmit = () => {
+    submit(title, slug, description, iconFile, filters);
+  };
+
   return (
-    <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={onClose}>
+    <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={handleClose}>
       <div className="space-y-4">
         <div>
           <label className="text-sm text-zinc-700 block mb-1">عنوان</label>
@@ -65,14 +75,21 @@ const CreateCategoryModal = ({ isOpen, onClose }) => {
           />
         </div>
 
-        <p className="text-red-500 text-xs">error</p>
+        {error && <p className="text-red-500 text-xs">error</p>}
 
         <div className="flex items-center justify-end gap-2 pt-2">
-          <button className="px-4 py-2 rounded-md bg-zinc-100 text-zinc-600 text-sm">
+          <button
+            className="px-4 py-2 rounded-md bg-zinc-100 text-zinc-600 text-sm"
+            onClick={handleClose}
+          >
             انصراف
           </button>
-          <button className="px-4 py-2 rounded-md bg-blue-500 text-white text-sm disabled:opacity-50">
-            ثبت
+          <button
+            className="px-4 py-2 rounded-md bg-blue-500 text-white text-sm disabled:opacity-50"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "در حال ثبت ..." : "ثبت"}
           </button>
         </div>
       </div>

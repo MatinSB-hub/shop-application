@@ -7,12 +7,17 @@ export const getAllCategories = async () => {
 };
 
 export const createCategory = async (formData) => {
-  const { data } = await api.post("/category", { formData });
-  return data;
+  try {
+    console.log([...formData.entries()]);
+    const { data } = await api.post("/category", formData);
+    return data;
+  } catch (err) {
+    console.log(err.response);
+  }
 };
 
 export const updateCategory = async (categoryId, formData) => {
-  const { data } = await api.put(`/category/${categoryId}`, { formData });
+  const { data } = await api.put(`/category/${categoryId}`, formData);
   return data;
 };
 
@@ -21,7 +26,6 @@ export const removeCategory = async (categoryId) => {
   return data;
 };
 
-
 //subCategory
 export const getAllSubCategories = async () => {
   const { data } = await api.get("/category/sub");
@@ -29,12 +33,12 @@ export const getAllSubCategories = async () => {
 };
 
 export const createSubCategory = async (formData) => {
-  const { data } = await api.post("/category/sub", { formData });
+  const { data } = await api.post("/category/sub", formData);
   return data;
 };
 
 export const updateSubCategory = async (categoryId, formData) => {
-  const { data } = await api.put(`/category/sub/${categoryId}`, { formData });
+  const { data } = await api.put(`/category/sub/${categoryId}`, formData);
   return data;
 };
 
