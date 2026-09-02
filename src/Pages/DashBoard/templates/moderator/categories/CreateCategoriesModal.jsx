@@ -5,7 +5,7 @@ import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
 import { Handler } from "leaflet";
 
-const CreateCategoryModal = ({ isOpen, onClose }) => {
+const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
@@ -30,8 +30,9 @@ const CreateCategoryModal = ({ isOpen, onClose }) => {
     onClose();
   };
 
-  const handleSubmit = () => {
-    submit(title, slug, description, iconFile, filters);
+  const handleSubmit = async () => {
+    await submit(title, slug, description, iconFile, filters);
+    reFetchCategories();
   };
 
   return (

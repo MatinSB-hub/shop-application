@@ -158,7 +158,7 @@ function ModeratorCategoriesTable() {
           onCancel={() => setDeletingCategory(null)}
           isLoading={isDeleting}
         />
-        <CreateCategoryModal isOpen={isOpen} onClose={toggleModal} />
+        <CreateCategoryModal isOpen={isOpen} onClose={toggleModal} reFetchCategories={reFetchCategories}/>
       </Table>
     </>
   );
