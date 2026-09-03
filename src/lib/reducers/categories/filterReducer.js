@@ -16,15 +16,15 @@ function FilterReducer(filters, action) {
     }
     case "filters/fieldChange": {
       return filters.map((filter, i) =>
-        i === filters.payload.index
+        i === action.payload.index
           ? { ...filter, [action.payload.field]: action.payload.value }
           : filter,
       );
     }
     case "filters/optionsChange": {
       return filters.map((filter, i) =>
-        i === filters.payload.index
-          ? { ...filter, options: [action.payload.options] }
+        i === action.payload.index
+          ? { ...filter, options: action.payload.options }
           : filter,
       );
     }

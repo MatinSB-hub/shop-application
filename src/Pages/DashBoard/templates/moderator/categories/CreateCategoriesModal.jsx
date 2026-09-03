@@ -4,6 +4,7 @@ import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer"
 import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import FiltersEditor from "./FiltersEditor";
 
 const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   const [title, setTitle] = useState("");
@@ -77,6 +78,8 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
             onChange={(e) => setIconFile(e.target.files[0] || null)}
           />
         </div>
+
+        <FiltersEditor filters={filters} dispatch={dispatchFilters} />
 
         {error && <p className="text-red-500 text-xs">error</p>}
 
