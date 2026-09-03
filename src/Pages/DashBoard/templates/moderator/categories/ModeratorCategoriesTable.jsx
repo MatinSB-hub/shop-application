@@ -28,6 +28,7 @@ function ModeratorCategoriesTable() {
   };
 
   const { isLoading, categories, reFetchCategories, error } = useCategories();
+  console.log(categories);
 
   const handleRemove = async () => {
     setIsDeleting(true);
@@ -158,7 +159,11 @@ function ModeratorCategoriesTable() {
           onCancel={() => setDeletingCategory(null)}
           isLoading={isDeleting}
         />
-        <CreateCategoryModal isOpen={isOpen} onClose={toggleModal} reFetchCategories={reFetchCategories}/>
+        <CreateCategoryModal
+          isOpen={isOpen}
+          onClose={toggleModal}
+          reFetchCategories={reFetchCategories}
+        />
       </Table>
     </>
   );

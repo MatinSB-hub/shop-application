@@ -1,9 +1,9 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import Modal from "../../../../../Components/Templates/Dashboard/Modal/index";
 import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer";
 import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
-import { Handler } from "leaflet";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   const [title, setTitle] = useState("");
@@ -12,9 +12,12 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   const [iconFile, setIconFile] = useState(null);
   const [filters, dispatchFilters] = useReducer(FilterReducer, []);
 
+  useEffect(() => console.log("iconFile:", iconFile), [iconFile]);
+
   const { error, isSubmitting, submit } = useCategoriesForm(() => {
     toast.success("ایجاد دسسته بندی با موفقیت انجام شد");
     handleClose();
+    reFetchCategories();
   });
 
   const resetForm = () => {
@@ -31,8 +34,7 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   };
 
   const handleSubmit = async () => {
-    await submit(title, slug, description, iconFile, filters);
-    reFetchCategories();
+    const result = await submit(title, slug, description, iconFile, filters);
   };
 
   return (
@@ -90,7 +92,11 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "در حال ثبت ..." : "ثبت"}
+            {isSubmitting ? (
+              <AiOutlineLoading3Quarters className="animate-spin" />
+            ) : (
+              "ثبت"
+            )}
           </button>
         </div>
       </div>
