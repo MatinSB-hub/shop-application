@@ -37,7 +37,7 @@ function FiltersEditor({ filters, dispatch }) {
       <div className="space-y-3 ">
         {filters.map((filter, index) => (
           <div
-            key={filter.slug}
+            key={filter.index}
             className="border border-zinc-200 rounded-md p-3 space-y-2"
           >
             <div className="flex items-center gap-2">

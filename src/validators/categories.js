@@ -1,5 +1,4 @@
 import z, { file, nullable, optional, string } from "zod";
-import { iconNames as allLucideIconNames } from "lucide-react/dynamic";
 
 export const categoriesSchema = z.object({
   title: string()
@@ -8,7 +7,7 @@ export const categoriesSchema = z.object({
     .max(20, "عنوان باید حداکثر 20 کرکتر باشد"),
   slug: string()
     .trim()
-    .regex(/^[a-zA-Z]+$/, "لینک باید فقط شامل حروف انگلیسی باشد")
+    .regex(/^[a-zA-Z1-9]+$/, "لینک باید فقط شامل حروف انگلیسی باشد")
     .min(3, "لینک باید حداقل 3 کرکتر باشد")
     .max(20, "لینک باید حداکثر 20 کرکتر باشد"),
   description: optional(

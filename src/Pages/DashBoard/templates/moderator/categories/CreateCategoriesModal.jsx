@@ -1,19 +1,33 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import Modal from "../../../../../Components/Templates/Dashboard/Modal/index";
 import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer";
 import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import FiltersEditor from "./FiltersEditor";
+import { BiImageAdd } from "react-icons/bi";
+import { useAsync } from "react-select/async";
 
 const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
+  const inputRef = useRef(null);
+
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [iconFile, setIconFile] = useState(null);
+  const [url, setUrl] = useState(null);
   const [filters, dispatchFilters] = useReducer(FilterReducer, []);
 
-  useEffect(() => console.log("iconFile:", iconFile), [iconFile]);
+  useEffect(() => {
+    if (iconFile) {
+      const newURL = URL.createObjectURL(iconFile);
+      setUrl(newURL);
+
+      return () => {
+        (URL.revokeObjectURL(newURL), setUrl(null));
+      };
+    }
+  }, [iconFile]);
 
   const { error, isSubmitting, submit } = useCategoriesForm(() => {
     toast.success("ایجاد دسسته بندی با موفقیت انجام شد");
@@ -68,17 +82,34 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
           />
         </div>
 
-        <div>
+        <div className="">
           <label className="text-sm text-zinc-700 block mb-1">
             آیکون (اختیاری)
           </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setIconFile(e.target.files[0] || null)}
-          />
-        </div>
+          <div className="flex gap-2">
+            <input
+              ref={inputRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => setIconFile(e.target.files[0] || null)}
+              className="invisible hidden"
+            />
 
+            {!url && (
+              <button
+                onClick={() => inputRef.current?.click()}
+                type="button"
+                className="w-20 h-20 aspect-square rounded-md primary-border border-dashed flex flex-col items-center justify-center gap-1 text-zinc-500 hover:bg-zinc-50 hover:text-blue-500 transition-colors p-3"
+              >
+                <BiImageAdd className="text-xl" />
+                <span className="text-[11px]">افزودن آیکن</span>
+              </button>
+            )}
+            {url && (
+              <img src={url} className="w-25 h-25 rounded-sm object-cover" />
+            )}
+          </div>
+        </div>
         <FiltersEditor filters={filters} dispatch={dispatchFilters} />
 
         {error && <p className="text-red-500 text-xs">error</p>}
