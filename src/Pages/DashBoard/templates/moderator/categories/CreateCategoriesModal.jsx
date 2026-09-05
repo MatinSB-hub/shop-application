@@ -7,6 +7,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import FiltersEditor from "./FiltersEditor";
 import { BiImageAdd } from "react-icons/bi";
 import { useAsync } from "react-select/async";
+import { HiX } from "react-icons/hi";
 
 const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   const inputRef = useRef(null);
@@ -17,6 +18,12 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   const [iconFile, setIconFile] = useState(null);
   const [url, setUrl] = useState(null);
   const [filters, dispatchFilters] = useReducer(FilterReducer, []);
+
+  const removeIcon = () => {
+    URL.revokeObjectURL(url);
+    setIconFile(null);
+    setUrl(null);
+  };
 
   useEffect(() => {
     if (iconFile) {
@@ -106,7 +113,10 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
               </button>
             )}
             {url && (
-              <img src={url} className="w-25 h-25 rounded-sm object-cover" />
+              <div className="flex relative">
+                <img src={url} className="w-25 h-25 rounded-sm object-cover" />
+                <HiX className="absolute -left-1 -top-1 w-5 h-5 bg-red-600 rounded-md p-0.5 text-white" onClick={removeIcon}/>
+              </div>
             )}
           </div>
         </div>
