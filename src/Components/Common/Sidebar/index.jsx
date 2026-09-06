@@ -1,3 +1,4 @@
+import BackTohome from "../../Templates/Dashboard/backTohome";
 import Logout from "../../Templates/Dashboard/Logout";
 import ModeratorLinks from "../../Templates/Dashboard/ModeratorLinks";
 
@@ -9,7 +10,10 @@ const index = () => {
           <ModeratorLinks />
         </main>
       </div>
-      <Logout />
+      <div>
+        <BackTohome />
+        <Logout />
+      </div>
     </aside>
   );
 };

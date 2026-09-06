@@ -18,7 +18,7 @@ const Buttons = () => {
       {isLoading ? (
         <span className="bg-[#2A2D53]">درحال بارگذاری ...</span>
       ) : user ? (
-        <Link to="/dashboard" className="bg-[#2A2D53]">
+        <Link to="/dashboard/moderator" className="bg-[#2A2D53]">
           پنل کاربری
         </Link>
       ) : (
