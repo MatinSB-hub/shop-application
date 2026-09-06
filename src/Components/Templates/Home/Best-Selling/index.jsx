@@ -16,7 +16,7 @@ const BestSelling = () => {
 
         {!isLoading &&
           products.length &&
-          products.map((product) => <ProductCard key={product._id} {...product}/>)}
+          products.slice(0,5).map((product) => <ProductCard key={product._id} {...product}/>)}
       </div>
     </section>
   );
