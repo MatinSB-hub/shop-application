@@ -9,7 +9,7 @@ function useProducts(limit = 10) {
   const [error, setError] = useState([]);
 
   const fetchProducts = async () => {
-    setIsLoading(false);
+    setIsLoading(true);
     setError("");
 
     try {
