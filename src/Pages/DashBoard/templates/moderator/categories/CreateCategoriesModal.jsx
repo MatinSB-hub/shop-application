@@ -25,6 +25,11 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
     setUrl(null);
   };
 
+  const addIcon = (file) => {
+    const newURL = URL.createObjectURL(file);
+    setUrl(newURL);
+  };
+
   useEffect(() => {
     if (iconFile) {
       const newURL = URL.createObjectURL(iconFile);
@@ -115,7 +120,10 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
             {url && (
               <div className="flex relative">
                 <img src={url} className="w-25 h-25 rounded-sm object-cover" />
-                <HiX className="absolute -left-1 -top-1 w-5 h-5 bg-red-600 rounded-md p-0.5 text-white" onClick={removeIcon}/>
+                <HiX
+                  className="absolute -left-1 -top-1 w-5 h-5 bg-red-600 rounded-md p-0.5 text-white"
+                  onClick={removeIcon}
+                />
               </div>
             )}
           </div>
