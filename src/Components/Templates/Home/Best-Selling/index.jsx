@@ -26,8 +26,15 @@ const BestSelling = () => {
       />
 
       <div className="mt-10 w-full border rounded-2xl p-4 border-neutral-300 divide-x divide-neutral-200 gap-5">
-        {isLoading &&
-          Array.from({ length: 55 }).map((_, index) => <ProductCardSkeleton />)}
+        {isLoading && (
+          <Swiper slidesPerView={5}>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <SwiperSlide>
+                <ProductCardSkeleton />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
 
         {!isLoading && error && (
           <p className="col-span-5 text-center text-red-500 py-8">{error}</p>

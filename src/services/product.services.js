@@ -19,15 +19,22 @@ export const getAllProducts = async (params) => {
   return data;
 };
 
+export const getOneProduct = async (slug) => {
+  const { data } = await api.get(`products/${slug}`);
+  return data;
+};
+
 export const removeProduct = async (productId) => {
   const res = await api.delete(`/products/${productId}`);
   return res;
 };
 
-export const updateProducts = async(productId,formData)=>{
-  console.log([...formData.entries()])
-  const res = await api.patch(`/products/${productId}`,[...formData.entries()])
+export const updateProducts = async (productId, formData) => {
+  console.log([...formData.entries()]);
+  const res = await api.patch(`/products/${productId}`, [
+    ...formData.entries(),
+  ]);
   return res;
-}
+};
 
 export default createProduct;

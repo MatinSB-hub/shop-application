@@ -3,21 +3,29 @@ import Description from "../Components/Templates/Product/Content/Description";
 import HeroDetails from "../Components/Templates/Product/Content/HeroDetails";
 import RelatedProducts from "../Components/Templates/Product/Content/RelatedProducts";
 import Sidebar from "../Components/Templates/Product/Sidebar";
+import useProduct from "../hooks/useProduct";
 
 const ProductPage = () => {
   // get {productID} from params !
+
+  const { product, isLoading, error } = useProduct("ps5");
+  console.log(product)
   return (
     <main
       id="product-content"
       className="w-[95%] mx-auto grid grid-cols-8 gap-5  my-10"
     >
-      <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
-        <HeroDetails product={{}} />
-        <Description />
-        <RelatedProducts />
-        <ProductComments />
-      </section>
-      <Sidebar />
+      {!isLoading && !error ? (
+        <>
+          <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
+            <HeroDetails {...product} />
+            <Description description={product.description}/>
+            <RelatedProducts />
+            <ProductComments />
+          </section>
+          <Sidebar />
+        </> 
+      ) : "loading skeleton"}
     </main>
   );
 };
