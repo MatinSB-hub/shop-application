@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { getAllProducts, getOneProduct } from "../services/product.services";
 
-function useProduct(slug) {
+function useProduct(productID) {
   const [product, setProduct] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
-  const [error, setError] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchProduct = async () => {
-    setIsLoading(true);
-    setError("");
-
     try {
-      const res = await getOneProduct(slug);
-      setProduct(res?.data?.product)
+      setIsLoading(true);
+      setError("");
+      const res = await getOneProduct(productID);
+      setProduct(res?.data?.product || []);
     } catch (err) {
       setError(err);
       console.log("خطا در دریافت محصول");
@@ -22,8 +21,10 @@ function useProduct(slug) {
   };
 
   useEffect(() => {
-    fetchProduct();
-  }, [slug]);
+    if (productID) {
+      fetchProduct();
+    }
+  }, [productID]);
 
   return {
     product,

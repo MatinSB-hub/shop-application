@@ -20,7 +20,7 @@ export const getAllProducts = async (params) => {
 };
 
 export const getOneProduct = async (slug) => {
-  const { data } = await api.get(`products/${slug}`);
+  const { data } = await api.get(`/products/${slug}`);
   return data;
 };
 

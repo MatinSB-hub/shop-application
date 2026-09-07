@@ -1,3 +1,4 @@
+import { useParams } from "react-router";
 import ProductComments from "../Components/Templates/Product/Content/Comments";
 import Description from "../Components/Templates/Product/Content/Description";
 import HeroDetails from "../Components/Templates/Product/Content/HeroDetails";
@@ -6,10 +7,10 @@ import Sidebar from "../Components/Templates/Product/Sidebar";
 import useProduct from "../hooks/useProduct";
 
 const ProductPage = () => {
-  // get {productID} from params !
+  const { productID } = useParams();
 
-  const { product, isLoading, error } = useProduct("ps5");
-  console.log(product)
+  const { product, isLoading, error } = useProduct(productID);
+  console.log(product);
   return (
     <main
       id="product-content"
@@ -19,13 +20,15 @@ const ProductPage = () => {
         <>
           <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
             <HeroDetails {...product} />
-            <Description description={product.description}/>
+            <Description description={product.description} />
             <RelatedProducts />
             <ProductComments />
           </section>
           <Sidebar />
-        </> 
-      ) : "loading skeleton"}
+        </>
+      ) : (
+        "loading skeleton"
+      )}
     </main>
   );
 };
