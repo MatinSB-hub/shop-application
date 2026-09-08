@@ -24,7 +24,7 @@ const ProductPage = () => {
             <RelatedProducts />
             <ProductComments />
           </section>
-          <Sidebar />
+          <Sidebar {...product}/>
         </>
       ) : (
         "loading skeleton"
