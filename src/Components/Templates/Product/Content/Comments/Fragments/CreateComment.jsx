@@ -1,35 +1,13 @@
 const CreateComment = () => {
   return (
     <div className="col-span-3 space-y-3 bg-slate-50 rounded-lg border border-slate-200 max-h-max sticky top-4">
-      <div>
-        <label
-          htmlFor="comment-fullName"
-          className="text-xs select-none cursor-pointer text-slate-500"
-        >
-          نام شما:
-        </label>
-        <input
-          type="text"
-          id="comment-fullName"
-          className="w-full h-10 rounded-md border border-slate-200 bg-white mt-1.5"
-          placeholder="مثال: امین سعیدی"
-        />
-      </div>
 
       <div>
         <label
-          htmlFor="comment-email"
           className="text-xs select-none cursor-pointer text-slate-500"
         >
-          پست‌الکترونیکی:
+          امتیاز دهی
         </label>
-        <input
-          type="email"
-          id="comment-email"
-          className="w-full h-10 rounded-md border border-slate-200 bg-white mt-1.5"
-          placeholder="example: radfront@sabzshop.ir"
-          dir="ltr"
-        />
       </div>
 
       <div>
@@ -37,7 +15,7 @@ const CreateComment = () => {
           htmlFor="comment-content"
           className="text-xs select-none cursor-pointer text-slate-500"
         >
-          پست‌الکترونیکی:
+          متن کامنت
         </label>
         <textarea
           name="comment-content"
