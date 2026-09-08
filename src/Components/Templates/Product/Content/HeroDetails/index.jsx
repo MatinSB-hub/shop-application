@@ -15,7 +15,7 @@ const HeroDetails = ({ name, description, customFields,images }) => {
               <img
                 src={`https://shopino.iran.liara.run/images/products/${images && images[0]}`}
                 alt="Product"
-                className="size-full w-110 h-110 rounded-lg"
+                className="size-full w-110 h-110 rounded-lg object-center"
               />
             </div>
             <div className="flex flex-col justify-between h-full">
