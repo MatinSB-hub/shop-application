@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 const CreateComment = ({ productID }) => {
   const [commentText, setCommentText] = useState("");
-  const [selectedRate, setSelectedRate] = useState(null);
+  const [selectedRate, setSelectedRate] = useState(0);
 
   const { submit, isLoading, error } = useComment(() => {
     setCommentText("");
@@ -14,13 +14,7 @@ const CreateComment = ({ productID }) => {
   });
 
   const handleSubmitComment = () => {
-    const commentData = {
-      productId: productID,
-      content: commentText,
-      rating: selectedRate,
-    };
-    submit(commentData);
-    console.log(commentData)
+    submit(productID, commentText, selectedRate);
   };
   return (
     <div className="col-span-3 space-y-3 bg-slate-50 rounded-lg border border-slate-200 max-h-max sticky top-4">
@@ -49,8 +43,9 @@ const CreateComment = ({ productID }) => {
       {!isLoading && error && <p className="text-sm text-red-500">{error}</p>}
 
       <button
-        className="w-full text-xs h-10 bg-slate-800 text-white focus-within:ring-4! ring-slate-600/50"
+        className="w-full text-xs h-10 bg-slate-800 text-white focus-within:ring-4! ring-slate-600/501 disabled:bg-slate-500"
         onClick={handleSubmitComment}
+        disabled={isLoading}
       >
         {isLoading ? "درحال ثبت..." : "ثبت نظر"}
       </button>
