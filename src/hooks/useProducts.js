@@ -17,7 +17,7 @@ function useProducts(limit = 10) {
       setProducts(res?.data?.products || []);
       setPagination(res?.data?.pagination || null);
     } catch (err) {
-      setError(err?.response?.data?.message || "خطا در دریافت محصولات");
+      setError(err?.response?.data?.message || "خطا در یافت محصولات");
       console.log("خطا در دریافت محصولات");
     } finally {
       setIsLoading(false);

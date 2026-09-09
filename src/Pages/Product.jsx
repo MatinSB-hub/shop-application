@@ -6,11 +6,11 @@ import RelatedProducts from "../Components/Templates/Product/Content/RelatedProd
 import Sidebar from "../Components/Templates/Product/Sidebar";
 import useProduct from "../hooks/useProduct";
 
+
 const ProductPage = () => {
   const { productID } = useParams();
 
   const { product, isLoading, error } = useProduct(productID);
-  console.log(product);
   return (
     <main
       id="product-content"
@@ -22,7 +22,7 @@ const ProductPage = () => {
             <HeroDetails {...product} />
             <Description description={product?.description} />
             <RelatedProducts />
-            <ProductComments />
+            <ProductComments productID={productID}/>
           </section>
           <Sidebar {...product}/>
         </>

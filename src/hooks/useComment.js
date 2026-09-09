@@ -14,7 +14,7 @@ function useComment(onSuccess) {
       onSuccess();
     } catch (err) {
       setError(err?.response?.data?.message || "خطا در ثبت کامنت");
-      console.log("خطا در ثبت کامنت");
+      console.log(err);
     } finally {
       setIsLoading(false);
     }

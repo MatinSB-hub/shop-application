@@ -1,10 +1,10 @@
 import { Link } from "react-router";
 
-const ProductCard = ({ name, slug, sellers }) => {
+const ProductCard = ({ name, _id, sellers }) => {
   const price = sellers && sellers[0].price;
   return (
     <article className="w-full h-64 relative space-y-3 flex pl-2 justify-between flex-col">
-      <Link className="absolute size-full" to={`/product/${slug}`} />
+      <Link className="absolute size-full" to={`/product/${_id}`} />
 
       <header className="h-34.5 flex-center w-full">
         <img
