@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import StarRate from "./StarRate";
 import useComment from "../../../../../../hooks/useComment";
 import { toast } from "sonner";
+import { authContext } from "../../../../../../Contexts/authProvider";
+import { useNavigate } from "react-router";
 
 const CreateComment = ({ productID }) => {
+  const Navigate = useNavigate();
+
   const [commentText, setCommentText] = useState("");
   const [selectedRate, setSelectedRate] = useState(0);
+  const { user } = useContext(authContext);
 
   const { submit, isLoading, error } = useComment(() => {
     setCommentText("");
@@ -14,7 +19,16 @@ const CreateComment = ({ productID }) => {
   });
 
   const handleSubmitComment = () => {
-    submit(productID, commentText, selectedRate);
+    if (user) {
+      submit(productID, commentText.trim(), selectedRate);
+    } else {
+      toast.info("برای ثبت کامنت وارد حساب کاربری خود شوید", {
+        action: {
+          label: "ورود به حساب",
+          onClick: () => Navigate("/auth"),
+        },
+      });
+    }
   };
   return (
     <div className="col-span-3 space-y-3 bg-slate-50 rounded-lg border border-slate-200 max-h-max sticky top-4">
