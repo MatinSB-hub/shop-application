@@ -13,7 +13,7 @@ function useProduct(productID) {
       const res = await getOneProduct(productID);
       setProduct(res?.data?.product || []);
     } catch (err) {
-      setError(err);
+      setError(err?.response?.data?.messdage || "خطا در دریافت محصول");
       console.log("خطا در دریافت محصول");
     } finally {
       setIsLoading(false);

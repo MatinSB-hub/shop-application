@@ -12,7 +12,7 @@ function useSubCategories() {
       const { data } = await getAllSubCategories();
       setSubCategories(data?.categories || []);
     } catch (err) {
-      setError("خطا در ردیافت زیر دسته بندی ها");
+      setError(err?.response?.data?.message || "خطا در ردیافت زیر دسته بندی ها");
       console.log("error:", err);
     } finally {
       setIsLoading(false);

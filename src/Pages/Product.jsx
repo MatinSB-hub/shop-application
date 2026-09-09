@@ -20,7 +20,7 @@ const ProductPage = () => {
         <>
           <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
             <HeroDetails {...product} />
-            <Description description={product.description} />
+            <Description description={product?.description} />
             <RelatedProducts />
             <ProductComments />
           </section>

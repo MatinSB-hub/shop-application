@@ -12,7 +12,7 @@ function useCategories() {
       const { data } = await getAllCategories();
       setCategories(data?.categories || []);
     } catch (err) {
-      setError("خطا در ردیافت دسته بندی ها");
+      setError(err?.response?.data?.message || "خطا در ردیافت دسته بندی ها");
       console.log("error:", err);
     } finally {
       setIsLoading(false);

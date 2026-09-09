@@ -14,11 +14,11 @@ function useUsers(limit) {
 
     try {
       const res = await getAllUsers({ page, limit });
-      console.log("here is useUsers:",res)
+      console.log("here is useUsers:", res);
       setUsers(res?.data?.users || []);
       setPagination(res?.data?.pagination || null);
     } catch (err) {
-      setError(err);
+      setError(err?.response?.data?.message || "خطا در دریافت کاربران");
       console.log("خطا در دریافت کاربران");
     } finally {
       setIsLoading(false);

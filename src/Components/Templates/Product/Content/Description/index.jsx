@@ -9,7 +9,7 @@ const Description = ({description}) => {
 
       <FullReadContainer isOpen={false} onToggle={() => {}}>
         <div className="text-sm text-justify text-slate-700 font-normal">
-          {description || "فاقد توضیحات"}
+          { "فاقد توضیحات"}
         </div>
       </FullReadContainer>
     </div>

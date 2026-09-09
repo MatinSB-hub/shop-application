@@ -5,8 +5,8 @@ function useProducts(limit = 10) {
   const [products, setProducts] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [page, setPage] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
-  const [error, setError] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -17,7 +17,7 @@ function useProducts(limit = 10) {
       setProducts(res?.data?.products || []);
       setPagination(res?.data?.pagination || null);
     } catch (err) {
-      setError(err);
+      setError(err?.response?.data?.message || "خطا در دریافت محصولات");
       console.log("خطا در دریافت محصولات");
     } finally {
       setIsLoading(false);

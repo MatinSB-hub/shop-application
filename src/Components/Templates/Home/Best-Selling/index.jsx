@@ -40,7 +40,7 @@ const BestSelling = () => {
           <p className="col-span-5 text-center text-red-500 py-8">{error}</p>
         )}
 
-        {!isLoading && products.length && (
+        {!isLoading && products?.length > 0 && (
           <Swiper
             slidesPerView={5}
             modules={[Autoplay]}
@@ -64,11 +64,11 @@ const BestSelling = () => {
             }}
             loop
           >
-            {products.map((product) => (
+            {/* {products?.map((product) => (
               <SwiperSlide key={product._id}>
                 <ProductCard {...product} />
               </SwiperSlide>
-            ))}
+            ))} */}
           </Swiper>
         )}
       </div>
