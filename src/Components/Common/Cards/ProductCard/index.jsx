@@ -6,7 +6,7 @@ const ProductCard = ({ name, slug, sellers }) => {
     <article className="w-full h-64 relative space-y-3 flex pl-2 justify-between flex-col">
       <Link className="absolute size-full" to={`/product/${slug}`} />
 
-      <header className="h-[138px] flex-center w-full">
+      <header className="h-34.5 flex-center w-full">
         <img
           src="/assets/static/product1.png"
           className="h-full object-cover"

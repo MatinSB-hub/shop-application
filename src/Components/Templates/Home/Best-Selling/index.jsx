@@ -64,11 +64,11 @@ const BestSelling = () => {
             }}
             loop
           >
-            {/* {products?.map((product) => (
+            {products?.map((product) => (
               <SwiperSlide key={product._id}>
                 <ProductCard {...product} />
               </SwiperSlide>
-            ))} */}
+            ))}
           </Swiper>
         )}
       </div>
