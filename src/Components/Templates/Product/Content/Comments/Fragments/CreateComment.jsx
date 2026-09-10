@@ -24,7 +24,7 @@ const CreateComment = ({ productID }) => {
   });
 
   useEffect(() => {
-    if (loc.state.scrollTo === "comment") {
+    if (loc.state?.scrollTo === "comment") {
       commentRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "start",
