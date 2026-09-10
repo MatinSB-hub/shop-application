@@ -1,14 +1,21 @@
 import React, { useContext, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router";
+import {
+  redirect,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 import validate from "../validators";
 import * as authServices from "../services/auth.services";
 import { toast } from "sonner";
 import { sendOTPSchema, verifyOTPSchema } from "../validators/auth";
 import useCountDown from "./useCountDown";
 import { authContext } from "../Contexts/authProvider";
+import { isSafeUrl } from "../lib/helpers/url";
 
 function useAuth() {
   const [saerchParams, setSearchParams] = useSearchParams();
+  const loc = useLocation();
 
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");
@@ -66,8 +73,15 @@ function useAuth() {
     toast.success("ورود موفق");
 
     const redirectTo = saerchParams.get("redirect");
+    if (isSafeUrl(redirectTo)) {
+      navigate(
+        redirectTo ? redirectTo : "/",
+        redirectTo && { state: { scrollTo: "comment" } },
+      )
+    }else{
+        navigate("/")
+      }
 
-    navigate(redirectTo ? redirectTo : "/" , redirectTo && {state: {scrollTo:"comment"}});
     refreshUser();
   };
 
