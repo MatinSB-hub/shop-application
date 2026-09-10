@@ -8,6 +8,7 @@ const createProduct = async (formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
+    
     return data;
   } catch (err) {
     console.log(err.response);

@@ -177,6 +177,7 @@ function ModeratorProductsTable() {
         isOpen={isDrawerShow}
         onToggle={toggleDrawer}
         editingMode={isEditing}
+        refetch={reFetchProducts}
       />
     </>
   );

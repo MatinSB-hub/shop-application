@@ -14,7 +14,7 @@ import ImageUploadField from "./ImageUploadField";
 import useProducts from "../../../../../hooks/useProducts";
 
 // mode: CREATE | EDIT
-const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
+const ProductDrawer = ({ isOpen, onToggle, editingMode, refetch }) => {
   const { isLoading: categoriesIsLoading, categories } = useCategories();
   const [error, setError] = useState(null);
   const [isSubmiting, setIsSubmiting] = useState(null);
@@ -63,7 +63,7 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
       setIsSubmiting(true);
       if (!!editingMode) {
         const data = await updateProducts(editingMode._id, buildFormData());
-        console.log("data edit:",data)
+        console.log("data edit:", data);
         toast.success(`محصول ${form.name}  با موفقیت ویرایش شد`);
       } else {
         await createProduct(buildFormData());
@@ -71,6 +71,7 @@ const ProductDrawer = ({ isOpen, onToggle, editingMode }) => {
       }
       resetForm();
       onToggle();
+      refetch();  
     } catch (err) {
       setError(err.response?.data?.message || "خطایی رخ داده است");
     } finally {
