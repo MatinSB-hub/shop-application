@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import validate from "../validators";
 import * as authServices from "../services/auth.services";
 import { toast } from "sonner";
@@ -8,6 +8,8 @@ import useCountDown from "./useCountDown";
 import { authContext } from "../Contexts/authProvider";
 
 function useAuth() {
+  const [saerchParams, setSearchParams] = useSearchParams();
+
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");
   const [isSentOtp, setIsSentOtp] = useState(false);
@@ -63,7 +65,9 @@ function useAuth() {
 
     toast.success("ورود موفق");
 
-    navigate("/");
+    const redirectTo = saerchParams.get("redirect");
+
+    navigate(redirectTo ? redirectTo : "/");
     refreshUser();
   };
 

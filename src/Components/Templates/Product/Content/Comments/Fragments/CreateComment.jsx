@@ -4,8 +4,11 @@ import useComment from "../../../../../../hooks/useComment";
 import { toast } from "sonner";
 import { authContext } from "../../../../../../Contexts/authProvider";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 const CreateComment = ({ productID }) => {
+  const loc = useLocation();
+
   const Navigate = useNavigate();
 
   const [commentText, setCommentText] = useState("");
@@ -25,7 +28,7 @@ const CreateComment = ({ productID }) => {
       toast.info("برای ثبت کامنت وارد حساب کاربری خود شوید", {
         action: {
           label: "ورود به حساب",
-          onClick: () => Navigate("/auth"),
+          onClick: () => Navigate(`/auth?redirect=${loc.pathname}`),
         },
       });
     }
