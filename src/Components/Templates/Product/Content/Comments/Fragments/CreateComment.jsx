@@ -39,7 +39,8 @@ const CreateComment = ({ productID }) => {
       toast.info("برای ثبت کامنت وارد حساب کاربری خود شوید", {
         action: {
           label: "ورود به حساب",
-          onClick: () => Navigate(`/auth?redirect=${loc.pathname}`),
+          onClick: () =>
+            Navigate(`/auth`, { state: { redirect: loc.pathname } }),
         },
       });
     }

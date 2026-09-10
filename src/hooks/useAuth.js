@@ -14,8 +14,8 @@ import { authContext } from "../Contexts/authProvider";
 import { isSafeUrl } from "../lib/helpers/url";
 
 function useAuth() {
-  const [saerchParams, setSearchParams] = useSearchParams();
   const loc = useLocation();
+  console.log(loc);
 
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");
@@ -72,15 +72,17 @@ function useAuth() {
 
     toast.success("ورود موفق");
 
-    const redirectTo = saerchParams.get("redirect");
-    if (isSafeUrl(redirectTo)) {
-      navigate(
-        redirectTo ? redirectTo : "/",
-        redirectTo && { state: { scrollTo: "comment" } },
-      )
-    }else{
-        navigate("/")
+    if (loc?.state?.redirect) {
+      const redirectTo = loc?.state?.redirect;
+      if (isSafeUrl(redirectTo)) {
+        navigate(
+          redirectTo ? redirectTo : "/",
+          redirectTo && { state: { scrollTo: "comment" } },
+        );
       }
+    } else {
+      navigate("/");
+    }
 
     refreshUser();
   };
