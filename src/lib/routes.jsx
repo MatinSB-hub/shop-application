@@ -33,7 +33,6 @@ const router = createBrowserRouter([
       { path: "product/:productID", element: <ProductPage /> },
       { path: "blog/:blogID", element: <BlogPage /> },
       { path: "forbidden", element: <Forbidden /> },
-
       {
         path: "auth",
         element: <AuthLayout />,
@@ -64,9 +63,9 @@ const router = createBrowserRouter([
           { index: true, loader: () => redirect("home") },
           { path: "home", element: <div>home page</div> },
           { path: "orders", element: <div>orders page</div> },
-          { path: "products", element: <ModeratorsProducts/> },
-          { path: "categories", element: <ModeratorCategories/> },
-          { path: "users", element: <ModeratorUsers/> },
+          { path: "products", element: <ModeratorsProducts /> },
+          { path: "categories", element: <ModeratorCategories /> },
+          { path: "users", element: <ModeratorUsers /> },
         ],
       },
     ],

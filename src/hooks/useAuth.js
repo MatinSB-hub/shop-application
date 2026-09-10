@@ -67,7 +67,7 @@ function useAuth() {
 
     const redirectTo = saerchParams.get("redirect");
 
-    navigate(redirectTo ? redirectTo : "/");
+    navigate(redirectTo ? redirectTo : "/" , redirectTo && {state: {scrollTo:"comment"}});
     refreshUser();
   };
 

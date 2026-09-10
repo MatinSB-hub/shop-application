@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import StarRate from "./StarRate";
 import useComment from "../../../../../../hooks/useComment";
 import { toast } from "sonner";
@@ -7,7 +7,9 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
 
 const CreateComment = ({ productID }) => {
+  const commentRef = useRef();
   const loc = useLocation();
+  console.log("loc comment:", loc);
 
   const Navigate = useNavigate();
 
@@ -20,6 +22,15 @@ const CreateComment = ({ productID }) => {
     setSelectedRate(null);
     toast.success("کامنت با موفقیت ثبت شد");
   });
+
+  useEffect(() => {
+    if (loc.state.scrollTo === "comment") {
+      commentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [loc.state]);
 
   const handleSubmitComment = () => {
     if (user) {
@@ -34,7 +45,10 @@ const CreateComment = ({ productID }) => {
     }
   };
   return (
-    <div className="col-span-3 space-y-3 bg-slate-50 rounded-lg border border-slate-200 max-h-max sticky top-4">
+    <div
+      ref={commentRef}
+      className="col-span-3 space-y-3 bg-slate-50 rounded-lg border border-slate-200 max-h-max sticky top-4"
+    >
       <div>
         <label className="text-xs select-none cursor-pointer text-slate-500">
           امتیاز دهی
