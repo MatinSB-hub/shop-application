@@ -5,7 +5,11 @@ const MiniProduct = ({ name, images }) => {
     <article className="flex items-center gap-4">
       <div className="size-16.5! min-w-16.5!">
         <img
-          src={`https://shopino.iran.liara.run/images/products/${images && images[0]}`}
+          src={
+            images && images[0]
+              ? `https://shopino.iran.liara.run/images/products/${images[0]}`
+              : "/assets/static/product1.png"
+          }
           alt="Product"
           className="size-full "
         />

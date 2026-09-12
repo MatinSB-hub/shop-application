@@ -2,7 +2,8 @@ import ProductColors from "./Fragments/ProductColors";
 import ProductVariants from "./Fragments/ProductVariants";
 import UsefulButtons from "./Fragments/UsefulButtons";
 
-const HeroDetails = ({ name, description, customFields,images }) => {
+const HeroDetails = ({ name, description, customFields, images }) => {
+  console.log("product images:", images);
   return (
     <>
       <section id="product-hero-details">
@@ -13,7 +14,11 @@ const HeroDetails = ({ name, description, customFields,images }) => {
           <div className="grid grid-cols-2 items-start">
             <div className="h-[450px] ">
               <img
-                src={`https://shopino.iran.liara.run/images/products/${images && images[0]}`}
+                src={
+                  images && images[0]
+                    ? `https://shopino.iran.liara.run/images/products/${images[0]}`
+                    : "/assets/static/product1.png"
+                }
                 alt="Product"
                 className="size-full w-110 h-110 rounded-lg object-center"
               />
