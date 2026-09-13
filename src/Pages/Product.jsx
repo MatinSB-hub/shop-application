@@ -6,9 +6,9 @@ import RelatedProducts from "../Components/Templates/Product/Content/RelatedProd
 import Sidebar from "../Components/Templates/Product/Sidebar";
 import useProduct from "../hooks/useProduct";
 
-
 const ProductPage = () => {
   const { productID } = useParams();
+  console.log("productId:", productID);
 
   const { product, isLoading, error } = useProduct(productID);
   return (
@@ -22,9 +22,9 @@ const ProductPage = () => {
             <HeroDetails {...product} />
             <Description description={product?.description} />
             <RelatedProducts />
-            <ProductComments productID={productID}/>
+            <ProductComments productID={productID} />
           </section>
-          <Sidebar {...product}/>
+          <Sidebar {...product} />
         </>
       ) : (
         "loading skeleton"

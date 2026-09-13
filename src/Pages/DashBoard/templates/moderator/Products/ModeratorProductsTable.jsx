@@ -112,7 +112,7 @@ function ModeratorProductsTable() {
               );
               return (
                 <TableRow>
-                  <TableCell>{product.shortIdentifier}</TableCell>
+                  <TableCell>{product._id}</TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>
                     {formatPrice(price)} تومان

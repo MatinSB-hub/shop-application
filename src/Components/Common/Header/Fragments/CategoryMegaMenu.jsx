@@ -8,6 +8,8 @@ function CategoryMegaMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
 
+  console.log("categories:", categories);
+
   const handleOpen = () => {
     setIsOpen(true);
     if (categories.length && !activeCategory) {
@@ -62,16 +64,17 @@ function CategoryMegaMenu() {
                       </Link>
 
                       <ul className="flex! flex-col! gap-1.5!">
-                        {sub.subCategories.map((leaf) => (
-                          <li key={leaf._id}>
-                            <Link
-                              to={`category/${activeCategory.slug}/${sub.slug}/${leaf.slug}`}
-                              className="text-xs text-slate-500 hover:text-blue-600"
-                            >
-                              {leaf.title}
-                            </Link>
-                          </li>
-                        ))}
+                        {sub.subCategories.length > 0 &&
+                          sub.subCategories.map((leaf) => (
+                            <li key={leaf._id}>
+                              <Link
+                                to={`category/${activeCategory.slug}/${sub.slug}/${leaf.slug}`}
+                                className="text-xs text-slate-500 hover:text-blue-600"
+                              >
+                                {leaf.title}
+                              </Link>
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   ))}
