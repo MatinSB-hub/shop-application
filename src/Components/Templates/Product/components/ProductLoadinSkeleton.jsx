@@ -2,7 +2,7 @@ import React from "react";
 
 function ProductLoadinSkeleton() {
   return (
-    <div className="w-full h-screen flex justify-center items-start gap-10 mt-10 **:animate-pulse ">
+    <div className="w-full h-screen flex justify-center items-start gap-10 mt-10 **:animate-custom-pulse ">
       <div className="w-[70%] h-135 border-2 primary-border  rounded-2xl">
         <div className="w-full h-full flex justify-around pt-5">
           <div className="w-[55%] h-[90%] bg-gray-300 rounded-2xl" />

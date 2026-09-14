@@ -2,6 +2,19 @@
 @import url("./../public/css/fonts");
 
 @theme {
+  --animate-custom-pulse: pulse 2s linear infinite;
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 90%;
+    }
+    50% {
+      opacity: 70%;
+    }
+  }
+}
+
+@theme {
   --font-IRANSansX: "IRANSansX";
 
   --breakpoint-*: initial;
