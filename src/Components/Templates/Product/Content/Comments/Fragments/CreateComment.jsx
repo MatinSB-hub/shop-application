@@ -6,7 +6,7 @@ import { authContext } from "../../../../../../Contexts/authProvider";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
 
-const CreateComment = ({ productID }) => {
+const CreateComment = ({ productID,reFetchComments }) => {
   const commentRef = useRef();
   const loc = useLocation();
   console.log("loc comment:", loc);
@@ -20,6 +20,7 @@ const CreateComment = ({ productID }) => {
   const { submit, isLoading, error } = useComment(() => {
     setCommentText("");
     setSelectedRate(null);
+    reFetchComments()
     toast.success("کامنت با موفقیت ثبت شد");
   });
 

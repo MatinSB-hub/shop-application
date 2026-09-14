@@ -12,18 +12,20 @@ function useGetProductComments(info) {
       const { data } = await getProductComments(info);
       setComments(data.comments);
     } catch (err) {
-      setError(err?.response?.data?.message);
+      setError(err?.response?.data?.message || "خطایی در دریافت کامت های محصول رخ داده است");
       console.log("err:", err);
     } finally {
       setIsloading(false);
     }
   };
 
+  const reFetchComments = () => fetchComments();
+
   useEffect(() => {
-    fetchComments();
+    reFetchComments();
   }, []);
 
-  return { comments, isLoading, error };
+  return { comments, reFetchComments, isLoading, error };
 }
 
 export default useGetProductComments;
