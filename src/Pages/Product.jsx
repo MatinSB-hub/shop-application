@@ -12,7 +12,7 @@ const ProductPage = () => {
   console.log("productId:", productID);
 
   const { product, isLoading, error } = useProduct(productID);
-  return isLoading && !error ? (
+  return !isLoading && !error ? (
     <main
       id="product-content"
       className="w-[95%] mx-auto grid grid-cols-8 gap-5  my-10"
