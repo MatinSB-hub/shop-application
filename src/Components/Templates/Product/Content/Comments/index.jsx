@@ -9,6 +9,7 @@ const ProductComments = ({ productID }) => {
   const { comments, isLoading, error } = useGetProductComments({
     productId: productID,
     limit: 3,
+    cursor:"",
   });
   console.log("comments:", comments);
   return (

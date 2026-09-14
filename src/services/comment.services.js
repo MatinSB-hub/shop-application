@@ -6,6 +6,6 @@ export const createComment = async (comment) => {
 };
 
 export const getProductComments = async (info) => {
-  const { data } = await api.get("comments", info);
+  const { data } = await api.get("/comments", {params:info});
   return data;
 };

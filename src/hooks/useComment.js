@@ -25,6 +25,7 @@ function useComment(onSuccess) {
         setError("");
         await createComment(commentData);
         onSuccess();
+        console.log("created comment:", commentData);
       } catch (err) {
         setError(err?.response?.data?.message || "خطا در ثبت کامنت");
         console.log(err?.response);
