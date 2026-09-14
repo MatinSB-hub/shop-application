@@ -12,7 +12,7 @@ const HeroDetails = ({ name, description, customFields, images }) => {
             <UsefulButtons />
           </div>
           <div className="grid grid-cols-2 items-start">
-            <div className="h-[450px] ">
+            <div className="h-112.5 ">
               <img
                 src={
                   images && images[0]

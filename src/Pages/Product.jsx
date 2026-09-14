@@ -5,31 +5,30 @@ import HeroDetails from "../Components/Templates/Product/Content/HeroDetails";
 import RelatedProducts from "../Components/Templates/Product/Content/RelatedProducts";
 import Sidebar from "../Components/Templates/Product/Sidebar";
 import useProduct from "../hooks/useProduct";
+import ProductLoadinSkeleton from "../Components/Templates/Product/components/ProductLoadinSkeleton";
 
 const ProductPage = () => {
   const { productID } = useParams();
   console.log("productId:", productID);
 
   const { product, isLoading, error } = useProduct(productID);
-  return (
+  return isLoading && !error ? (
     <main
       id="product-content"
       className="w-[95%] mx-auto grid grid-cols-8 gap-5  my-10"
     >
-      {!isLoading && !error ? (
-        <>
-          <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
-            <HeroDetails {...product} />
-            <Description description={product?.description} />
-            <RelatedProducts />
-            <ProductComments productID={productID} />
-          </section>
-          <Sidebar {...product} />
-        </>
-      ) : (
-        "loading skeleton"
-      )}
+      <>
+        <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
+          <HeroDetails {...product} />
+          <Description description={product?.description} />
+          <RelatedProducts />
+          <ProductComments productID={productID} />
+        </section>
+        <Sidebar {...product} />
+      </>
     </main>
+  ) : (
+    <ProductLoadinSkeleton />
   );
 };
 
