@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { getProductComments } from "../services/comment.services";
 
 function useGetProductComments(info) {
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(false);
   const fetchComments = async () => {
     try {
       setIsloading(true);
       setError("");
-      const data = await getProductComments(info);
-      setComments(data);
+      const { data } = await getProductComments(info);
+      setComments(data.comments);
     } catch (err) {
       setError(err?.response?.data?.message);
       console.log("err:", err);

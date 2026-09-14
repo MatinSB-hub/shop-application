@@ -27,7 +27,7 @@ const ProductComments = ({ productID }) => {
         <div className="col-span-5 ">
           {/* All Comments */}
           <div id="comments-content" className="pt-0! space-y-5">
-            {Array.from({ length: 3 }).map((comment, index) => (
+            {comments.map((comment, index) => (
               <Comment key={index} {...comment} />
             ))}
           </div>
