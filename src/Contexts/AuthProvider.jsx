@@ -18,7 +18,6 @@ function AuthProvider({ children }) {
     }
   };
 
-
   useEffect(() => {
     initAuth();
   }, []);
