@@ -12,23 +12,31 @@ const ProductPage = () => {
   console.log("productId:", productID);
 
   const { product, isLoading, error } = useProduct(productID);
-  return !isLoading && !error ? (
-    <main
-      id="product-content"
-      className="w-[95%] mx-auto grid grid-cols-8 gap-5  my-10"
-    >
-      <>
-        <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
-          <HeroDetails {...product} />
-          <Description description={product?.description} />
-          <RelatedProducts />
-          <ProductComments productID={productID} />
-        </section>
-        <Sidebar {...product} />
-      </>
-    </main>
-  ) : (
-    <ProductLoadinSkeleton />
+  return (
+    <>
+      {!isLoading && !error && (
+        <main
+          id="product-content"
+          className="w-[95%] mx-auto grid grid-cols-8 gap-5  my-10"
+        >
+          <>
+            <section className="col-span-6 space-y-10  *:p-5 *:border *:border-neutral-200  *:rounded-xl">
+              <HeroDetails {...product} />
+              <Description description={product?.description} />
+              <RelatedProducts />
+              <ProductComments productID={productID} />
+            </section>
+            <Sidebar {...product} />
+          </>
+        </main>
+      )}
+      {isLoading && !error && <ProductLoadinSkeleton />}
+      {!isLoading && error && (
+        <p className="flex justify-center items-center m-25 text-sm text-red-500">
+          {error}
+        </p>
+      )}
+    </>
   );
 };
 
