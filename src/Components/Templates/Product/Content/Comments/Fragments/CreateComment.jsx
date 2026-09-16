@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import StarRate from "./StarRate";
 import useComment from "../../../../../../hooks/useComment";
 import { toast } from "sonner";
-import { authContext } from "../../../../../../Contexts/authProvider";
+import { authContext } from "../../../../../../Contexts/AuthProvider";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
 

@@ -8,9 +8,8 @@ function CartProvider({ children }) {
   const [items, setItems] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  return (
-    <cartContext.Provider value={"undefined"}>{children}</cartContext.Provider>
-  );
+  const value = { items };
+  return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 }
 
 export default CartProvider;

@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getMe, logout } from "../services/auth.services";
+import { toast } from "sonner";
 
 export const authContext = createContext();
 
@@ -27,6 +28,7 @@ function AuthProvider({ children }) {
       setIsLoading(true);
       const { data } = await logout();
       if (data.success) {
+        setUser(null);
         toast.success("با موفقیت خارج شدید");
       } else {
         toast.error("خطا در خروج از حساب");
@@ -34,7 +36,6 @@ function AuthProvider({ children }) {
     } catch (err) {
       console.log(err);
     } finally {
-      setUser(null);
       setIsLoading(false);
     }
   };
