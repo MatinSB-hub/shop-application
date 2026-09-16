@@ -46,8 +46,9 @@ export const addGuestCartItem = ({
       { productId, sellerId, quantity, name, slug, image, price },
     ];
   }
-
-  saveGuestCartItems(updatedItems);
+  ////////////// added return //////////////////
+  return saveGuestCartItems(updatedItems);
+  /////////////////////////////////////////////
 };
 
 export const updateGuestCartItem = (productId, sellerId, quantity) => {
