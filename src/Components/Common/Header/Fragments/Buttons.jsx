@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { CgShoppingCart } from "react-icons/cg";
 import { HiShoppingCart } from "react-icons/hi2";
 import { Link } from "react-router";
-import { authContext } from "../../../../Contexts/authProvider";
+import { authContext } from "../../../../Contexts/AuthProvider";
 
 const Buttons = () => {
   const { user, isLoading } = useContext(authContext);

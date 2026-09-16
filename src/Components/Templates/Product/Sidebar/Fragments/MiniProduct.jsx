@@ -8,7 +8,7 @@ const MiniProduct = ({ name, images }) => {
           src={
             images && images[0]
               ? `https://shopino.iran.liara.run/images/products/${images[0]}`
-              : "/assets/static/product1.png"
+              : "/assets/static/defaultProductImage.png"
           }
           alt="Product"
           className="size-full "

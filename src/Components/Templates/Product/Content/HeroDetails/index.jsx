@@ -17,7 +17,7 @@ const HeroDetails = ({ name, description, customFields, images }) => {
                 src={
                   images && images[0]
                     ? `https://shopino.iran.liara.run/images/products/${images[0]}`
-                    : "/assets/static/product1.png"
+                    : "/assets/static/defaultProductImage.png"
                 }
                 alt="Product"
                 className="size-full w-110 h-110 rounded-lg object-center"

@@ -12,7 +12,7 @@ const ProductCard = ({ name, _id, sellers, images }) => {
           src={
             images && images[0]
               ? `https://shopino.iran.liara.run/images/products/${images[0]}`
-              : "/assets/static/product1.png"
+              : "/assets/static/defaultProductImage.png"
           }
           className="h-full object-cover"
         />
