@@ -6,9 +6,17 @@ import React, {
   useState,
 } from "react";
 import { authContext } from "./AuthProvider";
-import { addToServerCart, getServerCart } from "../services/cart.services";
+import {
+  addToServerCart,
+  getServerCart,
+  updateServerCart,
+} from "../services/cart.services";
 import { toast } from "sonner";
-import { addGuestCartItem, getGuestCartItems } from "../lib/helpers/guestCart";
+import {
+  addGuestCartItem,
+  getGuestCartItems,
+  updateGuestCartItem,
+} from "../lib/helpers/guestCart";
 
 export const cartContext = createContext();
 
@@ -32,19 +40,19 @@ function CartProvider({ children }) {
 
   const mergeGuestCartIntoServer = async () => {};
 
-  const addToCart = async (items) => {
+  const addToCart = async (item) => {
     try {
       setIsLoading(true);
       if (user) {
         const response = await addToServerCart({
-          productId: items.productId,
-          sellerId: items.sellerId,
-          quantity: items.quantity,
+          productId: item.productId,
+          sellerId: item.sellerId,
+          quantity: item.quantity,
         });
 
         setItems(response?.data?.cart?.items || []);
       } else {
-        setItems(addGuestCartItem(items));
+        setItems(addGuestCartItem(item));
       }
     } catch (err) {
       toast.error(
@@ -55,22 +63,66 @@ function CartProvider({ children }) {
     }
   };
 
+  const removeItem = async (productId, sellerId) => {
+    if (user) {
+      try {
+        setIsLoading(true);
+        const response = removeServerCart({ productId, sellerId });
+        setItems(response?.data?.cart?.items);
+      } catch (err) {
+        toast.error("خطا در حذف محصول از سبد");
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      removeGuestCartItem(productId, sellerId);
+    }
+  };
+
+  const updateItems = async (productId, sellerId, quantity) => {
+    try {
+      if (user) {
+        const response = await updateServerCart({
+          productId,
+          sellerId,
+          quantity,
+        });
+        setItems(response?.data?.cart?.items);
+      } else {
+        updateGuestCartItem(productId, sellerId, quantity);
+      }
+    } catch (err) {
+      toast.error("خطا در ویرایش سبد خرید");
+    }
+  };
+
   useEffect(() => {
-    if (authIsLoading) true;
+    if (authIsLoading) return;
+    let cancelled = false;
 
     const syncCart = async () => {
-      setIsLoading(false);
-      if (user) {
-        await mergeGuestCartIntoServer();
-        await fetchServerCart();
-      } else {
-        setItems(getGuestCartItems());
-      }
+      setIsLoading(true);
 
-      setIsLoading(false);
+      try {
+        if (user) {
+          await mergeGuestCartIntoServer();
+          if (cancelled) return;
+          await fetchServerCart();
+        } else {
+          setItems(getGuestCartItems());
+        }
+      } catch (err) {
+        toast.error("خطا در سینک سبد خرید");
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
     };
 
     syncCart();
+
+    return () => {
+      cancelled = true;
+    };
   }, [user, authIsLoading]);
 
   const value = { items };

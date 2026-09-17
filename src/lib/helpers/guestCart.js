@@ -63,7 +63,9 @@ export const updateGuestCartItem = (productId, sellerId, quantity) => {
             : item,
         );
 
-  saveGuestCartItems(updatedItems);
+  ////////////// added return //////////////////
+  return saveGuestCartItems(updatedItems);
+  /////////////////////////////////////////////
 };
 
 export const removeGuestCartItem = (productId, sellerId) => {
