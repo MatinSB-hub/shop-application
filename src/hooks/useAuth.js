@@ -10,12 +10,11 @@ import * as authServices from "../services/auth.services";
 import { toast } from "sonner";
 import { sendOTPSchema, verifyOTPSchema } from "../validators/auth";
 import useCountDown from "./useCountDown";
-import { authContext } from "../Contexts/authProvider";
+import { authContext } from "../Contexts/AuthProvider";
 import { isSafeUrl } from "../lib/helpers/url";
 
 function useAuth() {
   const loc = useLocation();
-  console.log(loc);
 
   const [phone, setPhone] = useState("");
   const [otp, setotp] = useState("");

@@ -38,7 +38,29 @@ function CartProvider({ children }) {
     }
   };
 
-  const mergeGuestCartIntoServer = async () => {};
+  const mergeGuestCartIntoServer = async () => {
+    const guestCart = getGuestCartItems();
+    if (!guestCart.length) return;
+
+    let faildCount = 0;
+    for (const item of items) {
+      try {
+        await addToServerCart({
+          productId: item.productId,
+          sellerId: item.sellerId,
+          quantity: item.quantity,
+        });
+      } catch {
+        faildCount += 1;
+      }
+    }
+
+    if (faildCount > 0) {
+      toast.info(`${faildCount} مورد از سبد قبلی شما اضافه نشد`);
+    }
+
+    clearGuestCart();
+  };
 
   const addToCart = async (item) => {
     try {
@@ -87,7 +109,7 @@ function CartProvider({ children }) {
           sellerId,
           quantity,
         });
-        setItems(response?.data?.cart?.items);
+        setItems(response?.data?.cart?.items || []);
       } else {
         updateGuestCartItem(productId, sellerId, quantity);
       }
@@ -95,6 +117,8 @@ function CartProvider({ children }) {
       toast.error("خطا در ویرایش سبد خرید");
     }
   };
+
+  const itemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     if (authIsLoading) return;
@@ -125,7 +149,14 @@ function CartProvider({ children }) {
     };
   }, [user, authIsLoading]);
 
-  const value = { items };
+  const value = {
+    items,
+    itemsCount,
+    isLoading,
+    updateItems,
+    removeItem,
+    addToCart,
+  };
   return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 }
 
