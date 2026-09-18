@@ -11,8 +11,8 @@ const Comment = ({ content, rating, updatedAt, user }) => {
         <UserProfile name={user.phone} />
         <div className="flex gap-5">
           <div className="flex">
-            {Array.from({ length: rating }).map(() => (
-              <FaStar className="text-amber-300" />
+            {Array.from({ length: rating }).map((_, index) => (
+              <FaStar key={index} className="text-amber-300" />
             ))}
           </div>
           <div className="text-xs text-slate-400">{lastUpdate}</div>

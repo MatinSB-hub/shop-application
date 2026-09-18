@@ -47,7 +47,8 @@ export const addGuestCartItem = ({
     ];
   }
   ////////////// added return //////////////////
-  return saveGuestCartItems(updatedItems);
+  const newItems = saveGuestCartItems(updatedItems);
+  return newItems;
   /////////////////////////////////////////////
 };
 
@@ -64,7 +65,8 @@ export const updateGuestCartItem = (productId, sellerId, quantity) => {
         );
 
   ////////////// added return //////////////////
-  return saveGuestCartItems(updatedItems);
+  const newItems = saveGuestCartItems(updatedItems);
+  return newItems;
   /////////////////////////////////////////////
 };
 

@@ -22,13 +22,15 @@ export const cartContext = createContext();
 
 function CartProvider({ children }) {
   const { user, isLoading: authIsLoading } = useContext(authContext);
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchServerCart = async () => {
     try {
       const response = await getServerCart();
       const cart = response?.data?.cart;
+
+      setItems(cart.items);
     } catch (err) {
       if (err?.response?.status === 404) {
         setItems([]);
@@ -62,7 +64,7 @@ function CartProvider({ children }) {
     clearGuestCart();
   };
 
-  const addToCart = async (item) => {
+  const addItem = async (item) => {
     try {
       setIsLoading(true);
       if (user) {
@@ -76,9 +78,11 @@ function CartProvider({ children }) {
       } else {
         setItems(addGuestCartItem(item));
       }
+      toast.success(`محصول ${item?.name} با موفقیت به سبد خرید اضافه شد`);
     } catch (err) {
+      console.log(err.response);
       toast.error(
-        err.response.data.message || "خطا در اضافه کردن محصول به سبد خرید",
+        err.response.data.message || "خطا در اضافه کردن محصول به سبد",
       );
     } finally {
       setIsLoading(false);
@@ -155,7 +159,7 @@ function CartProvider({ children }) {
     isLoading,
     updateItems,
     removeItem,
-    addToCart,
+    addItem,
   };
   return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 }

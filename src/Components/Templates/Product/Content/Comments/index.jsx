@@ -34,7 +34,7 @@ const ProductComments = ({ productID }) => {
           {/* All Comments */}
           <div id="comments-content" className="pt-0! space-y-5">
             {isLoading &&
-              Array.from({ length: 3 }).map(() => <CommentsLodingSkeleton />)}
+              Array.from({ length: 3 }).map((_,index) => <CommentsLodingSkeleton key={index} />)}
             {!isLoading &&
               !error &&
               comments.map((comment, index) => (
