@@ -10,7 +10,7 @@ export const addToServerCart = async (body) => {
   return data;
 };
 export const removeServerCart = async (body) => {
-  const { data } = await api.delete("cart/remove", body);
+  const { data } = await api.post("cart/remove", body);
   return data;
 };
 export const updateServerCart = async (body) => {

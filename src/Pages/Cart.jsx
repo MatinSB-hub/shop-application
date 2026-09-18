@@ -8,7 +8,7 @@ import { cartContext } from "../Contexts/CartProvider";
 
 const CartPage = () => {
   const { itemsCount, items } = useContext(cartContext);
-  console.log(items)
+  console.log(items);
   if (!itemsCount) {
     return <EmptyBasket />;
   } else {
@@ -17,7 +17,7 @@ const CartPage = () => {
         <div id="cart-content" className="col-span-6">
           <div className="flex-between">
             <CartTitle itemsCount={itemsCount} />
-            <ClearBasket />
+            <ClearBasket items={items} />
           </div>
 
           <div id="cart-products-container" className=" space-y-4 mt-2">

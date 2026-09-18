@@ -9,11 +9,13 @@ import { authContext } from "./AuthProvider";
 import {
   addToServerCart,
   getServerCart,
+  removeServerCart,
   updateServerCart,
 } from "../services/cart.services";
 import { toast } from "sonner";
 import {
   addGuestCartItem,
+  clearGuestCart,
   getGuestCartItems,
   updateGuestCartItem,
 } from "../lib/helpers/guestCart";
@@ -88,7 +90,7 @@ function CartProvider({ children }) {
 
         setItems(response?.data?.cart?.items || []);
       } else {
-        setItems(addGuestCartItem(item));
+        fetchServerCart();
       }
       toast.success(`محصول ${item?.name} با موفقیت به سبد خرید اضافه شد`);
     } catch (err) {
@@ -106,7 +108,7 @@ function CartProvider({ children }) {
       try {
         setIsLoading(true);
         const response = removeServerCart({ productId, sellerId });
-        setItems(response?.data?.cart?.items);
+        fetchServerCart();
       } catch (err) {
         toast.error("خطا در حذف محصول از سبد");
       } finally {
@@ -125,7 +127,7 @@ function CartProvider({ children }) {
           sellerId,
           quantity,
         });
-        setItems(response?.data?.cart?.items || []);
+        fetchServerCart();
       } else {
         updateGuestCartItem(productId, sellerId, quantity);
       }
@@ -134,12 +136,22 @@ function CartProvider({ children }) {
     }
   };
 
-  const clearCart = async () => {
-    if (user) {
-      for (const item of items) {
-        await removeServerCart();
+  const clearCart = async (items) => {
+    try {
+      if (user) {
+        for (const item of items) {
+          await removeServerCart({
+            productId: item.productId,
+            sellerId: item.sellerId,
+          });
+        }
+        await fetchServerCart();
+      } else {
+        setItems(clearGuestCart());
       }
-    } else {
+    } catch (err) {
+      console.log("res:", err.response);
+      toast.error("خطا در خالی شدن سبد خرید");
     }
   };
 
@@ -181,6 +193,7 @@ function CartProvider({ children }) {
     updateItems,
     removeItem,
     addItem,
+    clearCart,
   };
   return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 }
