@@ -25,18 +25,30 @@ function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const normalizeData = (item) => ({
+    productId: item.product._id,
+    image: item.product.images?.[0] || "",
+    name: item.product.name,
+    quantity: item.quantity,
+    sellerId: item.sellers?.[0]?._id,
+    slug: item.product.slug,
+    price: item.discountedPrice ?? item.originalPrice,
+  });
+
   const fetchServerCart = async () => {
     try {
       const response = await getServerCart();
       const cart = response?.data?.cart;
 
-      setItems(cart.items);
+      setItems((cart.items || []).map(normalizeData));
     } catch (err) {
       if (err?.response?.status === 404) {
         setItems([]);
       } else {
+        console.log("err:", err.response);
         toast.error("خطا در دریافت سبد خرید");
       }
+      console.log("err:", err.response);
     }
   };
 

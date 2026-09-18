@@ -1,25 +1,28 @@
+import { useContext } from "react";
 import Checkout from "../Components/Templates/Cart/Checkout";
 import CartProduct from "../Components/Templates/Cart/Content/Fragments/CartProduct";
 import CartTitle from "../Components/Templates/Cart/Content/Fragments/CartTitle";
 import ClearBasket from "../Components/Templates/Cart/Content/Fragments/ClearBasket";
 import { EmptyBasket } from "../Components/Templates/Cart/EmptyBasket";
+import { cartContext } from "../Contexts/CartProvider";
 
 const CartPage = () => {
-  const cartLength = 0;
-  if (!cartLength) {
+  const { itemsCount, items } = useContext(cartContext);
+  console.log(items)
+  if (!itemsCount) {
     return <EmptyBasket />;
   } else {
     return (
       <main id="cart-page" className="my-10 container grid grid-cols-9 gap-5">
         <div id="cart-content" className="col-span-6">
           <div className="flex-between">
-            <CartTitle />
+            <CartTitle itemsCount={itemsCount} />
             <ClearBasket />
           </div>
 
           <div id="cart-products-container" className=" space-y-4 mt-2">
-            {Array.from({ length: 3 }).map((product, index) => (
-              <CartProduct {...product} />
+            {items.map((item, index) => (
+              <CartProduct key={index} {...item} />
             ))}
           </div>
         </div>

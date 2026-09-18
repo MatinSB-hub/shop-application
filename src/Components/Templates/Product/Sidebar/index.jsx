@@ -8,7 +8,7 @@ import Counseling from "./Fragments/Counseling";
 const Sidebar = ({ sellers, ...product }) => {
   const firstSeller = sellers?.[0]?.seller;
   const image = product?.images && product?.images[0];
-  console.log("firstSeller:", firstSeller);
+  const firstSellerPrice = sellers?.[0].price;
 
   return (
     <aside className="col-span-2 w-full rounded-xl border border-neutral-200 max-h-max sticky top-5 p-5 space-y-5">
@@ -21,7 +21,7 @@ const Sidebar = ({ sellers, ...product }) => {
         name={product?.name}
         slug={product?.slug}
         image={image}
-        price={product?.price}
+        price={firstSellerPrice}
         stock={firstSeller?.stock}
       />
       <Counseling />

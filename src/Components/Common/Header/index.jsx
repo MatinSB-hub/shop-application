@@ -4,7 +4,7 @@ import Buttons from "./Fragments/Buttons";
 import { TbBooks, TbHome, TbInfoCircle, TbPhoneCall } from "react-icons/tb";
 import CategoryMegaMenu from "./Fragments/CategoryMegaMenu";
 
-const Header = () => {
+const   Header = () => {
   return (
     <header className=" bg-white border-b border-slate-200  w-full! h-15">
       <nav className="flex-between **:flex-ic **:gap-1 :gap-3! container h-full">
