@@ -30,7 +30,7 @@ function CartProvider({ children }) {
     image: item.product.images?.[0] || "",
     name: item.product.name,
     quantity: item.quantity,
-    sellerId: item.sellers?.[0]?._id,
+    sellerId: item.seller?._id,
     slug: item.product.slug,
     price: item.discountedPrice ?? item.originalPrice,
   });
@@ -131,6 +131,15 @@ function CartProvider({ children }) {
       }
     } catch (err) {
       toast.error("خطا در ویرایش سبد خرید");
+    }
+  };
+
+  const clearCart = async () => {
+    if (user) {
+      for (const item of items) {
+        await removeServerCart();
+      }
+    } else {
     }
   };
 
