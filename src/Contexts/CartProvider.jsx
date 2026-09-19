@@ -41,8 +41,8 @@ function CartProvider({ children }) {
     try {
       const response = await getServerCart();
       const cart = response?.data?.cart;
-
-      setItems((cart.items || []).map(normalizeData));
+      const normalizedData = (cart.items || []).map(normalizeData);
+      setItems(normalizedData);
     } catch (err) {
       if (err?.response?.status === 404) {
         setItems([]);
@@ -88,9 +88,9 @@ function CartProvider({ children }) {
           quantity: item.quantity,
         });
 
-        setItems(response?.data?.cart?.items || []);
-      } else {
         fetchServerCart();
+      } else {
+        addGuestCartItem(item);
       }
       toast.success(`محصول ${item?.name} با موفقیت به سبد خرید اضافه شد`);
     } catch (err) {

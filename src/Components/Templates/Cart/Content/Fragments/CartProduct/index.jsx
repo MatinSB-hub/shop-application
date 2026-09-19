@@ -4,6 +4,7 @@ import Variants from "./Elements/Variants";
 import Entity from "./Elements/Entity";
 
 const CartProduct = ({ name, image, price }) => {
+  console.log("image", image);
   return (
     <article className="w-full p-8 border rounded-xl border-slate-200  flex flex-col justify-between h-[414px]">
       <div className="w-full grid grid-cols-2 gap-4">
