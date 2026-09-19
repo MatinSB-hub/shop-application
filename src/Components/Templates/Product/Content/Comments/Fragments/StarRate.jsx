@@ -17,3 +17,5 @@ function StarRate({ value, onChange }) {
 }
 
 export default StarRate;
+
+

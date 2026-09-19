@@ -17,6 +17,7 @@ import {
   addGuestCartItem,
   clearGuestCart,
   getGuestCartItems,
+  removeGuestCartItem,
   updateGuestCartItem,
 } from "../lib/helpers/guestCart";
 
@@ -59,7 +60,7 @@ function CartProvider({ children }) {
     if (!guestCart.length) return;
 
     let faildCount = 0;
-    for (const item of items) {
+    for (const item of guestCart) {
       try {
         await addToServerCart({
           productId: item.productId,
@@ -78,6 +79,11 @@ function CartProvider({ children }) {
     clearGuestCart();
   };
 
+  // Keeps React state in sync with localStorage after guest cart mutations
+  const syncGuestCartState = () => {
+    setItems(getGuestCartItems());
+  };
+
   const addItem = async (item) => {
     try {
       setIsLoading(true);
@@ -88,9 +94,10 @@ function CartProvider({ children }) {
           quantity: item.quantity,
         });
 
-        fetchServerCart();
+        await fetchServerCart();
       } else {
         addGuestCartItem(item);
+        syncGuestCartState();
       }
       toast.success(`محصول ${item?.name} با موفقیت به سبد خرید اضافه شد`);
     } catch (err) {
@@ -104,18 +111,19 @@ function CartProvider({ children }) {
   };
 
   const removeItem = async (productId, sellerId) => {
-    if (user) {
-      try {
+    try {
+      if (user) {
         setIsLoading(true);
-        const response = removeServerCart({ productId, sellerId });
-        fetchServerCart();
-      } catch (err) {
-        toast.error("خطا در حذف محصول از سبد");
-      } finally {
-        setIsLoading(false);
+        const response = await removeServerCart({ productId, sellerId });
+        await fetchServerCart();
+      } else {
+        removeGuestCartItem(productId, sellerId);
+        syncGuestCartState();
       }
-    } else {
-      removeGuestCartItem(productId, sellerId);
+    } catch (err) {
+      toast.error("خطا در حذف محصول از سبد");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -127,9 +135,10 @@ function CartProvider({ children }) {
           sellerId,
           quantity,
         });
-        fetchServerCart();
+        await fetchServerCart();
       } else {
         updateGuestCartItem(productId, sellerId, quantity);
+        syncGuestCartState();
       }
     } catch (err) {
       toast.error("خطا در ویرایش سبد خرید");
