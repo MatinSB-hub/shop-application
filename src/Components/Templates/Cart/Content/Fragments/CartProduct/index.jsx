@@ -1,10 +1,26 @@
-import React from "react";
+import { useContext, useState } from "react";
 import Title from "./Elements/Title";
 import Variants from "./Elements/Variants";
 import Entity from "./Elements/Entity";
+import { cartContext } from "../../../../../../Contexts/CartProvider";
 
-const CartProduct = ({ name, image, price }) => {
-  console.log("image", image);
+const CartProduct = ({ name, image, price, productId, sellerId, quantity }) => {
+  const { updateItems } = useContext(cartContext);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const changeProductCount = async (newQuantity) => {
+    if (quantity < 0) return;
+    try {
+      setIsUpdating(true);
+      console.log("update data:", {
+        productId,
+        sellerId,
+        newQuantity,
+      });
+      await updateItems(productId, sellerId, newQuantity);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
   return (
     <article className="w-full p-8 border rounded-xl border-slate-200  flex flex-col justify-between h-[414px]">
       <div className="w-full grid grid-cols-2 gap-4">
@@ -23,7 +39,7 @@ const CartProduct = ({ name, image, price }) => {
 
       <div className="w-full flex-between px-10 h-20 rounded-xl border border-slate-200 bg-slate-50">
         {/* Product Entity  */}
-        <Entity count={1} onCountChange={() => {}} />
+        <Entity count={quantity} onCountChange={changeProductCount} />
 
         {/* Product Price */}
         <div>

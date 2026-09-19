@@ -86,7 +86,6 @@ function CartProvider({ children }) {
 
   const addItem = async (item) => {
     try {
-      setIsLoading(true);
       if (user) {
         const response = await addToServerCart({
           productId: item.productId,
@@ -105,15 +104,12 @@ function CartProvider({ children }) {
       toast.error(
         err.response.data.message || "خطا در اضافه کردن محصول به سبد",
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const removeItem = async (productId, sellerId) => {
     try {
       if (user) {
-        setIsLoading(true);
         const response = await removeServerCart({ productId, sellerId });
         await fetchServerCart();
       } else {
@@ -122,8 +118,6 @@ function CartProvider({ children }) {
       }
     } catch (err) {
       toast.error("خطا در حذف محصول از سبد");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -141,7 +135,11 @@ function CartProvider({ children }) {
         syncGuestCartState();
       }
     } catch (err) {
-      toast.error("خطا در ویرایش سبد خرید");
+      if (err?.response?.status === 400) {
+        toast.info(" محصول بیشتر از این تعداد موجود نمیباشد");
+      } else {
+        toast.error("خطا در ویرایش سبد خرید");
+      }
     }
   };
 

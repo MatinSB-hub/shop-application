@@ -8,13 +8,13 @@ const Entity = ({ count, onCountChange }) => {
 
   return (
     <div className="flex-center gap-5">
-      <button className={buttonCSS}>
+      <button className={buttonCSS} onClick={() => onCountChange(count - 1)}>
         <FaMinus />
       </button>
 
       <p>{Number(count).toLocaleString("fa-IR")} عدد</p>
 
-      <button className={buttonCSS}>
+      <button className={buttonCSS} onClick={() => onCountChange(count + 1)}>
         <FaPlus />
       </button>
     </div>
