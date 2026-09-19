@@ -7,7 +7,7 @@ import { cartContext } from "../../../../../../Contexts/CartProvider";
 const CartProduct = ({ name, image, price, productId, sellerId, quantity }) => {
   const { updateItems } = useContext(cartContext);
   const [isUpdating, setIsUpdating] = useState(false);
-  const changeProductCount = async (newQuantity) => {
+  const handleQuntityChange = async (newQuantity) => {
     if (quantity < 0) return;
     try {
       setIsUpdating(true);
@@ -39,7 +39,7 @@ const CartProduct = ({ name, image, price, productId, sellerId, quantity }) => {
 
       <div className="w-full flex-between px-10 h-20 rounded-xl border border-slate-200 bg-slate-50">
         {/* Product Entity  */}
-        <Entity count={quantity} onCountChange={changeProductCount} />
+        <Entity count={quantity} onCountChange={handleQuntityChange} isUpdating={isUpdating} />
 
         {/* Product Price */}
         <div>
