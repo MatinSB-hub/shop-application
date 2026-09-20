@@ -19,6 +19,7 @@ import ModeratorsProducts from "../Pages/DashBoard/moderator/products/page.jsx";
 import ModeratorCategoriesTable from "../Pages/DashBoard/templates/moderator/categories/ModeratorCategoriesTable.jsx";
 import ModeratorCategories from "../Pages/DashBoard/moderator/categories/page.jsx";
 import ModeratorUsers from "../Pages/DashBoard/moderator/users/page.jsx";
+import Checkout from "../Pages/Checkout.jsx";
 // const test = useContext(authContext)
 
 const router = createBrowserRouter([
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "contact-us", element: <ContactUSPage /> },
       { path: "cart", element: <CartPage /> },
       { path: "product/:productID", element: <ProductPage /> },
+      { path: "checkout", element: <Checkout /> },
       { path: "blog/:blogID", element: <BlogPage /> },
       { path: "forbidden", element: <Forbidden /> },
       {

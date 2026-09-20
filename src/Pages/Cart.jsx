@@ -26,7 +26,7 @@ const CartPage = () => {
             ))}
           </div>
         </div>
-        <Checkout />
+        <Checkout items={items}/>
       </main>
     );
   }
