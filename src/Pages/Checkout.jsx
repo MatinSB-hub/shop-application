@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SectionTitle from "../Components/Common/SectionTitle";
 import { useLocation } from "react-router";
 import { number } from "zod";
@@ -6,6 +6,8 @@ import LocationPicker from "../Components/Templates/Checkout/components/Location
 
 function Checkout() {
   const loc = useLocation();
+
+  const [position, setPosition] = useState();
   return (
     <div className="flex justify-center">
       <div className="w-[80%] flex flex-col gap-8 mt-8">
@@ -34,7 +36,7 @@ function Checkout() {
                 placeholder="City ID"
               ></input>
 
-              <LocationPicker/>
+              <LocationPicker position={position} setPosition={setPosition} />
             </div>
           </div>
           <div className="min-w-max h-max flex flex-col gap-4 bg-white p-5 rounded-2xl">
