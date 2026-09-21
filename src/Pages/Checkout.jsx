@@ -2,10 +2,10 @@ import React from "react";
 import SectionTitle from "../Components/Common/SectionTitle";
 import { useLocation } from "react-router";
 import { number } from "zod";
+import LocationPicker from "../Components/Templates/Checkout/components/LocationPicker";
 
 function Checkout() {
   const loc = useLocation();
-  console.log(loc.state.invoice);
   return (
     <div className="flex justify-center">
       <div className="w-[80%] flex flex-col gap-8 mt-8">
@@ -33,6 +33,8 @@ function Checkout() {
                 className="w-full h-12 border-3 primary-border rounded-2xl resize-none"
                 placeholder="City ID"
               ></input>
+
+              <LocationPicker/>
             </div>
           </div>
           <div className="min-w-max h-max flex flex-col gap-4 bg-white p-5 rounded-2xl">
