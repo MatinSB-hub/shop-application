@@ -8,7 +8,7 @@ import { cartContext } from "../Contexts/CartProvider";
 
 const CartPage = () => {
   const { itemsCount, items } = useContext(cartContext);
-  console.log("cart page items",items);
+  console.log("cart page items", items);
   if (!itemsCount) {
     return <EmptyBasket />;
   } else {
@@ -26,7 +26,7 @@ const CartPage = () => {
             ))}
           </div>
         </div>
-        <Checkout items={items}/>
+        <Checkout items={items} itemsCount={itemsCount} />
       </main>
     );
   }

@@ -3,7 +3,7 @@ import { authContext } from "../../../../Contexts/AuthProvider";
 import { redirect, useNavigate } from "react-router";
 import { toast } from "sonner";
 const TAX = 0.09;
-const Checkout = ({ items }) => {
+const Checkout = ({ items, itemsCount }) => {
   const { user } = useContext(authContext);
   const navigate = useNavigate();
 
@@ -18,7 +18,14 @@ const Checkout = ({ items }) => {
 
   const handleCheckout = () => {
     if (user) {
-      navigate("/checkout");
+      navigate("/checkout", {
+        state: {
+          invoice: {
+            itemsCount,
+            finalPrice,
+          },
+        },
+      });
     } else {
       toast.info("برای خرید وارد حساب خود شوید", {
         action: {
