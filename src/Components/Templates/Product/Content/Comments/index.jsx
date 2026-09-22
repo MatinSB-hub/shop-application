@@ -17,16 +17,16 @@ const ProductComments = ({ productID }) => {
     },
   );
 
-  const handlerLoadMore = () => {
-    setLimit((prev) => prev * 2);
+  const handleReFetchComments = () => {
+    reFetchComments({
+      productId: productID,
+      limit,
+      cursor: "",
+    });
   };
 
   useEffect(() => {
-    reFetchComments({
-      productId: productID,
-      limit: limit,
-      cursor: "",
-    });
+    handleReFetchComments();
   }, [limit]);
 
   console.log("comments:", comments);
@@ -42,7 +42,7 @@ const ProductComments = ({ productID }) => {
         {/* New Comment */}
         <CreateComment
           productID={productID}
-          reFetchComments={reFetchComments}
+          reFetchComments={handleReFetchComments}
         />
 
         <div className="col-span-5 ">
@@ -64,7 +64,7 @@ const ProductComments = ({ productID }) => {
             {comments?.pagination?.hasNextPage && (
               <button
                 className="px-3 py-1.5 bg-slate-800 text-xs flex-center gap-1 rounded-md text-white"
-                onClick={handlerLoadMore}
+                onClick={() => setLimit((prev) => prev * 2)}
               >
                 بارگذاری بیشتر
               </button>
