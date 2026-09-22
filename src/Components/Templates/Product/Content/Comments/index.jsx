@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import useGetProductComments from "../../../../../hooks/useGetProductComments";
 import { getProductComments } from "../../../../../services/comment.services";
 import Comment from "../../../../Common/Cards/Comment";
@@ -7,6 +8,7 @@ import CreateComment from "./Fragments/CreateComment";
 
 const ProductComments = ({ productID }) => {
   console.log("id:", productID);
+  const [limit, setLimit] = useState(3);
   const { comments, reFetchComments, isLoading, error } = useGetProductComments(
     {
       productId: productID,
@@ -14,6 +16,19 @@ const ProductComments = ({ productID }) => {
       cursor: "",
     },
   );
+
+  const handlerLoadMore = () => {
+    setLimit((prev) => prev * 2);
+  };
+
+  useEffect(() => {
+    reFetchComments({
+      productId: productID,
+      limit: limit,
+      cursor: "",
+    });
+  }, [limit]);
+
   console.log("comments:", comments);
   return (
     <section id="product-comments" className="space-y-8">
@@ -34,19 +49,26 @@ const ProductComments = ({ productID }) => {
           {/* All Comments */}
           <div id="comments-content" className="pt-0! space-y-5">
             {isLoading &&
-              Array.from({ length: 3 }).map((_,index) => <CommentsLodingSkeleton key={index} />)}
+              Array.from({ length: 3 }).map((_, index) => (
+                <CommentsLodingSkeleton key={index} />
+              ))}
             {!isLoading &&
               !error &&
-              comments.map((comment, index) => (
+              comments?.comments?.map((comment, index) => (
                 <Comment key={index} {...comment} />
               ))}
             {error && <p className="text-sm text-red-500">{error}</p>}
           </div>
 
           <div className="mt-5 flex items-center justify-end">
-            <button className="px-3 py-1.5 bg-slate-800 text-xs flex-center gap-1 rounded-md text-white">
-              بارگذاری بیشتر
-            </button>
+            {comments?.pagination?.hasNextPage && (
+              <button
+                className="px-3 py-1.5 bg-slate-800 text-xs flex-center gap-1 rounded-md text-white"
+                onClick={handlerLoadMore}
+              >
+                بارگذاری بیشتر
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ const BestSelling = () => {
       />
 
       <div className="mt-10 w-full border rounded-2xl p-4 border-neutral-300 divide-x divide-neutral-200 gap-5">
-        {isLoading && (
+        {isLoading && !error && (
           <Swiper slidesPerView={5}>
             {Array.from({ length: 5 }).map((_, index) => (
               <SwiperSlide>
