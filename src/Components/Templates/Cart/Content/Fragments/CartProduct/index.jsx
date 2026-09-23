@@ -11,11 +11,6 @@ const CartProduct = ({ name, image, price, productId, sellerId, quantity }) => {
     if (quantity < 0) return;
     try {
       setIsUpdating(true);
-      console.log("update data:", {
-        productId,
-        sellerId,
-        newQuantity,
-      });
       await updateItems(productId, sellerId, newQuantity);
     } finally {
       setIsUpdating(false);
@@ -39,7 +34,11 @@ const CartProduct = ({ name, image, price, productId, sellerId, quantity }) => {
 
       <div className="w-full flex-between px-10 h-20 rounded-xl border border-slate-200 bg-slate-50">
         {/* Product Entity  */}
-        <Entity count={quantity} onCountChange={handleQuntityChange} isUpdating={isUpdating} />
+        <Entity
+          count={quantity}
+          onCountChange={handleQuntityChange}
+          isUpdating={isUpdating}
+        />
 
         {/* Product Price */}
         <div>
