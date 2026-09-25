@@ -12,7 +12,7 @@ function CategoryMegaMenu() {
 
   const handleOpen = () => {
     setIsOpen(true);
-    if (categories.length && !activeCategory) {
+    if (categories?.length > 0 && !activeCategory) {
       setActiveCategory(categories[0]);
     }
   };
@@ -30,7 +30,7 @@ function CategoryMegaMenu() {
         <span>دسته‌بندی کالاها</span>
       </button>
 
-      {!isLoading && isOpen && categories.length > 0 && (
+      {!isLoading && !error && isOpen && categories?.length > 0 && (
         <div className="absolute! top-full! right-0! pt-2! z-50! w-max max-w-5xl! flex flex-col">
           <div className="flex! items-stretch! bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden max-h-[70vh]!">
             <ul className="flex! flex-col! gap-0! w-56! shrink-0! border-l border-slate-100 py-3! overflow-y-auto!">
@@ -51,7 +51,7 @@ function CategoryMegaMenu() {
             </ul>
 
             <div className="flex-1! p-6! overflow-y-auto!">
-              {activeCategory.subCategories.length > 0 ? (
+              {activeCategory?.subCategories?.length > 0 ? (
                 <div className="grid! grid-cols-4! gap-x-6! gap-y-4! items-start!">
                   {activeCategory.subCategories.map((sub) => (
                     <div key={sub._id} className="flex! flex-col! gap-0!">
@@ -64,7 +64,7 @@ function CategoryMegaMenu() {
                       </Link>
 
                       <ul className="flex! flex-col! gap-1.5!">
-                        {sub.subCategories.length > 0 &&
+                        {sub?.subCategories?.length > 0 &&
                           sub.subCategories.map((leaf) => (
                             <li key={leaf._id}>
                               <Link
