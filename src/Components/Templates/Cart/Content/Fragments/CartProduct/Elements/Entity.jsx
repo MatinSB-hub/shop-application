@@ -45,3 +45,8 @@ const Entity = ({ count, onCountChange, isUpdating }) => {
 };
 
 export default Entity;
+
+
+
+
+
