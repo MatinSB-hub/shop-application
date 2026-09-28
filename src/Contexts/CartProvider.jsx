@@ -42,8 +42,8 @@ function CartProvider({ children }) {
     try {
       const response = await getServerCart();
       const cart = response?.data?.cart;
-      // const normalizedData = (cart.items || []).map(normalizeData);
-      // setItems(normalizedData);
+      const normalizedData = (cart.items || []).map(normalizeData);
+      setItems(normalizedData);
     } catch (err) {
       if (err?.response?.status === 404) {
         setItems([]);
