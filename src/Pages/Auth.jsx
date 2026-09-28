@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import useAuth from "../hooks/useAuth";
+import { useEffect, useRef } from "react";
 
 const LoginPage = () => {
   const {
@@ -15,6 +16,19 @@ const LoginPage = () => {
     convertedTimeFormat,
     isLoading,
   } = useAuth();
+
+  const phoneNumberRef = useRef();
+  const otpInputRef = useRef();
+
+  useEffect(() => {
+    phoneNumberRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    if (isSentOtp) {
+      otpInputRef.current.focus();
+    }
+  }, [isSentOtp]);
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -33,6 +47,7 @@ const LoginPage = () => {
               لطفا شماره موبایل خود را وارد کنید
             </p>
             <input
+              ref={phoneNumberRef}
               value={phone}
               onChange={handlePhoneChange}
               className="auth-input"
@@ -45,6 +60,7 @@ const LoginPage = () => {
           <>
             <div className="flex items-center justify-center gap-1">
               <input
+                ref={otpInputRef}
                 value={otp}
                 onChange={handleOtpChange}
                 className="auth-input text-center"

@@ -6,8 +6,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCardSkeleton from "../Components/Templates/Home/Best-Selling/components/ProductCardSkeleton";
 import { Autoplay } from "swiper/modules";
 
-function withSlider(WrappedComponent,sliderTitle) {
-  return function SliderWarprer() {
+function withSlider(WrappedComponent, sliderTitle) {
+  const enhancedComponents = () => {
+    // displayName = "SliderWarprer";
     const { products, isLoading, error } = useProducts();
     return (
       <section className="container my-12.5">
@@ -39,14 +40,14 @@ function withSlider(WrappedComponent,sliderTitle) {
           )}
 
           {!isLoading && products?.length > 0 && (
-
-              <WrappedComponent products={products} />
-
+            <WrappedComponent products={products} />
           )}
         </div>
       </section>
     );
   };
+
+  return enhancedComponents;
 }
 
 export default withSlider;

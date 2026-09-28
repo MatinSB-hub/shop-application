@@ -1,21 +1,30 @@
+import { Activity } from "react";
 import { HiX } from "react-icons/hi";
 
 const Modal = ({ isOpen, children, title, onClose }) => {
-  if (!isOpen) return null;
+  // if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-lg w-full max-w-lg max-h-[90vh] overflow-auto" onClick={(e)=>e.stopPropagation()}>
-        <div className="bgred500 flex items-center justify-between border-b border-zinc-200 p-4 sticky top-0 bg-white z-2">
-          <p className="font-medium">{title}</p>
-          <button onClick={onClose} className="text-zinc-600">
-            <HiX className="size-6" />
-          </button>
-        </div>
+    <Activity mode={isOpen ? "visible" : "hidden"}>
+      <div
+        className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+        onClick={onClose}
+      >
+        <div
+          className="bg-white rounded-lg w-full max-w-lg max-h-[90vh] overflow-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="bgred500 flex items-center justify-between border-b border-zinc-200 p-4 sticky top-0 bg-white z-2">
+            <p className="font-medium">{title}</p>
+            <button onClick={onClose} className="text-zinc-600">
+              <HiX className="size-6" />
+            </button>
+          </div>
 
-        <div className="p-4">{children}</div>
+          <div className="p-4">{children}</div>
+        </div>
       </div>
-    </div>
+    </Activity>
   );
 };
 
