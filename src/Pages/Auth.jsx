@@ -17,19 +17,6 @@ const LoginPage = () => {
     isLoading,
   } = useAuth();
 
-  const phoneNumberRef = useRef();
-  const otpInputRef = useRef();
-
-  useEffect(() => {
-    phoneNumberRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    if (isSentOtp) {
-      otpInputRef.current.focus();
-    }
-  }, [isSentOtp]);
-
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <header className="text-center flex items-center justify-center flex-col gap-2">
@@ -47,7 +34,7 @@ const LoginPage = () => {
               لطفا شماره موبایل خود را وارد کنید
             </p>
             <input
-              ref={phoneNumberRef}
+              autoFocus
               value={phone}
               onChange={handlePhoneChange}
               className="auth-input"
@@ -60,7 +47,7 @@ const LoginPage = () => {
           <>
             <div className="flex items-center justify-center gap-1">
               <input
-                ref={otpInputRef}
+                autoFocus
                 value={otp}
                 onChange={handleOtpChange}
                 className="auth-input text-center"
