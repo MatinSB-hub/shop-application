@@ -15,7 +15,7 @@ import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
 import useCategories from "../../../../../hooks/useCategories";
 import { removeCategory } from "../../../../../services/category.sevices";
 import { toast } from "sonner";
-import CreateCategoryModal from "./CreateCategoriesModal";
+import CreateCategoryModal from "./components/CreateCategoriesModal";
 
 function ModeratorCategoriesTable() {
   const [deletingCategory, setDeletingCategory] = useState();

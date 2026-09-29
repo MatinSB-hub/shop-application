@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import Modal from "../../../../../Components/Templates/Dashboard/Modal/index";
-import FilterReducer from "../../../../../lib/reducers/categories/FilterReducer";
-import useCategoriesForm from "../../../../../hooks/useCategoriesForm";
+import Modal from "../../../../../../Components/Templates/Dashboard/Modal/index";
+import FilterReducer from "../../../../../../lib/reducers/categories/FilterReducer";
+import useCategoriesForm from "../../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import FiltersEditor from "./FiltersEditor";
@@ -42,7 +42,7 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
   }, [iconFile]);
 
   const { error, isSubmitting, submit } = useCategoriesForm(() => {
-    toast.success("ایجاد دسسته بندی با موفقیت انجام شد");
+    toast.success("ایجاد دسته بندی با موفقیت انجام شد");
     handleClose();
     reFetchCategories();
   });

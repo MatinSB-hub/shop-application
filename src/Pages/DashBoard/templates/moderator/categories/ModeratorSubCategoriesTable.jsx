@@ -16,12 +16,20 @@ import useCategories from "../../../../../hooks/useCategories";
 import useSubCategories from "../../../../../hooks/useSubCategories";
 import { removeSubCategory } from "../../../../../services/category.sevices";
 import { toast } from "sonner";
+import CreateCategoryModal from "./components/CreateCategoriesModal";
+import CreateSubCategoryModal from "./components/CreateSubCategoriesModals";
 
 function ModeratorSubCategoriesTable() {
   const [deletingSubCategory, setDeletingSubCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
 
   const [isEditing, setIsEditing] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const [isDrawerShow, setIsDrawerShow] = useState(false);
   const toggleDrawer = () => {
@@ -33,23 +41,22 @@ function ModeratorSubCategoriesTable() {
   const { isLoading, subCategories, reFetchSubCategories, error } =
     useSubCategories();
 
-    const handleRemove = async () => {
-      setIsDeleting(true);
+  const handleRemove = async () => {
+    setIsDeleting(true);
 
-      try {
-        const data = await removeSubCategory(deletingSubCategory._id);
-        toast.success("حذف زیر دسته بندی با موفقیت انجام شد");
-        reFetchSubCategories();
-        console.log("data", data);
-      } catch (err) {
-        console.log("err.response", err.response);
-        toast.error(err.response.data.message || "خطا در حذف زیر دسته بندی");
-      } finally {
-        setIsDeleting(false);
-        setDeletingSubCategory(null);
-      }
-    };
-
+    try {
+      const data = await removeSubCategory(deletingSubCategory._id);
+      toast.success("حذف زیر دسته بندی با موفقیت انجام شد");
+      reFetchSubCategories();
+      console.log("data", data);
+    } catch (err) {
+      console.log("err.response", err.response);
+      toast.error(err.response.data.message || "خطا در حذف زیر دسته بندی");
+    } finally {
+      setIsDeleting(false);
+      setDeletingSubCategory(null);
+    }
+  };
 
   const getParentTitle = (parentId) => {
     return (
@@ -66,7 +73,7 @@ function ModeratorSubCategoriesTable() {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={toggleDrawer}
+              onClick={toggleModal}
               className="px-3 hover:opacity-90 flex items-center h-10 rounded-md bg-blue-500 text-white"
             >
               <BiPlus />
@@ -169,11 +176,7 @@ function ModeratorSubCategoriesTable() {
           isLoading={isDeleting}
         />
       </Table>
-      {/* <ProductDrawer
-        isOpen={isDrawerShow}
-        onToggle={toggleDrawer}
-        editingMode={isEditing}
-      /> */}
+      <CreateSubCategoryModal isOpen={isOpen} />
     </>
   );
 }
