@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { createSubCategory } from "../services/category.sevices";
 
-function useSubCategoriesForm() {
+function useSubCategoriesForm(onSuccess) {
   const [isSubmiting, setIsSubmiting] = useState();
   const [error, setError] = useState();
   const submit = async (title, slug, parent, description, filters) => {
@@ -19,6 +19,7 @@ function useSubCategoriesForm() {
     
     try {
       await createSubCategory(formData);
+      onSuccess()
     } catch (err) {
       console.log("subCategories Error:", err.response);
       setError(err?.response?.data?.message || "خطا در ایجاد زیر دسته بندی");

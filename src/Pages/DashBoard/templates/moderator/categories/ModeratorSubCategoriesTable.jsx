@@ -51,7 +51,9 @@ function ModeratorSubCategoriesTable() {
       console.log("data", data);
     } catch (err) {
       console.log("err.response", err.response);
-      toast.errorCategories(err.response.data.message || "خطا در حذف زیر دسته بندی");
+      toast.errorCategories(
+        err.response.data.message || "خطا در حذف زیر دسته بندی",
+      );
     } finally {
       setIsDeleting(false);
       setDeletingSubCategory(null);
@@ -176,7 +178,11 @@ function ModeratorSubCategoriesTable() {
           isLoading={isDeleting}
         />
       </Table>
-      <CreateSubCategoryModal isOpen={isOpen} onClose={toggleModal}/>
+      <CreateSubCategoryModal
+        isOpen={isOpen}
+        onClose={toggleModal}
+        reFetchSubCategories={reFetchSubCategories}
+      />
     </>
   );
 }
