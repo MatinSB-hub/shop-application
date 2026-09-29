@@ -23,7 +23,7 @@ function useCategories() {
     fetchData();
   }, []);
 
-  return { isLoading, categories, reFetchCategories: fetchData, error };
+  return { isLoading, categories, reFetchCategories: fetchData, errorCategories:error };
 }
 
 export default useCategories;

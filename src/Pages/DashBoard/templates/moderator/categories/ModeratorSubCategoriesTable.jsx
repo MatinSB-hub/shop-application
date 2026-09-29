@@ -38,7 +38,7 @@ function ModeratorSubCategoriesTable() {
   };
 
   const { categories, reFetchCategories } = useCategories();
-  const { isLoading, subCategories, reFetchSubCategories, error } =
+  const { isLoading, subCategories, reFetchSubCategories, errorCategories } =
     useSubCategories();
 
   const handleRemove = async () => {
@@ -51,7 +51,7 @@ function ModeratorSubCategoriesTable() {
       console.log("data", data);
     } catch (err) {
       console.log("err.response", err.response);
-      toast.error(err.response.data.message || "خطا در حذف زیر دسته بندی");
+      toast.errorCategories(err.response.data.message || "خطا در حذف زیر دسته بندی");
     } finally {
       setIsDeleting(false);
       setDeletingSubCategory(null);
@@ -97,15 +97,15 @@ function ModeratorSubCategoriesTable() {
           </TableRow>
         )}
 
-        {!isLoading && error && (
+        {!isLoading && errorCategories && (
           <TableRow>
             <TableCell colSpan={3} className="text-center text-red-400">
-              {error || "خطا در دریافت دسته بندی ها"}
+              {errorCategories || "خطا در دریافت دسته بندی ها"}
             </TableCell>
           </TableRow>
         )}
 
-        {!isLoading && !error && subCategories.length === 0 && (
+        {!isLoading && !errorCategories && subCategories.length === 0 && (
           <TableRow>
             <TableCell colSpan={3} className="text-center text-red-400">
               هنوز دسته بندی ثبت نشده
@@ -114,7 +114,7 @@ function ModeratorSubCategoriesTable() {
         )}
         <TableBody>
           {!isLoading &&
-            !error &&
+            !errorCategories &&
             subCategories.map((subCategory) => {
               return (
                 <TableRow key={subCategory._id}>

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 function useSubCategoriesForm() {
-  const [isLoading, setIsLoading] = useState();
+  const [isSubmiting, setIsSubmiting] = useState();
   const [error, setError] = useState();
   const submit = async (title, slug, parent, description, filters) => {
-    setIsLoading(true);
+    setIsSubmiting(true);
 
     const formData = new FormData();
 
@@ -20,10 +20,10 @@ function useSubCategoriesForm() {
       console.log("subCategories Error:", err.response);
       setError(err?.response?.data?.message || "خطا در ایجاد زیر دسته بندی");
     } finally {
-      setIsLoading(false);
+      setIsSubmiting(false);
     }
   };
-  return { submit, isLoading, error };
+  return { submit, isSubmiting, error };
 }
 
 export default useSubCategoriesForm;

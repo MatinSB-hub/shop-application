@@ -4,7 +4,7 @@ import { TbCategory, TbChevronLeft } from "react-icons/tb";
 import { Link } from "react-router";
 
 function CategoryMegaMenu() {
-  const { categories, isLoading, error } = useCategories();
+  const { categories, isLoading, errorCategories } = useCategories();
   const [isOpen, setIsOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
 
@@ -30,7 +30,7 @@ function CategoryMegaMenu() {
         <span>دسته‌بندی کالاها</span>
       </button>
 
-      {!isLoading && !error && isOpen && categories?.length > 0 && (
+      {!isLoading && !errorCategories && isOpen && categories?.length > 0 && (
         <div className="absolute! top-full! right-0! pt-2! z-50! w-max max-w-5xl! flex flex-col">
           <div className="flex! items-stretch! bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden max-h-[70vh]!">
             <ul className="flex! flex-col! gap-0! w-56! shrink-0! border-l border-slate-100 py-3! overflow-y-auto!">

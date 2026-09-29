@@ -27,7 +27,7 @@ function ModeratorCategoriesTable() {
     setIsOpen((prev) => !prev);
   };
 
-  const { isLoading, categories, reFetchCategories, error } = useCategories();
+  const { isLoading, categories, reFetchCategories, errorCategories } = useCategories();
   console.log(categories);
 
   const handleRemove = async () => {
@@ -40,7 +40,7 @@ function ModeratorCategoriesTable() {
       console.log("data", data);
     } catch (err) {
       console.log("err.response", err.response);
-      toast.error(err.response.data.message || "خطا در حذف دسته بندی");
+      toast.errorCategories(err.response.data.message || "خطا در حذف دسته بندی");
     } finally {
       setIsDeleting(false);
       setDeletingCategory(null);
@@ -81,15 +81,15 @@ function ModeratorCategoriesTable() {
           </TableRow>
         )}
 
-        {!isLoading && error && (
+        {!isLoading && errorCategories && (
           <TableRow>
             <TableCell colSpan={3} className="text-center text-red-400">
-              {error || "خطا در دریافت دسته بندی ها"}
+              {errorCategories || "خطا در دریافت دسته بندی ها"}
             </TableCell>
           </TableRow>
         )}
 
-        {!isLoading && !error && categories.length === 0 && (
+        {!isLoading && !errorCategories && categories.length === 0 && (
           <TableRow>
             <TableCell colSpan={3} className="text-center text-red-400">
               هنوز دسته بندی ثبت نشده
@@ -98,7 +98,7 @@ function ModeratorCategoriesTable() {
         )}
         <TableBody>
           {!isLoading &&
-            !error &&
+            !errorCategories &&
             categories.map((category) => {
               return (
                 <TableRow key={category._id}>

@@ -8,15 +8,19 @@ import FiltersEditor from "./FiltersEditor";
 import { BiImageAdd } from "react-icons/bi";
 import { useAsync } from "react-select/async";
 import { HiX } from "react-icons/hi";
+import useSubCategoriesForm from "../../../../../../hooks/useSubCategoriesForm";
+import useCategories from "../../../../../../hooks/useCategories";
+import ParentCategoriesField from "./ParentCategoriesField";
 
 const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
-
+  const { categories, isLoading, errorCategories } = useCategories();
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
+  const [parenCategory, setParenCategory] = useState("");
   const [filters, dispatchFilters] = useReducer(FilterReducer, []);
 
-  const { error, isSubmitting, submit } = useCategoriesForm(() => {
+  const { error, isSubmitting, submit } = useSubCategoriesForm(() => {
     toast.success("ایجاد زیر دسته بندی با موفقیت انجام شد");
     handleClose();
     reFetchSubCategories();
@@ -38,6 +42,10 @@ const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
     const result = await submit(title, slug, description, filters);
   };
 
+  useEffect(()=>{
+    console.log(parenCategory)
+  },[parenCategory])
+
   return (
     <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={handleClose}>
       <div className="space-y-4">
@@ -58,6 +66,13 @@ const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
             className="w-full h-10 text-sm rounded-md outline-none primary-border px-3"
           />
         </div>
+        {!isLoading && !errorCategories ? (
+          <ParentCategoriesField categories={categories} setParentCategory={setParenCategory}/>
+        ) : (
+          <span className="text-gray-500 text-sm">
+            در حال دریافت دسته بندی ها...
+          </span>
+        )}
 
         <div>
           <label className="text-sm text-zinc-700 block mb-1">توضیحات</label>
