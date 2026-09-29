@@ -77,7 +77,7 @@ function ModeratorSubCategoriesTable() {
               className="px-3 hover:opacity-90 flex items-center h-10 rounded-md bg-blue-500 text-white"
             >
               <BiPlus />
-              <span>ایجاد دسته بندی</span>
+              <span>ایجاد زیر دسته بندی</span>
             </button>
           </div>
         </TableToolbar>
@@ -176,7 +176,7 @@ function ModeratorSubCategoriesTable() {
           isLoading={isDeleting}
         />
       </Table>
-      <CreateSubCategoryModal isOpen={isOpen} />
+      <CreateSubCategoryModal isOpen={isOpen} onClose={toggleModal}/>
     </>
   );
 }

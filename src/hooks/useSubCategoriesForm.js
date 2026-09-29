@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { createSubCategory } from "../services/category.sevices";
 
 function useSubCategoriesForm() {
   const [isSubmiting, setIsSubmiting] = useState();
   const [error, setError] = useState();
   const submit = async (title, slug, parent, description, filters) => {
+    console.log("filtres:", filters);
     setIsSubmiting(true);
 
     const formData = new FormData();
 
+    formData.append("title", title);
+    formData.append("slug", slug);
+    formData.append("parent", parent);
+    formData.append("description", description);
+    // formData.append("filters", filters);
+    
     try {
-      formData.append("title", title);
-      formData.append("slug", slug);
-      formData.append("parent", parent);
-      formData.append("description", description);
-      formData.append("filters", filters);
       await createSubCategory(formData);
     } catch (err) {
       console.log("subCategories Error:", err.response);

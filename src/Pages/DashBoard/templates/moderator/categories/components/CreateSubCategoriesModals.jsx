@@ -39,15 +39,21 @@ const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
   };
 
   const handleSubmit = async () => {
-    const result = await submit(title, slug, description, filters);
+    const result = await submit(
+      title,
+      slug,
+      parenCategory,
+      description,
+      filters,
+    );
   };
 
-  useEffect(()=>{
-    console.log(parenCategory)
-  },[parenCategory])
+  useEffect(() => {
+    console.log(parenCategory);
+  }, [parenCategory]);
 
   return (
-    <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={handleClose}>
+    <Modal title="زیر دسته‌بندی جدید" isOpen={isOpen} onClose={handleClose}>
       <div className="space-y-4">
         <div>
           <label className="text-sm text-zinc-700 block mb-1">عنوان</label>
@@ -67,7 +73,10 @@ const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
           />
         </div>
         {!isLoading && !errorCategories ? (
-          <ParentCategoriesField categories={categories} setParentCategory={setParenCategory}/>
+          <ParentCategoriesField
+            categories={categories}
+            setParentCategory={setParenCategory}
+          />
         ) : (
           <span className="text-gray-500 text-sm">
             در حال دریافت دسته بندی ها...
