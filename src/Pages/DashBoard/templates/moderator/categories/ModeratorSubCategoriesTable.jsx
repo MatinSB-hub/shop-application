@@ -183,6 +183,7 @@ function ModeratorSubCategoriesTable() {
       </Table>
       <CreateSubCategoryModal
         isOpen={isOpen}
+        editingMode={isEditing}
         onClose={toggleModal}
         reFetchSubCategories={reFetchSubCategories}
       />

@@ -15,7 +15,6 @@ const CreateCategoryModal = ({
   onClose,
   reFetchCategories,
 }) => {
-  console.log("editing mode:", editingMode);
   const inputRef = useRef(null);
 
   const [title, setTitle] = useState("");

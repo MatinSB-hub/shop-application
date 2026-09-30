@@ -12,7 +12,12 @@ import useSubCategoriesForm from "../../../../../../hooks/useSubCategoriesForm";
 import useCategories from "../../../../../../hooks/useCategories";
 import ParentCategoriesField from "./ParentCategoriesField";
 
-const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
+const CreateSubCategoryModal = ({
+  isOpen,
+  editingMode,
+  onClose,
+  reFetchSubCategories,
+}) => {
   const { categories, isLoading, errorCategories } = useCategories();
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -49,8 +54,13 @@ const CreateSubCategoryModal = ({ isOpen, onClose, reFetchSubCategories }) => {
   };
 
   useEffect(() => {
-    console.log(parenCategory);
-  }, [parenCategory]);
+    if (editingMode) {
+      setTitle(editingMode.title);
+      setSlug(editingMode.slug);
+      setDescription(editingMode.description);
+      setTitle(editingMode.title);
+    }
+  }, [editingMode]);
 
   return (
     <Modal title="زیر دسته‌بندی جدید" isOpen={isOpen} onClose={handleClose}>

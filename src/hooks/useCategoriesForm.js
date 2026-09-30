@@ -8,7 +8,6 @@ function useCategoriesForm(onSuccess) {
   const [error, setError] = useState(false);
 
   const submit = async (title, slug, description, iconFile, filters) => {
-
     const result = validator(categoriesSchema, {
       title,
       slug,
