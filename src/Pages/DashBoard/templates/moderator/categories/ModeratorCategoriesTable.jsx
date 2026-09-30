@@ -20,19 +20,17 @@ import CreateCategoryModal from "./components/CreateCategoriesModal";
 function ModeratorCategoriesTable() {
   const [deletingCategory, setDeletingCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
-
+  const [isEditing, setIsEditing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoading, categories, reFetchCategories, errorCategories } =
+    useCategories();
 
   const toggleModal = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const { isLoading, categories, reFetchCategories, errorCategories } = useCategories();
-  console.log(categories);
-
   const handleRemove = async () => {
     setIsDeleting(true);
-
     try {
       const data = await removeCategory(deletingCategory._id);
       toast.success("حذف محصول با موفقیت انجام شد");
@@ -40,7 +38,9 @@ function ModeratorCategoriesTable() {
       console.log("data", data);
     } catch (err) {
       console.log("err.response", err.response);
-      toast.errorCategories(err.response.data.message || "خطا در حذف دسته بندی");
+      toast.errorCategories(
+        err.response.data.message || "خطا در حذف دسته بندی",
+      );
     } finally {
       setIsDeleting(false);
       setDeletingCategory(null);
@@ -110,7 +110,7 @@ function ModeratorCategoriesTable() {
                       className="text-blue-400 hover:bg-blue-100 p-2 rounded-md"
                       onClick={() => {
                         setIsEditing(category);
-                        setIsDrawerShow(true);
+                        setIsOpen(true);
                       }}
                     >
                       <MdOutlineModeEdit />
@@ -161,6 +161,7 @@ function ModeratorCategoriesTable() {
         />
         <CreateCategoryModal
           isOpen={isOpen}
+          editingMode={isEditing}
           onClose={toggleModal}
           reFetchCategories={reFetchCategories}
         />

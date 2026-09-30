@@ -9,7 +9,13 @@ import { BiImageAdd } from "react-icons/bi";
 import { useAsync } from "react-select/async";
 import { HiX } from "react-icons/hi";
 
-const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
+const CreateCategoryModal = ({
+  isOpen,
+  editingMode,
+  onClose,
+  reFetchCategories,
+}) => {
+  console.log("editing mode:", editingMode);
   const inputRef = useRef(null);
 
   const [title, setTitle] = useState("");
@@ -29,17 +35,6 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
     const newURL = URL.createObjectURL(file);
     setUrl(newURL);
   };
-
-  useEffect(() => {
-    if (iconFile) {
-      const newURL = URL.createObjectURL(iconFile);
-      setUrl(newURL);
-
-      return () => {
-        (URL.revokeObjectURL(newURL), setUrl(null));
-      };
-    }
-  }, [iconFile]);
 
   const { error, isSubmitting, submit } = useCategoriesForm(() => {
     toast.success("ایجاد دسته بندی با موفقیت انجام شد");
@@ -64,8 +59,28 @@ const CreateCategoryModal = ({ isOpen, onClose, reFetchCategories }) => {
     const result = await submit(title, slug, description, iconFile, filters);
   };
 
+  useEffect(() => {
+    if (iconFile) {
+      const newURL = URL.createObjectURL(iconFile);
+      setUrl(newURL);
+
+      return () => {
+        (URL.revokeObjectURL(newURL), setUrl(null));
+      };
+    }
+  }, [iconFile]);
+
+  useEffect(() => {
+    if (!!editingMode) {
+      setTitle(editingMode.title);
+      setSlug(editingMode.slug);
+      setDescription(editingMode.description);
+      setTitle(editingMode.title);
+    }
+  }, [editingMode]);
+
   return (
-    <Modal title="دسته‌بندی جدید" isOpen={isOpen} onClose={handleClose}>
+    <Modal title={editingMode ? "ویرایش دسته بندی" : "دسته‌بندی جدید"} isOpen={isOpen} onClose={handleClose}>
       <div className="space-y-4">
         <div>
           <label className="text-sm text-zinc-700 block mb-1">عنوان</label>

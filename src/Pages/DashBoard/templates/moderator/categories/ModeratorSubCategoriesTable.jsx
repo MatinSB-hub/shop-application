@@ -20,30 +20,28 @@ import CreateCategoryModal from "./components/CreateCategoriesModal";
 import CreateSubCategoryModal from "./components/CreateSubCategoriesModals";
 
 function ModeratorSubCategoriesTable() {
+
   const [deletingSubCategory, setDeletingSubCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
-
   const [isEditing, setIsEditing] = useState(null);
-
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleModal = () => {
-    setIsOpen((prev) => !prev);
-  };
-
   const [isDrawerShow, setIsDrawerShow] = useState(false);
-  const toggleDrawer = () => {
-    setIsDrawerShow((prev) => !prev);
-    setIsEditing(false);
-  };
 
   const { categories, reFetchCategories } = useCategories();
   const { isLoading, subCategories, reFetchSubCategories, errorCategories } =
     useSubCategories();
 
+  const toggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const toggleDrawer = () => {
+    setIsDrawerShow((prev) => !prev);
+    setIsEditing(false);
+  };
+
   const handleRemove = async () => {
     setIsDeleting(true);
-
     try {
       const data = await removeSubCategory(deletingSubCategory._id);
       toast.success("حذف زیر دسته بندی با موفقیت انجام شد");
@@ -65,6 +63,7 @@ function ModeratorSubCategoriesTable() {
       categories.find((category) => category._id === parentId)?.title || " - "
     );
   };
+
   return (
     <>
       <Table>
@@ -122,13 +121,17 @@ function ModeratorSubCategoriesTable() {
                 <TableRow key={subCategory._id}>
                   <TableCell>{subCategory.title}</TableCell>
                   <TableCell>{subCategory.filters.length}</TableCell>
-                  <TableCell>{getParentTitle(subCategory.parent)}</TableCell>
+                  <TableCell>
+                    <span className="bg-gray-200 ring-5 ring-gray-200 rounded-sm">
+                      {getParentTitle(subCategory.parent)}
+                    </span>
+                  </TableCell>
                   <TableCell>
                     <button
                       className="text-blue-400 hover:bg-blue-100 p-2 rounded-md"
                       onClick={() => {
                         setIsEditing(subCategory);
-                        setIsDrawerShow(true);
+                        setIsOpen(true);
                       }}
                     >
                       <MdOutlineModeEdit />
