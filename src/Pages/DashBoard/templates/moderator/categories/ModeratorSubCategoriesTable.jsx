@@ -12,22 +12,18 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { MdOutlineModeEdit } from "react-icons/md";
 import TableBody from "../../../../../Components/Templates/Dashboard/common/Table/TableBody";
 import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
-import useCategories from "../../../../../hooks/useCategories";
 import useSubCategories from "../../../../../hooks/useSubCategories";
 import { removeSubCategory } from "../../../../../services/category.sevices";
 import { toast } from "sonner";
 import CreateCategoryModal from "./components/CreateCategoriesModal";
 import CreateSubCategoryModal from "./components/CreateSubCategoriesModals";
 
-function ModeratorSubCategoriesTable() {
-
+function ModeratorSubCategoriesTable({ categories }) {
   const [deletingSubCategory, setDeletingSubCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
   const [isEditing, setIsEditing] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDrawerShow, setIsDrawerShow] = useState(false);
-
-  const { categories, reFetchCategories } = useCategories();
   const { isLoading, subCategories, reFetchSubCategories, errorCategories } =
     useSubCategories();
 

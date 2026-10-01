@@ -180,7 +180,7 @@ export default function Footer() {
                   />
                 </svg>
                 <span className="text-slate-400 leading-relaxed">
-                  info@sabzlearn.ir
+                  info@shop-application.ir
                 </span>
               </li>
               <li className="flex items-start gap-3">

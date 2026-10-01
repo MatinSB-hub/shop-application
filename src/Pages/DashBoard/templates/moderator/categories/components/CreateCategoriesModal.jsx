@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import Modal from "../../../../../../Components/Templates/Dashboard/Modal/index";
-import FilterReducer from "../../../../../../lib/reducers/categories/FilterReducer";
+import filterReducer from "../../../../../../lib/reducers/categories/filterReducer";
 import useCategoriesForm from "../../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -22,7 +22,7 @@ const CreateCategoryModal = ({
   const [description, setDescription] = useState("");
   const [iconFile, setIconFile] = useState(null);
   const [url, setUrl] = useState(null);
-  const [filters, dispatchFilters] = useReducer(FilterReducer, []);
+  const [filters, dispatchFilters] = useReducer(filterReducer, []);
 
   const removeIcon = () => {
     URL.revokeObjectURL(url);

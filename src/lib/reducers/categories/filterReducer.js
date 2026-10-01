@@ -6,7 +6,7 @@ const emptyFilter = {
   options: [],
 };
 
-function FilterReducer(filters, action) {
+function filterReducer(filters, action) {
   switch (action.type) {
     case "filters/add": {
       return [...filters, { ...emptyFilter }];
@@ -35,4 +35,4 @@ function FilterReducer(filters, action) {
   }
 }
 
-export default FilterReducer;
+export default filterReducer;

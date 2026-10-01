@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Confirm from "../../../../../Components/Common/Confirm";
 import ProductDrawer from "../../../../../Components/Templates/Dashboard/common/ProductDrawer";
 import useProducts from "../../../../../hooks/useProducts";
@@ -11,19 +11,16 @@ import TableCell from "../../../../../Components/Templates/Dashboard/common/Tabl
 import { FaRegTrashCan } from "react-icons/fa6";
 import { MdOutlineModeEdit } from "react-icons/md";
 import TableBody from "../../../../../Components/Templates/Dashboard/common/Table/TableBody";
-import { formatPrice, getDisplayPrice } from "../../../../../lib/helpers/price";
-import useCategories from "../../../../../hooks/useCategories";
 import { removeCategory } from "../../../../../services/category.sevices";
 import { toast } from "sonner";
 import CreateCategoryModal from "./components/CreateCategoriesModal";
 
-function ModeratorCategoriesTable() {
+function ModeratorCategoriesTable({ isLoading, categories, reFetchCategories, errorCategories }) {
   const [deletingCategory, setDeletingCategory] = useState();
   const [isDeleting, setIsDeleting] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoading, categories, reFetchCategories, errorCategories } =
-    useCategories();
+
 
   const toggleModal = () => {
     setIsOpen((prev) => !prev);

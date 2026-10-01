@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import Modal from "../../../../../../Components/Templates/Dashboard/Modal/index";
-import FilterReducer from "../../../../../../lib/reducers/categories/FilterReducer";
+import filterReducer from "../../../../../../lib/reducers/categories/filterReducer";
 import useCategoriesForm from "../../../../../../hooks/useCategoriesForm";
 import { toast } from "sonner";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -23,7 +23,7 @@ const CreateSubCategoryModal = ({
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [parenCategory, setParenCategory] = useState("");
-  const [filters, dispatchFilters] = useReducer(FilterReducer, []);
+  const [filters, dispatchFilters] = useReducer(filterReducer, []);
 
   const { error, isSubmitting, submit } = useSubCategoriesForm(() => {
     toast.success("ایجاد زیر دسته بندی با موفقیت انجام شد");
