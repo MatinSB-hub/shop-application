@@ -41,7 +41,7 @@
 - Tailwind CSS
 
 **State Management**
-- Context API — Global state (cart, user, theme)
+- Context API — Global state (cart, user)
 
 **Libraries**
 - Leaflet — Interactive maps
